@@ -1,0 +1,178 @@
+substitutions:
+  name: "climate-foyer"
+  friendly_name: "Climate Foyer"
+  device_description: "ESP8266 Infrared Climate Controller with Temperature Sensor"
+
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  comment: "${device_description}"
+  name_add_mac_suffix: false
+  project:
+    name: esphome.BlueVue
+    version: "2.0"
+
+esp8266:
+  board: esp01_1m
+  restore_from_flash: true
+
+# Optimized logging for IR communication
+logger:
+  level: WARN
+  baud_rate: 115200
+
+# WiFi configuration with power management
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  power_save_mode: none
+  
+  # Fallback hotspot
+  ap:
+    ssid: "${friendly_name} Fallback"
+    password: !secret fallback_ap_password
+
+captive_portal:
+
+# Web server with authentication
+web_server:
+  port: 80
+  version: 3
+
+# Home Assistant API with encryption and services
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+  reboot_timeout: 0s
+  services:
+    - service: learn_ir_code
+      variables:
+        command: string
+      then:
+        - logger.log:
+            format: "Learning IR code for command: %s"
+            args: [ command.c_str() ]
+        # The IR receiver will automatically capture and log the next received code
+
+# OTA updates with password
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+# Status LED for connection indication
+status_led:
+  pin: GPIO4
+
+# One-wire bus for temperature sensor
+one_wire:
+  - platform: gpio
+    pin: GPIO16
+    id: dallas_bus
+
+# IR receiver for learning remote codes
+remote_receiver:
+  id: rcvr
+  pin:
+    number: GPIO5
+    mode: INPUT_PULLUP
+    inverted: true
+  # Reduced tolerance for better signal detection
+  tolerance: 25%
+  buffer_size: 1kb
+
+# IR transmitter for sending commands
+remote_transmitter:
+  id: tmtr
+  pin: GPIO14
+  carrier_duty_percent: 50%
+
+# Temperature sensor
+sensor:
+  - platform: dallas_temp
+    one_wire_id: dallas_bus
+    id: foyer_temp_ds
+    address: 0x0c000005fb46a528
+    name: "${friendly_name} Temperature"
+    accuracy_decimals: 1
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    filters:
+      # Smooth out temperature readings
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 1
+      # Only send updates if temperature changed by 0.5°F
+      - delta: 0.5
+
+  # Device monitoring sensors
+  - platform: wifi_signal
+    name: "${friendly_name} WiFi Signal"
+    update_interval: 60s
+    entity_category: diagnostic
+    
+  - platform: uptime
+    name: "${friendly_name} Uptime"
+    entity_category: diagnostic
+    update_interval: 60s
+
+# Main climate control
+climate:
+  - platform: midea_ir
+    name: "${friendly_name}"
+    id: foyer_climate
+    sensor: foyer_temp_ds
+    transmitter_id: tmtr
+    receiver_id: rcvr
+    use_fahrenheit: true
+    
+    # Visual/UI settings
+    visual:
+      min_temperature: 62°F  # Converted from 17°C
+      max_temperature: 86°F  # Converted from 30°C
+      temperature_step: 1°F
+
+# Motion sensor (commented out but improved)
+# binary_sensor:
+#   - platform: gpio
+#     pin: GPIO12
+#     name: "${friendly_name} Motion"
+#     id: foyer_motion
+#     device_class: motion
+#     filters:
+#       - delayed_off: 60s
+#     on_press:
+#       - logger.log: "Motion detected in foyer"
+#     on_release:
+#       - logger.log: "Motion cleared in foyer"
+
+# Device status indicators
+binary_sensor:
+  - platform: status
+    name: "${friendly_name} Status"
+    entity_category: diagnostic
+
+# Device information
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP Address"
+      entity_category: diagnostic
+    mac_address:
+      name: "${friendly_name} MAC Address"
+      entity_category: diagnostic
+      
+  - platform: version
+    name: "${friendly_name} ESPHome Version"
+    entity_category: diagnostic
+
+# Utility buttons
+button:
+  - platform: restart
+    name: "${friendly_name} Restart"
+    entity_category: config
+    
+  - platform: safe_mode
+    name: "${friendly_name} Safe Mode"
+    entity_category: config

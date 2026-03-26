@@ -1,0 +1,78 @@
+esphome:
+  name: wemos-s2
+  friendly_name: Wemos S2
+
+esp32:
+  board: lolin_s2_mini #Pinout: https://www.wemos.cc/en/latest/s2/s2_mini.html
+  framework:
+    type: esp-idf
+    version: recommended
+
+uart:
+  tx_pin: GPIO5
+  rx_pin: GPIO35
+  baud_rate: 256000
+  parity: NONE
+  stop_bits: 1
+
+ld2410:
+  # If using dedicated UART:
+  # uart_id: ld2410_uart
+  # If using default UART0 (as configured above):
+  # No uart_id needed, but be aware of potential conflicts.
+
+binary_sensor:
+  - platform: ld2410
+    has_target:
+      name: "Presence"
+      id: presence_sensor
+    has_moving_target:
+      name: "Moving Target"
+      id: moving_target_sensor
+    has_still_target:
+      name: "Still Target"
+      id: still_target_sensor
+
+# i2c:
+#   sda: GPIO9
+#   scl: GPIO7
+
+# font:
+#   - file: fonts/6x10-rounded.bdf # Ensure this path is correct
+#     id: default_font
+#   - file: fonts/5x8.bdf # Ensure this path is correct
+#     id: small_font
+
+# display:
+#   - platform: ssd1306_i2c
+#     model: "SSD1306 128x64"
+#     address: 0x3C
+#     lambda: |-
+#       it.print(0, 0, id(default_font), "Hello World!");
+
+# Enable logging
+logger:
+
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+
+ota:
+  - platform: esphome
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Wemos-S2 Fallback Hotspot"
+    password: "tjXYxw8yKZtU"
+
+captive_portal:
+
+# Web server for local access
+web_server:
+  port: 80
+  version: 3

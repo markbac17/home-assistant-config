@@ -1,0 +1,110 @@
+substitutions:
+  name: "sense-pir"
+  friendly_name: "Sense PIR"
+
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  comment: "ESPHome configuration for an ESP32-C3 with a PIR sensor on GPIO5"
+  project:
+    name: BlueVue.esphome
+    version: "2.0"
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+    version: recommended
+
+# Logger set to INFO for production efficiency
+logger:
+  level: INFO
+
+# Home Assistant API with encryption
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+
+# OTA with hashed password for security
+ota:
+  platform: esphome
+  password: !secret ota_password
+
+safe_mode:
+
+# WiFi configuration with static IP
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.1.19
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
+  ap:
+    ssid: "PIR Sensor Fallback"
+    password: !secret fallback_ap_password  # Use a secret for the fallback password
+  fast_connect: true
+
+# Captive portal for WiFi setup
+captive_portal:
+
+# Time synchronization with fallback
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+  - platform: sntp
+    id: sntp_time
+    servers:
+      - pool.ntp.org
+      - time.google.com
+    timezone: "America/New_York"  # Adjust to your timezone, e.g., "America/New_York"
+
+sensor:
+  - platform: adc
+    pin: GPIO0
+    id: ph
+    name: "pH Sensor"
+    update_interval: 1s
+    unit_of_measurement: pH
+    filters:
+      - median:
+          window_size: 7
+          send_every: 4
+          send_first_at: 3
+      # Measured voltage -> Actual pH (buffer solution)
+      - calibrate_linear:
+          - 0.59 -> 7.0
+          - 0.71 -> 4.0
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+# # PIR sensor on GPIO5
+# binary_sensor:
+#   - platform: gpio
+#     pin:
+#       number: GPIO5  # Equivalent to D1 (GPIO5) on Wemos D1 Mini
+#       mode: INPUT
+#     name: "PIR Motion"
+#     id: pir_motion
+#     device_class: motion
+#     filters:
+#       - delayed_on: 100ms   # Debounce brief triggers
+#       - delayed_off: 60s    # Keep sensor on for 60s after motion stops
+#     on_press:
+#       then:
+#         - text_sensor.template.publish:
+#             id: last_motion_time
+#             state: !lambda 'return id(homeassistant_time).now().strftime("%Y-%m-%d %H:%M:%S");'
+
+# # Text sensor for last motion timestamp
+# text_sensor:
+#   - platform: template
+#     name: "Last Motion Detected"
+#     id: last_motion_time
+#     icon: "mdi:clock-time-four-outline"
+#     update_interval: 60s  # Periodic updates to ensure state consistency
+
+web_server:
+  port: 80
+  version: 3

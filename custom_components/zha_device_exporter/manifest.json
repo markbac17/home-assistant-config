@@ -1,0 +1,15 @@
+{
+  "domain": "zha_device_exporter",
+  "name": "ZHA Device Exporter",
+  "codeowners": ["@dmulcahey"],
+  "config_flow": false,
+  "dependencies": [],
+  "after_dependencies": ["zha"],
+  "documentation": "https://github.com/dmulcahey/zha-device-exporter",
+  "homekit": {},
+  "iot_class": "local_push",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": [],
+  "version": "0.1.0"
+}

@@ -1,0 +1,19 @@
+substitutions:
+  name: "switch-a"
+  friendly_name: "Switch A"
+  device_description: "Switch with power monitoring"
+  board: esp8285
+  project_name: "esphome.BlueVue"
+  project_version: "3.0"
+  ip_address: "10.10.10.203"
+
+packages:
+  network: !include modules/network_defaults.yaml
+  base: !include modules/base.yaml
+  platform: !include modules/platform/esp8266.yaml
+  device: !include modules/device/switch_s31.yaml
+
+# Enable logging
+logger:
+  level: INFO
+  baud_rate: 0 # UART logging disabled for CSE7766 compatibility

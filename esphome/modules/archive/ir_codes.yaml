@@ -1,0 +1,96 @@
+
+- platform: remote_receiver
+  name: ir_0
+  lg:
+    data: 0x00FF4AB5
+    nbits: 32
+- platform: remote_receiver
+  name: ir_1
+  lg:
+    data: 0x00FF6897
+    nbits: 32
+- platform: remote_receiver
+  name: ir_2
+  lg:
+    data: 0x00FF9867
+    nbits: 32
+- platform: remote_receiver
+  name: ir_3
+  lg:
+    data: 0x00FFB04F
+    nbits: 32
+- platform: remote_receiver
+  name: ir_4
+  lg:
+    data: 0x00FF30CF
+    nbits: 32
+- platform: remote_receiver
+  name: ir_5
+  lg:
+    data: 0x00FF18E7
+    nbits: 32
+- platform: remote_receiver
+  name: ir_6
+  lg:
+    data: 0x00FF7A85
+    nbits: 32
+- platform: remote_receiver
+  name: ir_7
+  lg:
+    data: 0x00FF10EF
+    nbits: 32
+- platform: remote_receiver
+  name: ir_8
+  lg:
+    data: 0x00FF38C7
+    nbits: 32
+- platform: remote_receiver
+  name: ir_9
+  lg:
+    data: 0x00FF5AA5
+    nbits: 32
+- platform: remote_receiver
+  name: ir_ok
+  lg:
+    data: 0x00FF02FD
+    nbits: 32
+- platform: remote_receiver
+  name: ir_up
+  lg:
+    data: 0x00FF629D
+    nbits: 32
+- platform: remote_receiver
+  name: ir_down
+  lg:
+    data: 0x00FFA857
+    nbits: 32
+- platform: remote_receiver
+  name: ir_left
+  lg:
+    data: 0x00FF22DD
+    nbits: 32
+- platform: remote_receiver
+  name: ir_right
+  lg:
+    data: 0x00FFC23D
+    nbits: 32
+- platform: remote_receiver
+  name: ir_star
+  lg:
+    data: 0x00FF42BD
+    nbits: 32
+- platform: remote_receiver
+  name: ir_hash
+  lg:
+    data: 0x00FF52AD
+    nbits: 32
+- platform: remote_receiver
+  name: ir_light_on
+  lg:
+    data: 0x00F7C03F
+    nbits: 32
+- platform: remote_receiver
+  name: ir_light_off
+  lg:
+    data: 0x00F740BF
+    nbits: 32

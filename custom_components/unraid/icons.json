@@ -1,0 +1,249 @@
+{
+  "entity": {
+    "sensor": {
+      "cpu_usage": {
+        "default": "mdi:cpu-64-bit"
+      },
+      "ram_usage": {
+        "default": "mdi:memory"
+      },
+      "ram_used": {
+        "default": "mdi:memory"
+      },
+      "swap_usage": {
+        "default": "mdi:swap-horizontal"
+      },
+      "swap_used": {
+        "default": "mdi:swap-horizontal"
+      },
+      "cpu_temperature": {
+        "default": "mdi:thermometer"
+      },
+      "cpu_power": {
+        "default": "mdi:lightning-bolt"
+      },
+      "uptime": {
+        "default": "mdi:clock-outline"
+      },
+      "active_notifications": {
+        "default": "mdi:bell"
+      },
+      "notifications_unread_info": {
+        "default": "mdi:bell-outline"
+      },
+      "notifications_unread_warning": {
+        "default": "mdi:bell-alert"
+      },
+      "notifications_unread_alert": {
+        "default": "mdi:bell-ring"
+      },
+      "notifications_archived_total": {
+        "default": "mdi:bell-check"
+      },
+      "array_state": {
+        "default": "mdi:harddisk"
+      },
+      "array_usage": {
+        "default": "mdi:database"
+      },
+      "parity_progress": {
+        "default": "mdi:progress-check"
+      },
+      "last_parity_check_date": {
+        "default": "mdi:shield-check"
+      },
+      "last_parity_check_errors": {
+        "default": "mdi:shield-alert"
+      },
+      "disk_temperature": {
+        "default": "mdi:thermometer"
+      },
+      "disk_usage": {
+        "default": "mdi:harddisk"
+      },
+      "ups_battery": {
+        "default": "mdi:battery"
+      },
+      "ups_load": {
+        "default": "mdi:gauge"
+      },
+      "ups_runtime": {
+        "default": "mdi:timer"
+      },
+      "ups_power": {
+        "default": "mdi:lightning-bolt"
+      },
+      "ups_energy": {
+        "default": "mdi:lightning-bolt"
+      },
+      "ups_input_voltage": {
+        "default": "mdi:flash-triangle"
+      },
+      "ups_output_voltage": {
+        "default": "mdi:flash-triangle-outline"
+      },
+      "ups_battery_health": {
+        "default": "mdi:battery-heart-variant"
+      },
+      "share_usage": {
+        "default": "mdi:folder-network"
+      },
+      "flash_usage": {
+        "default": "mdi:usb-flash-drive"
+      },
+      "unraid_version": {
+        "default": "mdi:server"
+      },
+      "api_version": {
+        "default": "mdi:api"
+      },
+      "registration_type": {
+        "default": "mdi:license"
+      },
+      "registration_state": {
+        "default": "mdi:shield-account"
+      },
+      "installed_plugins": {
+        "default": "mdi:puzzle"
+      },
+      "container_cpu": {
+        "default": "mdi:docker"
+      },
+      "container_memory_usage": {
+        "default": "mdi:docker"
+      },
+      "container_memory_percent": {
+        "default": "mdi:docker"
+      },
+      "parity_speed": {
+        "default": "mdi:speedometer"
+      },
+      "parity_elapsed": {
+        "default": "mdi:timer"
+      },
+      "parity_estimated": {
+        "default": "mdi:timer-sand"
+      },
+      "ups_status": {
+        "default": "mdi:battery-alert-variant-outline"
+      },
+      "container_updates_count": {
+        "default": "mdi:package-up"
+      },
+      "registration_expiration": {
+        "default": "mdi:calendar-clock"
+      },
+      "disk_error_count": {
+        "default": "mdi:harddisk-remove"
+      }
+    },
+    "binary_sensor": {
+      "disk_health": {
+        "default": "mdi:harddisk"
+      },
+      "parity_status": {
+        "default": "mdi:shield-check"
+      },
+      "array_started": {
+        "default": "mdi:harddisk"
+      },
+      "parity_check_running": {
+        "default": "mdi:shield-sync"
+      },
+      "parity_check_paused": {
+        "default": "mdi:pause-circle"
+      },
+      "parity_valid": {
+        "default": "mdi:shield-check"
+      },
+      "ups_connected": {
+        "default": "mdi:battery"
+      },
+      "service": {
+        "default": "mdi:server"
+      },
+      "cloud_connected": {
+        "default": "mdi:cloud-check"
+      },
+      "remote_access": {
+        "default": "mdi:remote-desktop"
+      },
+      "container_update_available": {
+        "default": "mdi:package-up"
+      },
+      "mover_active": {
+        "default": "mdi:file-move"
+      },
+      "disks_disabled": {
+        "default": "mdi:harddisk-remove"
+      },
+      "disks_missing": {
+        "default": "mdi:harddisk-remove"
+      },
+      "disks_invalid": {
+        "default": "mdi:harddisk-remove"
+      },
+      "safe_mode": {
+        "default": "mdi:shield-alert"
+      },
+      "config_valid": {
+        "default": "mdi:cog-off"
+      },
+      "filesystems_unmountable": {
+        "default": "mdi:harddisk-remove"
+      }
+    },
+    "switch": {
+      "docker_container": {
+        "default": "mdi:docker"
+      },
+      "virtual_machine": {
+        "default": "mdi:desktop-tower"
+      },
+      "array": {
+        "default": "mdi:harddisk"
+      },
+      "parity_check": {
+        "default": "mdi:shield-sync"
+      },
+      "disk_spin": {
+        "default": "mdi:harddisk"
+      }
+    },
+    "button": {
+      "parity_check_start_correct": {
+        "default": "mdi:play"
+      },
+      "parity_check_pause": {
+        "default": "mdi:pause"
+      },
+      "parity_check_resume": {
+        "default": "mdi:play"
+      },
+      "docker_container_restart": {
+        "default": "mdi:restart"
+      },
+      "vm_force_stop": {
+        "default": "mdi:stop"
+      },
+      "vm_reboot": {
+        "default": "mdi:restart"
+      },
+      "vm_pause": {
+        "default": "mdi:pause"
+      },
+      "vm_resume": {
+        "default": "mdi:play"
+      },
+      "vm_reset": {
+        "default": "mdi:refresh"
+      },
+      "archive_all_notifications": {
+        "default": "mdi:bell-check"
+      },
+      "delete_all_archived_notifications": {
+        "default": "mdi:bell-remove"
+      }
+    }
+  }
+}

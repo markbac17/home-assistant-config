@@ -1,0 +1,37 @@
+substitutions:
+  name: "motion-a"
+  friendly_name: "Motion A"
+
+packages:
+  device_base: !include modules/device_base.yaml
+  wifi: !include modules/wifi.yaml
+
+esp8266:
+  board: esp01_1m
+
+uart:
+  tx_pin: TX
+  rx_pin: RX
+  baud_rate: 256000
+  parity: NONE
+  stop_bits: 1
+
+ld2410:
+
+binary_sensor:
+  - platform: ld2410
+    has_target:
+      name: Presence
+    has_moving_target:
+      name: Moving Target
+    has_still_target:
+      name: Still Target
+    out_pin_presence_status:
+      name: out pin presence status
+
+logger:
+  baud_rate: 0
+
+ota:
+  - platform: esphome
+    password: !secret ota_password

@@ -1,0 +1,100 @@
+substitutions:
+  name: "sensor-water-level-pail"
+  friendly_name: "Sensor Water Level Pail"
+  # Define a threshold for detecting wet vs dry. Adjust if needed.
+  # Value below this means WET, above means DRY.
+  wet_threshold: "100" # Using substitution for easy tuning
+
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  project:
+    name: BlueVue.esphome
+    version: "1.0"
+
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    type: esp-idf
+
+# Define the raw analog sensors (Unchanged)
+sensor:
+  - platform: adc
+    pin: GPIO34
+    name: "Pail Top Raw ADC"
+    id: pail_top_adc
+    update_interval: 5s
+    raw: True
+  - platform: adc
+    pin: GPIO33
+    name: "Pail Bottom Raw ADC"
+    id: pail_bottom_adc
+    update_interval: 5s
+    raw: True
+
+# Define the binary sensors based on the analog readings
+binary_sensor:
+  - platform: template
+    name: "Pail Full"
+    id: pail_full
+    # Optional: device_class: occupancy # Or moisture
+    # Logic: Pail is Full when the TOP sensor is WET. (Unchanged)
+    lambda: |-
+      if (id(pail_top_adc).state < ${wet_threshold}) {
+        return true; // Top sensor is WET -> Pail is Full
+      } else {
+        return false; // Top sensor is DRY -> Pail is not Full
+      }
+
+  - platform: template
+    name: "Pail Empty"
+    id: pail_empty
+    # Optional: device_class: occupancy # Or moisture
+    # --- MODIFIED LOGIC ---
+    # Pail is Empty ONLY if the BOTTOM sensor is DRY *AND* the TOP sensor is ALSO DRY.
+    # This prevents reporting 'Empty' if the top sensor is wet (impossible state).
+    lambda: |-
+      if (id(pail_bottom_adc).state > ${wet_threshold} && id(pail_top_adc).state > ${wet_threshold}) {
+        return true; // Bottom is DRY *and* Top is DRY -> Pail is Empty
+      } else {
+        // If either sensor is WET, the pail cannot be considered truly empty.
+        return false;
+      }
+
+  # --- NEW SENSOR ---
+  - platform: template
+    name: "Pail Sensor Error"
+    id: pail_sensor_error
+    # Use 'problem' device class for easy identification in Home Assistant
+    device_class: problem
+    # Logic: Error state is ON if Top sensor is WET while Bottom sensor is DRY.
+    # This indicates contradictory readings, likely a hardware fault.
+    lambda: |-
+      if (id(pail_top_adc).state < ${wet_threshold} && id(pail_bottom_adc).state > ${wet_threshold}) {
+        return true; // Contradictory: Top WET and Bottom DRY -> Error!
+      } else {
+        return false; // Sensor readings are physically plausible.
+      }
+
+# Standard configuration sections (Unchanged)
+logger:
+
+ota:
+  platform: esphome
+  password: "93d910f61ad18af9edc13a6ae62e7f26" # Consider !secret ota_password
+
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "BT Proxy Fallback Hotspot"
+    password: !secret api_password
+
+captive_portal:
+
+web_server:
+  port: 80

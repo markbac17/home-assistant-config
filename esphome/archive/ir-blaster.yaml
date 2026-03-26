@@ -1,0 +1,146 @@
+substitutions:
+  name: "matrix-2"
+  friendly_name: "Matrix 2"
+
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  project:
+    name: BlueVue.esphome
+    version: "1.0"
+
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    type: arduino
+
+packages:
+  device_base: !include modules/device_base.yaml
+  wifi: !include modules/wifi.yaml
+
+external_components:
+  - source: github://TillFleisch/ESPHome-HUB75-MatrixDisplayWrapper@main
+
+font: 
+  - file: fonts/5x7.bdf
+    id: default_font
+    size: 6
+  - file: fonts/4x6.bdf
+    id: small_font
+    size: 6
+
+color:
+  - id: my_red
+    hex: FF3340
+  - id: my_yellow
+    hex: FFFF00
+  - id: my_green
+    hex: 44CE36
+  - id: my_blue
+    hex: 3FF0FF
+  - id: my_orange
+    hex: DE4736
+
+display:
+  - platform: hub75_matrix_display
+    id: matrix
+    width: 32
+    height: 16
+    brightness: 12
+
+    R1_pin: 26
+    B1_pin: 5
+    G1_pin: 25
+    
+    R2_pin: 4
+    B2_pin: 27
+    G2_pin: 23
+
+    A_pin: 22
+    B_pin: 32
+    C_pin: 18
+#    D_pin: 17
+    
+    LAT_pin: 19
+    OE_pin: 21
+    CLK_pin: 16
+
+    lambda: |- 
+
+      int rounded_temp = round(id(outdoor_temperature).state);
+      it.print(0, 2, id(small_font), id(my_red), "D ");
+      it.printf(5, 1, id(default_font), id(my_red), "%d", rounded_temp);
+
+      int rounded_temp2 = round(id(office_temperature).state);
+      it.print(18, 2, id(small_font), id(my_blue), "O ");
+      it.printf(23, 1, id(default_font), id(my_blue), "%d", rounded_temp2);
+
+      int rounded_temp3 = round(id(bathroom_temperature).state);     
+      it.print(0, 11, id(small_font), id(my_green), "L ");
+      it.printf(5, 10, id(default_font), id(my_green), "%d", rounded_temp3);
+
+      int rounded_energy = round(id(energy).state);
+      it.printf(18, 10, id(default_font), id(my_yellow), "%d", rounded_energy);
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+sensor:
+  - platform: homeassistant
+    name: "Office Temperture"
+    id: office_temperature
+    entity_id: sensor.sense_office_office_pm_temperature_2
+    internal: true
+  - platform: homeassistant
+    name: "Bathroom Temperture"
+    id: bathroom_temperature
+    entity_id: sensor.bathroom_temperature
+    internal: true
+  - platform: homeassistant
+    name: "Outdoor Temperture"
+    id: outdoor_temperature
+    entity_id: sensor.glen_cove_realfeel_temperature
+    internal: true
+  - platform: homeassistant
+    name: "Bedroom Temperture"
+    id: bedroom_temperature
+    entity_id: sensor.sense_a_temperature
+    internal: true
+  - platform: homeassistant
+    name: "Living Temperture"
+    id: bathroom_2_temperature
+    entity_id: sensor.sense_b_temp
+    internal: true
+  - platform: homeassistant
+    name: "Living Temperture"
+    id: living_temperature
+    entity_id: sensor.home_current_temperature
+    internal: true
+  - platform: homeassistant
+    name: "Energy"
+    id: energy
+    entity_id: sensor.realtime_consumption
+    internal: true
+
+text_sensor:
+  - platform: homeassistant
+    id: ha_matrix_text
+    entity_id: input_text.matrix_text
+
+switch:
+  - platform: hub75_matrix_display
+    matrix_id: matrix
+    name: "${friendly_name} Power"
+    restore_mode: ALWAYS_ON
+    id: power
+
+number:
+  - platform: hub75_matrix_display
+    matrix_id: matrix
+    name: "${friendly_name} Brightness"
+
+logger:
+
+ota:
+  - platform: esphome

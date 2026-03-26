@@ -1,0 +1,48 @@
+- platform: template
+  name: "On"
+  on_press:
+    - remote_transmitter.transmit_lg:
+        data: 0x00F7C03F
+        nbits: 32
+- platform: template
+  name: "Off"
+  on_press:
+    - remote_transmitter.transmit_lg:
+        data: 0x00F740BF
+        nbits: 32
+- platform: template
+  name: "Up"
+  on_press:
+    - remote_transmitter.transmit_lg:
+        data: 0x00F700FF
+        nbits: 32
+- platform: template
+  name: "Down"
+  on_press:
+    - remote_transmitter.transmit_lg:
+        data: 0x00F7807F
+        nbits: 32
+- platform: template
+  name: "Red"
+  on_press:
+    - remote_transmitter.transmit_lg:
+        data: 0x00F720DF
+        nbits: 32
+- platform: template
+  name: "Green"
+  on_press:
+    - remote_transmitter.transmit_lg:
+        data: 0x00F7A05F
+        nbits: 32
+- platform: template
+  name: "Blue"
+  on_press:
+    - remote_transmitter.transmit_lg:
+        data: 0x00F7609F
+        nbits: 32
+- platform: template
+  name: "White"
+  on_press:
+    - remote_transmitter.transmit_lg:
+        data: 0x00F7E01F
+        nbits: 32

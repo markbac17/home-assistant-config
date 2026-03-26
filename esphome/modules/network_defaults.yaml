@@ -1,0 +1,5 @@
+substitutions:
+  gateway: "10.10.10.1"
+  subnet: "255.255.255.0"
+  dns1: "10.10.10.1"
+  dns2: "8.8.8.8"

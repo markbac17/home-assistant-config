@@ -1,0 +1,184 @@
+# Sonoff S31 (ESP8285) with CSE7766 power monitoring
+# Fixes "stale power/current/voltage" when relay turns OFF by using template sensors.
+
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+  parity: EVEN
+
+logger:
+  level: INFO
+  baud_rate: 0   # Required so UART RX works for CSE7766
+
+light:
+  - platform: binary
+    id: status_led_light
+    name: "${friendly_name} Status LED"
+    output: status_led_output
+    entity_category: diagnostic
+
+output:
+  - platform: gpio
+    id: status_led_output
+    pin:
+      number: GPIO13
+      inverted: true
+
+time:
+  - platform: sntp
+    id: sntp_time
+
+switch:
+  - platform: gpio
+    name: "${friendly_name}"
+    icon: "mdi:power"
+    pin: GPIO12
+    id: relay
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      - component.update: power_w
+      - component.update: current_a
+      - component.update: voltage_v
+    on_turn_off:
+      - component.update: power_w
+      - component.update: current_a
+      - component.update: voltage_v
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    name: "${friendly_name} Button"
+    entity_category: diagnostic
+    on_press:
+      - switch.toggle: relay
+      - light.toggle: status_led_light
+      - delay: 0.2s
+      - light.toggle: status_led_light
+    filters:
+      - delayed_on: 0.05s
+
+  - platform: template
+    name: "${friendly_name} Running"
+    device_class: running
+    lambda: |-
+      if (id(power_w).has_state() && id(relay).state) {
+        return id(power_w).state > 5.0;
+      } else {
+        return id(relay).state;
+      }
+
+sensor:
+  # Raw CSE7766 readings (internal) — these may stop updating when relay is OFF on some S31 units.
+  - platform: cse7766
+    current:
+      id: current_raw
+      internal: true
+      accuracy_decimals: 3
+    voltage:
+      id: voltage_raw
+      internal: true
+      accuracy_decimals: 1
+    power:
+      id: power_raw
+      internal: true
+      accuracy_decimals: 1
+    energy:
+      id: energy_raw
+      internal: true
+      accuracy_decimals: 3
+
+  # Exposed sensors (these keep updating and force 0 when relay is OFF)
+  - platform: template
+    id: power_w
+    name: "${friendly_name} Power"
+    unit_of_measurement: W
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 1
+    update_interval: 2s
+    lambda: |-
+      if (!id(relay).state) return 0.0;
+      if (!id(power_raw).has_state()) return 0.0;
+      float x = id(power_raw).state;
+      // Optional: clamp tiny ghost loads
+      if (x < 1.0) return 0.0;
+      return x;
+    filters:
+      # Adaptive network updates:
+      # - send quickly on meaningful change
+      - delta: 3.0
+      # - otherwise still send occasionally so HA doesn't look "stale"
+      - heartbeat: 30s
+
+  - platform: template
+    id: current_a
+    name: "${friendly_name} Current"
+    unit_of_measurement: A
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 3
+    update_interval: 5s
+    lambda: |-
+      if (!id(relay).state) return 0.0;
+      if (!id(current_raw).has_state()) return 0.0;
+      float x = id(current_raw).state;
+      if (x < 0.02) return 0.0;
+      return x;
+    filters:
+      - delta: 0.05
+      - heartbeat: 60s
+
+  - platform: template
+    id: voltage_v
+    name: "${friendly_name} Voltage"
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    update_interval: 10s
+    lambda: |-
+      // If you prefer to show line voltage even when OFF, remove the relay check.
+      if (!id(relay).state) return 0.0;
+      if (!id(voltage_raw).has_state()) return 0.0;
+      return id(voltage_raw).state;
+    filters:
+      - delta: 1.0
+      - heartbeat: 120s
+
+  # Keep showing the (monotonic) chip energy total; it should NOT go to zero.
+  - platform: template
+    id: energy_wh
+    name: "${friendly_name} Energy"
+    unit_of_measurement: Wh
+    device_class: energy
+    state_class: total_increasing
+    accuracy_decimals: 3
+    update_interval: 60s
+    lambda: |-
+      if (!id(energy_raw).has_state()) return 0.0;
+      return id(energy_raw).state;
+
+  - platform: total_daily_energy
+    name: "${friendly_name} Daily Energy"
+    power_id: power_w
+    device_class: energy
+
+text_sensor:
+  - platform: template
+    name: "${friendly_name} Status"
+    update_interval: 30s
+    lambda: |-
+      if (id(relay).state) {
+        if (id(power_w).has_state() && id(power_w).state > 5.0) {
+          return {"Running"};
+        } else {
+          return {"On - Low Power"};
+        }
+      } else {
+        return {"Off"};
+      }

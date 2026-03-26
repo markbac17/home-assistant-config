@@ -1,0 +1,10 @@
+secrets.yaml
+home-assistant_v2.db*
+*.db-shm
+*.db-wal
+*.log
+.storage/
+.cloud/
+backups/
+__pycache__/
+esphome/.esphome/

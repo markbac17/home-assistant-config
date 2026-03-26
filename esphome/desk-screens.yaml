@@ -1,0 +1,90 @@
+substitutions:
+  name: "switch-desk-screens"
+  friendly_name: "Desk Screens"
+
+packages:
+  device_base: !include modules/device_base.yaml
+
+esp8266:
+  board: esp01_1m
+
+logger:
+  baud_rate: 0
+
+uart:
+  id: uart_bus
+  tx_pin: GPIO1      # usually written without 0
+  rx_pin: GPIO3
+  baud_rate: 19200
+
+switch:
+  - platform: template
+    name: "Desk Screen 1"
+    id: relay_1
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    turn_on_action:
+      - if:
+          condition:
+            switch.is_off: relay_2
+          then:
+            - uart.write: [0xA0, 0x04, 0x01, 0xA1]
+          else:
+            - uart.write: [0xA0, 0x04, 0x03, 0xA1]
+    turn_off_action:
+      - if:
+          condition:
+            switch.is_off: relay_2
+          then:
+            - uart.write: [0xA0, 0x04, 0x00, 0xA1]
+          else:
+            - uart.write: [0xA0, 0x04, 0x02, 0xA1]
+
+  - platform: template
+    name: "Desk Screen 2"
+    id: relay_2
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    turn_on_action:
+      - if:
+          condition:
+            switch.is_off: relay_1
+          then:
+            - uart.write: [0xA0, 0x04, 0x02, 0xA1]
+          else:
+            - uart.write: [0xA0, 0x04, 0x03, 0xA1]
+    turn_off_action:
+      - if:
+          condition:
+            switch.is_off: relay_1
+          then:
+            - uart.write: [0xA0, 0x04, 0x00, 0xA1]
+          else:
+            - uart.write: [0xA0, 0x04, 0x01, 0xA1]
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO4
+      mode: INPUT_PULLUP
+      inverted: true
+    id: button_1
+    on_press:
+      - switch.toggle: relay_1
+
+  - platform: gpio
+    pin:
+      number: GPIO14
+      mode: INPUT_PULLUP
+      inverted: true
+    id: button_2
+    on_press:
+      - switch.toggle: relay_2
+
+  - platform: status
+    name: "${friendly_name} Status"
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: true

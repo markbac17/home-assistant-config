@@ -1,0 +1,1549 @@
+- id: '1736016621798'
+  alias: Living Room Multi-Action Button
+  description: Controls various lights in the kitchen and dining areas, and the projector,
+    using a 4-button dimmer switch.
+  use_blueprint:
+    path: luisfmrosa/zha-ts004f-tuya-4-button-dimmer-switch-blueprint.yaml
+    input:
+      tuya_4button_switch: ec3f61bc647af5a35430009365598f0d
+      button_1_click:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.bar
+      button_1_double_click:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.bar
+      button_2_click:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.bar_2
+      button_2_double_click:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.bar_2
+      button_3_click:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.dining
+      button_3_double_click:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.dining
+      button_1_long_press:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - light.dining_lamp
+          - light.bar_2
+          - light.bar
+      - action: switch.toggle
+        metadata: {}
+        data: {}
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.projector
+      button_4_click:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.dining_lamp
+      button_4_double_click:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.dining_lamp
+      button_4_long_press:
+      - action: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.projector
+- id: '1736031512188'
+  alias: Bathroom A Button
+  description: Controls various lights in Bathroom A using a 4-button Tuya switch,
+    including different color scenes and an all-off function.
+  use_blueprint:
+    path: luisfmrosa/zha-ts0044b-tuya-4-button-dimmer-switch-blueprint.yaml
+    input:
+      tuya_4button_switch: 34da890b9914e9bbda99a34d6a3a0d4f
+      button_1_click:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          rgb_color:
+          - 0
+          - 140
+          - 180
+          brightness_pct: 25
+        target:
+          entity_id: light.mark_light
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.kawai_light
+      button_2_click:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          rgb_color:
+          - 237
+          - 113
+          - 158
+          brightness_pct: 50
+        target:
+          entity_id: light.kawai_light
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.mark_light
+      button_3_click:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          rgb_color:
+          - 255
+          - 255
+          - 255
+          brightness_pct: 25
+        target:
+          entity_id:
+          - light.light_a
+          - light.light_b
+          - light.light_c
+          - light.light_d
+          - light.light_e
+          - light.light_f
+      button_4_double_click: []
+      button_4_click:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - light.kawai_light
+          - light.mark_light
+- id: '1736348015990'
+  alias: Changing room light
+  description: Turns the changing room light on when the closet door opens and off
+    when it closes.
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.closet_door
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.closet_door
+        state: 'on'
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.switch_closet_closet_light
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.closet_door
+        state: 'off'
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.switch_closet_closet_light
+  mode: single
+- id: '1738006217554'
+  alias: Home
+  description: ''
+  use_blueprint:
+    path: homeassistant/notify_leaving_zone.yaml
+    input:
+      person_entity: person.marek_bachurski
+      zone_entity: zone.home
+      notify_device: 394eedc9be66821ef5e3be372cbfcf0a
+- id: '1738006347550'
+  alias: Desk Screens
+  description: Turns on monitors when distance is below 4 feet but not 0; turns off
+    after 3 minutes of no motion or when distance is 0 and occupancy is clear
+  triggers:
+  - trigger: numeric_state
+    entity_id: sensor.tze204_qasjif9e_ts0601_target_distance
+    below: 4
+    above: 0
+    id: occupied
+  - trigger: state
+    entity_id: binary_sensor.tze204_qasjif9e_ts0601_occupancy
+    to: 'off'
+    id: no_motion
+  - trigger: state
+    entity_id: sensor.tze204_qasjif9e_ts0601_target_distance
+    to:
+    - '0'
+    - '0.0'
+    - '0.00'
+    id: zero_distance
+  - trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.desk_occupancy
+    id: timer_finished
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: occupied
+      sequence:
+      - target:
+          entity_id:
+          - light.7962e412dda528fbbffdbcf1ce3eed95
+          - light.b06019ef8d2ef6b6cad017e877ad08ce
+        action: light.turn_on
+        data: {}
+      - target:
+          entity_id: timer.desk_occupancy
+        action: timer.cancel
+        data: {}
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: trigger
+          id: no_motion
+        - condition: and
+          conditions:
+          - condition: trigger
+            id: zero_distance
+          - condition: state
+            entity_id: binary_sensor.tze204_qasjif9e_ts0601_occupancy
+            state: 'off'
+      - condition: state
+        entity_id: timer.desk_occupancy
+        state: idle
+      sequence:
+      - target:
+          entity_id: timer.desk_occupancy
+        action: timer.start
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: timer_finished
+      sequence:
+      - action: light.turn_off
+        data: {}
+  mode: single
+- id: '1738017565721'
+  alias: Media On
+  description: ''
+  triggers:
+  - device_id: 340f3d01a964a3f528bbb1171c8d3573
+    domain: zha
+    type: remote_button_short_press
+    subtype: button
+    trigger: device
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - switch.switch_sonos_switch_sonos
+      - switch.switch_projector_switch_projector
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+    enabled: true
+  - action: androidtv.adb_command
+    metadata: {}
+    data:
+      command: input keyevent KEYCODE_TV_INPUT
+    target:
+      entity_id: media_player.android_tv_192_168_1_179
+    enabled: true
+  - action: androidtv.adb_command
+    metadata: {}
+    data:
+      command: input keyevent ENTER
+    target:
+      entity_id: media_player.android_tv_192_168_1_179
+    enabled: true
+  - action: media_player.select_source
+    metadata: {}
+    data:
+      source: Line-in
+    target:
+      device_id: 9e9a9bc6f70f8bdcb443a4f551866ce4
+  - action: media_player.turn_on
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - ff6c4ec09b31ba6ff675500db939282b
+      - d9f49c079a64a9a5e0f27ea23e2f0978
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.52
+    target:
+      device_id:
+      - 9e9a9bc6f70f8bdcb443a4f551866ce4
+      - a7262bc346943ea2354cedcfb7d295a0
+      - d9f49c079a64a9a5e0f27ea23e2f0978
+  - action: media_player.select_source
+    metadata: {}
+    data:
+      source: YouTube
+    target:
+      device_id: d9f49c079a64a9a5e0f27ea23e2f0978
+  mode: single
+- id: '1738019504825'
+  alias: Media Off
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.media
+  conditions: []
+  actions:
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0
+    target:
+      device_id:
+      - 9e9a9bc6f70f8bdcb443a4f551866ce4
+      - d9f49c079a64a9a5e0f27ea23e2f0978
+  - action: media_player.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - ff6c4ec09b31ba6ff675500db939282b
+      - d9f49c079a64a9a5e0f27ea23e2f0978
+  - type: turn_off
+    device_id: ff6c4ec09b31ba6ff675500db939282b
+    entity_id: b009bdd2b4544f4fb851759553a9fb26
+    domain: remote
+  mode: single
+- id: '1738773467559'
+  alias: Tag Media is scanned
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 6ec61a48-cb4b-4d18-b486-b101463748e5
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: 92d626649fb930b1ebe4a50c25af9445
+    entity_id: 29988b58652143960457c3bb94701d77
+    domain: switch
+  - action: tts.cloud_say
+    metadata: {}
+    data:
+      cache: false
+      entity_id: media_player.kitchen
+      message: Turning on the projector
+  mode: single
+- id: '1738797069774'
+  alias: Office Tag
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: c9d6b418-6bdd-43cf-9e08-9f2e6b4930d1
+  conditions: []
+  actions:
+  - action: tts.cloud_say
+    metadata: {}
+    data:
+      cache: false
+      entity_id: media_player.office
+      message: Good Morning Mark
+  - action: scene.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: scene.office
+  mode: single
+- id: '1739129964404'
+  alias: Apple Fitness
+  description: Sets up the entertainment system for fitness, turning on devices, setting
+    volume, and switching inputs to the appropriate source.
+  triggers:
+  - device_id: 340f3d01a964a3f528bbb1171c8d3573
+    domain: zha
+    type: remote_button_double_press
+    subtype: button_1
+    trigger: device
+  - trigger: tag
+    tag_id: a53e866b-a9b3-4388-b98f-35e7e0c2a935
+    enabled: false
+  conditions: []
+  actions:
+  - action: androidtv.adb_command
+    metadata: {}
+    data:
+      command: input keyevent KEYCODE_TV_INPUT
+    target:
+      device_id: ea632eb0f6ab3bb7a1b75f5a6c19dc8c
+  - action: androidtv.adb_command
+    metadata: {}
+    data:
+      command: input keyevent ENTER
+    target:
+      device_id: ea632eb0f6ab3bb7a1b75f5a6c19dc8c
+  - action: media_player.select_source
+    metadata: {}
+    data:
+      source: Line-in
+    target:
+      entity_id: media_player.living_room
+  - action: media_player.turn_on
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - ff6c4ec09b31ba6ff675500db939282b
+      - d9f49c079a64a9a5e0f27ea23e2f0978
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.52
+    target:
+      device_id:
+      - d9f49c079a64a9a5e0f27ea23e2f0978
+  - action: media_player.select_source
+    metadata: {}
+    data:
+      source: Fitness
+    target:
+      device_id: d9f49c079a64a9a5e0f27ea23e2f0978
+  mode: single
+- id: '1739141916490'
+  alias: Bedside scan
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 6ec61a48-cb4b-4d18-b486-b101463748e5
+  conditions: []
+  actions:
+  - condition: time
+    after: '18:00:00'
+    before: 04:00:00
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - 59cd8a1d00f94b59c72cb373a8d6202d
+      - 92d626649fb930b1ebe4a50c25af9445
+      - 261b4b777719cdbcfc803da18d6adce9
+      - 9fa163053a73516977dd0bfdeb7ce5d2
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id: 77ed70afbc0b1710972226951ec9419a
+  mode: single
+- id: '1742411901799'
+  alias: Unraid Off
+  description: ''
+  triggers:
+  - trigger: time
+    at: '23:00:00'
+  conditions: []
+  actions:
+  - action: button.press
+    metadata: {}
+    data: {}
+    target:
+      entity_id: button.unraid_server_unraidbreton_unraidbreton_shutdown
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.switch_breton_unraid_unraid_breton
+  mode: single
+- id: '1743116730548'
+  alias: Bathroom A Motion
+  description: Turn on bathroom light when motion is detected between 6 AM and 11
+    PM.
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.bathroom_a_motion
+    from: 'off'
+    to: 'on'
+  conditions:
+  - condition: time
+    after: 06:00:00
+    before: '23:00:00'
+  actions:
+  - target:
+      entity_id: light.kawai_light
+    action: light.turn_on
+    data:
+      rgb_color:
+      - 159
+      - 101
+      - 96
+      brightness_pct: 40
+      color_temp_kelvin: 2589
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.matrix_clock_display
+  - wait_for_trigger:
+    - entity_id:
+      - binary_sensor.bathroom_a_motion
+      to:
+      - 'off'
+      for:
+        hours: 0
+        minutes: 2
+        seconds: 0
+      trigger: state
+  - target:
+      entity_id: light.kawai_light
+    action: light.turn_off
+    data: {}
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - switch.matrix_clock_display
+- id: '1743364200696'
+  alias: Status update
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_select.status
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.status
+        state: Good morning
+      sequence:
+      - action: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - switch.media_room_light
+          - switch.switch_kettle_switch_kettle
+          - switch.matrix_matrix_power
+      - action: cover.close_cover
+        metadata: {}
+        data: {}
+        target:
+          device_id: 33269f060f10a3bc558e28476c81bc49
+      - action: climate.set_temperature
+        metadata: {}
+        data:
+          hvac_mode: heat
+          temperature: 71
+        target:
+          entity_id: climate.home
+        enabled: false
+    - conditions:
+      - condition: state
+        entity_id: input_select.status
+        state: Good evening
+      sequence:
+      - action: cover.open_cover
+        metadata: {}
+        data: {}
+        target:
+          device_id: 33269f060f10a3bc558e28476c81bc49
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.dining_lamp
+    - conditions:
+      - condition: state
+        entity_id: input_select.status
+        state: Good night
+      sequence:
+      - action: climate.set_hvac_mode
+        metadata: {}
+        data:
+          hvac_mode: 'off'
+        target:
+          device_id: aabb84909b1d5cf877ae9679a5f7c95e
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - light.dimmer_bedroom
+          - light.wall_dimmer_switch
+          - light.media_room_light_media_room_light
+          - light.bar_2
+          - light.bar
+          - light.water_closet
+          - light.switch_office_closet_office_closet
+          - light.dining
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - switch.media_room_light
+          - switch.matrix_matrix_power
+          - switch.sonos
+          - switch.desk_screen_left
+          - switch.desk_screen_right
+  mode: single
+- id: '1743375904411'
+  alias: voice - good morning
+  description: ''
+  triggers:
+  - trigger: conversation
+    command: Good morning
+  conditions: []
+  actions:
+  - action: input_select.select_option
+    target:
+      entity_id: input_select.status
+    data:
+      option: Good morning
+  mode: single
+- id: '1743378032381'
+  alias: voice - good evening
+  description: ''
+  triggers:
+  - trigger: conversation
+    command:
+    - Good evening
+  conditions: []
+  actions:
+  - action: input_select.select_option
+    target:
+      entity_id: input_select.status
+    data:
+      option: Good evening
+  mode: single
+- id: '1743378080498'
+  alias: voice - good night
+  description: ''
+  triggers:
+  - trigger: conversation
+    command:
+    - Good night
+  conditions: []
+  actions:
+  - action: input_select.select_option
+    target:
+      entity_id: input_select.status
+    data:
+      option: Good night
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      device_id: cebf22a6b856761347db01582f333d1e
+  - action: assist_satellite.announce
+    metadata: {}
+    data:
+      message: Good night
+    target:
+      device_id: 153956128563990dfc3794721a70445f
+  - action: tts.cloud_say
+    metadata: {}
+    data:
+      cache: false
+      entity_id: media_player.office
+      message: Good night
+  - action: tts.cloud_say
+    metadata: {}
+    data:
+      cache: false
+      entity_id: media_player.kitchen
+      message: Good night
+  mode: single
+- id: '1743707807105'
+  alias: Front door open
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.contact_b_opening
+    to:
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.contact_b_opening
+        state: 'on'
+      sequence:
+      - action: assist_satellite.announce
+        metadata: {}
+        data:
+          message: Front door is open
+          preannounce: true
+        target:
+          entity_id: assist_satellite.my_satellite
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.contact_b_opening
+        state: 'off'
+      sequence:
+      - action: assist_satellite.announce
+        metadata: {}
+        data:
+          message: Front door is closed
+          preannounce: true
+        target:
+          entity_id: assist_satellite.my_satellite
+  mode: single
+- id: '1743708293865'
+  alias: Patio door motion
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.tze200_iba1ckek_ts0601_vibration
+    to: 'on'
+    from:
+  conditions: []
+  actions:
+  - action: assist_satellite.announce
+    metadata: {}
+    data:
+      message: Patio door shifted
+      preannounce: true
+    target:
+      entity_id: assist_satellite.my_satellite
+  mode: single
+- id: '1744123763894'
+  alias: Knob
+  description: ''
+  use_blueprint:
+    path: markbac17/smart_knob.yaml
+    input:
+      remote: 340f3d01a964a3f528bbb1171c8d3573
+      mediaplayer: media_player.great_room
+      long_press:
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - switch.sonos
+          - switch.switch_projector_switch_projector
+      - action: media_player.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: media_player.living
+      single_press:
+      - action: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - switch.switch_projector_switch_projector
+          - switch.sonos
+      - action: media_player.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: media_player.living
+      - action: media_player.volume_set
+        metadata: {}
+        data:
+          volume_level: 0.74
+      - wait_for_trigger:
+        - type: turned_on
+          device_id: e251d3a35e73eea32dd1f67e9463ef35
+          entity_id: 5facd437bce66996d30f13c5f6acb616
+          domain: light
+          trigger: device
+          for:
+            hours: 0
+            minutes: 1
+            seconds: 0
+      - action: media_player.volume_set
+        metadata: {}
+        data:
+          volume_level: 0.76
+- id: '1744126310835'
+  alias: Papa
+  description: Control lights with Zigbee remote buttons
+  triggers:
+  - id: on_button
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:17:88:01:08:75:5c:8c
+      unique_id: 00:17:88:01:08:75:5c:8c:1:0x0006
+      device_id: f1e956261c8c2c320128cc910f73c10d
+      endpoint_id: 1
+      cluster_id: 6
+      command: 'on'
+  - id: up_button
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:17:88:01:08:75:5c:8c
+      unique_id: 00:17:88:01:08:75:5c:8c:1:0x0008
+      device_id: f1e956261c8c2c320128cc910f73c10d
+      endpoint_id: 1
+      cluster_id: 8
+      command: step
+      args:
+      - 0
+      - 30
+      - 9
+      params:
+        step_mode: 0
+        step_size: 30
+        transition_time: 9
+        options_mask:
+        options_override:
+  - id: down_button
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:17:88:01:08:75:5c:8c
+      unique_id: 00:17:88:01:08:75:5c:8c:1:0x0008
+      device_id: f1e956261c8c2c320128cc910f73c10d
+      endpoint_id: 1
+      cluster_id: 8
+      command: step
+      args:
+      - 1
+      - 30
+      - 9
+      params:
+        step_mode: 1
+        step_size: 30
+        transition_time: 9
+        options_mask:
+        options_override:
+  - id: off_button
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:17:88:01:08:75:5c:8c
+      unique_id: 00:17:88:01:08:75:5c:8c:1:0x0006
+      device_id: f1e956261c8c2c320128cc910f73c10d
+      endpoint_id: 1
+      cluster_id: 6
+      command: off_with_effect
+      args:
+      - 0
+      - 0
+      params:
+        effect_id: 0
+        effect_variant: 0
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: on_button
+      sequence:
+      - action: assist_satellite.announce
+        metadata: {}
+        data:
+          message: Screen 1
+          preannounce: true
+        target:
+          entity_id: assist_satellite.my_satellite
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 0
+        target:
+          entity_id: input_number.matrix_display_page
+    - conditions:
+      - condition: trigger
+        id: off_button
+      sequence:
+      - action: assist_satellite.announce
+        metadata: {}
+        data:
+          message: Screen 4
+          preannounce: true
+        target:
+          entity_id: assist_satellite.my_satellite
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 3
+        target:
+          entity_id: input_number.matrix_display_page
+    - conditions:
+      - condition: trigger
+        id: up_button
+      sequence:
+      - action: assist_satellite.announce
+        metadata: {}
+        data:
+          message: Screen 2
+          preannounce: true
+        target:
+          entity_id: assist_satellite.my_satellite
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 1
+        target:
+          entity_id: input_number.matrix_display_page
+    - conditions:
+      - condition: trigger
+        id: down_button
+      sequence:
+      - action: assist_satellite.announce
+        metadata: {}
+        data:
+          message: Screen 3
+          preannounce: true
+        target:
+          entity_id: assist_satellite.my_satellite
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 2
+        target:
+          entity_id: input_number.matrix_display_page
+  mode: single
+- id: '1744153535688'
+  alias: Switch A
+  description: Control lights with Zigbee remote buttons
+  triggers:
+  - id: button_1_short_press
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: a4:c1:38:f3:3a:ce:59:21
+      unique_id: a4:c1:38:f3:3a:ce:59:21:1:0x0006
+      device_id: ec3f61bc647af5a35430009365598f0d
+      endpoint_id: 1
+      cluster_id: 6
+      command: remote_button_short_press
+      args: []
+      params: {}
+  - id: button_2_short_press
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: a4:c1:38:f3:3a:ce:59:21
+      unique_id: a4:c1:38:f3:3a:ce:59:21:2:0x0006
+      device_id: ec3f61bc647af5a35430009365598f0d
+      endpoint_id: 2
+      cluster_id: 6
+      command: remote_button_short_press
+      args: []
+      params: {}
+  - id: button_3_short_press
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: a4:c1:38:f3:3a:ce:59:21
+      unique_id: a4:c1:38:f3:3a:ce:59:21:3:0x0006
+      device_id: ec3f61bc647af5a35430009365598f0d
+      endpoint_id: 3
+      cluster_id: 6
+      command: remote_button_short_press
+      args: []
+      params: {}
+  - id: button_4_short_press
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: a4:c1:38:f3:3a:ce:59:21
+      unique_id: a4:c1:38:f3:3a:ce:59:21:4:0x0006
+      device_id: ec3f61bc647af5a35430009365598f0d
+      endpoint_id: 4
+      cluster_id: 6
+      command: remote_button_short_press
+      args: []
+      params: {}
+  - id: button_1_double_press
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: a4:c1:38:f3:3a:ce:59:21
+      unique_id: a4:c1:38:f3:3a:ce:59:21:1:0x0006
+      device_id: ec3f61bc647af5a35430009365598f0d
+      endpoint_id: 1
+      cluster_id: 6
+      command: remote_button_double_press
+      args: []
+      params: {}
+  - id: button_2_double_press
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: a4:c1:38:f3:3a:ce:59:21
+      unique_id: a4:c1:38:f3:3a:ce:59:21:2:0x0006
+      device_id: ec3f61bc647af5a35430009365598f0d
+      endpoint_id: 2
+      cluster_id: 6
+      command: remote_button_double_press
+      args: []
+      params: {}
+  - id: button_3_double_press
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: a4:c1:38:f3:3a:ce:59:21
+      unique_id: a4:c1:38:f3:3a:ce:59:21:3:0x0006
+      device_id: ec3f61bc647af5a35430009365598f0d
+      endpoint_id: 3
+      cluster_id: 6
+      command: remote_button_double_press
+      args: []
+      params: {}
+  - id: button_4_double_press
+    trigger: event
+    event_type: zha_event
+    event_data:
+      device_ieee: a4:c1:38:f3:3a:ce:59:21
+      unique_id: a4:c1:38:f3:3a:ce:59:21:4:0x0006
+      device_id: ec3f61bc647af5a35430009365598f0d
+      endpoint_id: 4
+      cluster_id: 6
+      command: remote_button_double_press
+      args: []
+      params: {}
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - button_1_short_press
+      sequence:
+      - action: light.toggle
+        metadata: {}
+        data:
+          brightness_pct: 34
+        target:
+          entity_id:
+          - light.bar
+    - conditions:
+      - condition: trigger
+        id:
+        - button_2_short_press
+      sequence:
+      - action: light.toggle
+        metadata: {}
+        data:
+          brightness_pct: 76
+        target:
+          entity_id: light.bar_light
+    - conditions:
+      - condition: trigger
+        id:
+        - button_3_short_press
+      sequence:
+      - action: light.toggle
+        metadata: {}
+        data:
+          brightness_pct: 51
+        target:
+          entity_id: light.dining_lamp
+          device_id: 1a9d07c69db3a057a1cf110ffd3b6801
+    - conditions:
+      - condition: trigger
+        id:
+        - button_4_short_press
+      sequence:
+      - action: light.toggle
+        metadata: {}
+        data:
+          kelvin: 3133
+        target:
+          entity_id: light.hall
+    - conditions:
+      - condition: trigger
+        id:
+        - button_1_double_press
+      sequence:
+      - action: light.toggle
+        metadata: {}
+        data:
+          brightness_pct: 100
+        target:
+          entity_id: light.bar
+    - conditions:
+      - condition: trigger
+        id:
+        - button_2_double_press
+      sequence: []
+    - conditions:
+      - condition: trigger
+        id:
+        - button_3_double_press
+      sequence: []
+    - conditions:
+      - condition: trigger
+        id:
+        - button_4_double_press
+      sequence: []
+  mode: single
+- id: '1745416088244'
+  alias: Good morning
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunrise
+    offset: 0
+  conditions: []
+  actions:
+  - action: assist_satellite.announce
+    metadata: {}
+    data:
+      message: Good morning
+      preannounce: true
+    target:
+      device_id: 153956128563990dfc3794721a70445f
+  mode: single
+- id: '1745687788965'
+  alias: Ikea button
+  description: ''
+  use_blueprint:
+    path: Malte/zha-ikea-four-button-remote-styrbar-for-lights-e2001-e2002.yaml
+    input:
+      remote: a68206a441e5ed42979dcebad3b91392
+      light:
+        entity_id: light.dimmer_bedroom
+- id: '1745704138276'
+  alias: Sunrise and Sunset Voice Alerts
+  description: Announce good morning at sunrise and sunset warning via voice assistant.
+  triggers:
+  - event: sunrise
+    id: sunrise_alert
+    trigger: sun
+  - event: sunset
+    offset: -00:30:00
+    id: sunset_warning
+    trigger: sun
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: sunrise_alert
+      sequence:
+      - data:
+          message: Good morning Mark
+          preannounce: true
+        target:
+          device_id:
+          - c20e8a754f60bc369cc7523a9bda8d83
+          - 153956128563990dfc3794721a70445f
+        action: assist_satellite.announce
+    - conditions:
+      - condition: trigger
+        id: sunset_warning
+      sequence:
+      - data:
+          message: Good evening Mark, sunset is in 30 minutes.
+          preannounce: true
+        target:
+          device_id:
+          - c20e8a754f60bc369cc7523a9bda8d83
+          - 153956128563990dfc3794721a70445f
+        action: assist_satellite.announce
+  mode: single
+- id: '1747177112875'
+  alias: Bathroom B Motion - Fixed Turn Off
+  description: Turn on bathroom light when motion is detected between 6 AM and 11
+    PM, with a delay before turning off.
+  triggers:
+  - entity_id: binary_sensor.bathroom_b_motion
+    to: 'on'
+    trigger: state
+  conditions:
+  - condition: time
+    after: 06:00:00
+    before: '23:00:00'
+  actions:
+  - action: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.bath_b
+  - wait_for_trigger:
+    - entity_id: binary_sensor.bathroom_b_motion
+      to: 'off'
+      for:
+        minutes: 3
+      trigger: state
+  - action: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.bath_b
+  mode: single
+- id: '1750703244704'
+  alias: Office Multi-Action
+  description: Automation for office with multiple button press types
+  triggers:
+  - device_id: 5181c3a2166305fe02f286e0fd59a256
+    domain: zha
+    type: remote_button_short_press
+    subtype: remote_button_short_press
+    trigger: device
+    alias: short_press
+    id: short_press
+  - device_id: 5181c3a2166305fe02f286e0fd59a256
+    domain: zha
+    type: remote_button_long_press
+    subtype: remote_button_long_press
+    trigger: device
+    alias: long_press
+    id: long_press
+  - device_id: 5181c3a2166305fe02f286e0fd59a256
+    domain: zha
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+    trigger: device
+    alias: double_press
+    id: double_press
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        alias: Short press trigger
+        id: short_press
+      sequence:
+      - action: switch.toggle
+        data: {}
+        target:
+          entity_id:
+          - switch.desk_screen_right
+          - switch.desk_screen_left
+    - conditions:
+      - condition: trigger
+        alias: Long press trigger
+        id: long_press
+      sequence:
+      - action: switch.toggle
+        data: {}
+        target:
+          entity_id:
+          - switch.desk_screen_left
+          - switch.desk_screen_right
+    - conditions:
+      - condition: trigger
+        alias: Double press trigger
+        id: double_press
+      sequence:
+      - action: switch.toggle
+        data: {}
+        target:
+          entity_id:
+          - switch.desk_screen_right
+          - switch.desk_screen_left
+  mode: single
+- id: '1752786012565'
+  alias: Office closet button
+  description: Mirror switch.closet_aux state to switch.office_b
+  triggers:
+  - entity_id: switch.closet_aux
+    trigger: state
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: switch.closet_aux
+        state: 'on'
+      sequence:
+      - target:
+          entity_id: switch.office_b
+        action: switch.turn_on
+    - conditions:
+      - condition: state
+        entity_id: switch.closet_aux
+        state: 'off'
+      sequence:
+      - target:
+          entity_id: switch.office_b
+        action: switch.turn_off
+  mode: single
+- id: '1754510441395'
+  alias: Echo Button
+  description: ''
+  triggers:
+  - device_id: 4742b960d219745cd815b9d4b4394b2b
+    domain: zha
+    type: remote_button_short_press
+    subtype: remote_button_short_press
+    trigger: device
+  conditions: []
+  actions:
+  - action: media_player.select_source
+    metadata: {}
+    data:
+      source: YouTube
+    target:
+      entity_id: media_player.living_room
+  mode: single
+- id: '1757812043284'
+  alias: Kawai
+  description: Automation for office with multiple button press types
+  triggers:
+  - alias: short_press
+    device_id: b678fa922e850b314673c94691e87310
+    domain: zha
+    type: remote_button_short_press
+    subtype: remote_button_short_press
+    trigger: device
+    id: short_press
+  - alias: long_press
+    device_id: b678fa922e850b314673c94691e87310
+    domain: zha
+    type: remote_button_long_release
+    subtype: remote_button_long_release
+    trigger: device
+    id: long_press
+  - alias: double_press
+    device_id: b678fa922e850b314673c94691e87310
+    domain: zha
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+    trigger: device
+    id: double_press
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        alias: Short press trigger
+        id: short_press
+      sequence:
+      - action: media_player.volume_set
+        metadata: {}
+        data:
+          volume_level: 1
+        target:
+          entity_id: media_player.home_assistant_voice_09693d_media_player
+      - data:
+          message: Help Me Mark
+          preannounce: true
+        target:
+          device_id:
+          - 153956128563990dfc3794721a70445f
+        action: assist_satellite.announce
+      - action: media_player.volume_set
+        metadata: {}
+        data:
+          volume_level: 0.49
+        target:
+          entity_id: media_player.home_assistant_voice_09693d_media_player
+      - data:
+          message: Help is on the way my sweet honey pot
+          preannounce: true
+        target:
+          device_id:
+          - c20e8a754f60bc369cc7523a9bda8d83
+        action: assist_satellite.announce
+    - conditions:
+      - condition: trigger
+        alias: Long press trigger
+        id: long_press
+      sequence:
+      - action: switch.toggle
+        target:
+          entity_id:
+          - switch.switch_desk_screens_desk_screen_1
+          - switch.switch_desk_screens_desk_screen_2
+        data: {}
+      - action: light.turn_off
+        target:
+          entity_id: light.office_lamp
+        data: {}
+    - conditions:
+      - condition: trigger
+        alias: Double press trigger
+        id: double_press
+      sequence:
+      - action: switch.toggle
+        target:
+          entity_id:
+          - switch.switch_desk_screens_desk_screen_1
+          - switch.switch_desk_screens_desk_screen_2
+        data: {}
+      - action: light.turn_on
+        target:
+          entity_id: light.office_lamp
+        data:
+          brightness_pct: 80
+  mode: single
+- id: '1760571674639'
+  alias: Front door arm
+  description: Automation for office with multiple button press types
+  triggers:
+  - alias: short_press
+    device_id: b678fa922e850b314673c94691e87310
+    domain: zha
+    type: device_offline
+    subtype: device_offline
+    trigger: device
+    id: short_press
+  - alias: long_press
+    device_id: b678fa922e850b314673c94691e87310
+    domain: zha
+    type: device_offline
+    subtype: device_offline
+    trigger: device
+    id: long_press
+  - alias: double_press
+    device_id: b678fa922e850b314673c94691e87310
+    domain: zha
+    type: device_offline
+    subtype: device_offline
+    trigger: device
+    id: double_press
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        alias: Short press trigger
+        id: short_press
+      sequence:
+      - action: switch.toggle
+        target:
+          entity_id:
+          - switch.switch_desk_screens_desk_screen_1
+          - switch.switch_desk_screens_desk_screen_2
+        data: {}
+      - action: light.toggle
+        target:
+          entity_id: light.office_lamp
+        data: {}
+    - conditions:
+      - condition: trigger
+        alias: Long press trigger
+        id: long_press
+      sequence:
+      - action: switch.toggle
+        target:
+          entity_id:
+          - switch.switch_desk_screens_desk_screen_1
+          - switch.switch_desk_screens_desk_screen_2
+        data: {}
+      - action: light.turn_off
+        target:
+          entity_id: light.office_lamp
+        data: {}
+    - conditions:
+      - condition: trigger
+        alias: Double press trigger
+        id: double_press
+      sequence:
+      - action: switch.toggle
+        target:
+          entity_id:
+          - switch.switch_desk_screens_desk_screen_1
+          - switch.switch_desk_screens_desk_screen_2
+        data: {}
+      - action: light.turn_on
+        target:
+          entity_id: light.office_lamp
+        data:
+          brightness_pct: 80
+  mode: single
+- id: '1764963420223'
+  alias: Server room motion
+  description: Turn on bathroom light when motion is detected between 6 AM and 11
+    PM.
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.water_closet_motion
+    from:
+    - 'off'
+    to:
+    - 'on'
+  conditions:
+  - condition: time
+    after: 06:00:00
+    before: '23:00:00'
+  actions:
+  - target:
+      entity_id:
+      - light.water_closet
+    action: light.turn_on
+    data:
+      brightness_pct: 79
+  - wait_for_trigger:
+    - entity_id:
+      - binary_sensor.water_closet_motion
+      to:
+      - 'off'
+      for:
+        minutes: 1
+      trigger: state
+  - target:
+      entity_id:
+      - light.water_closet
+    action: light.turn_off
+    data: {}
+  mode: single
+- id: '1766241342332'
+  alias: Christmas
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_button.christmas
+    from:
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.christmas
+    data: {}
+  - condition: state
+    state: []
+    entity_id: input_button.christmas
+  - action: input_button.press
+    metadata: {}
+    target:
+      entity_id: input_button.christmas
+    data: {}
+  mode: single

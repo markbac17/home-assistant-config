@@ -1,0 +1,87 @@
+- filter:
+    #    include_domains:
+    #      - light
+    include_entities:
+      # Living Room
+      - switch.sonos
+      - switch.matrix_display_power
+      - switch.projector
+      - light.main
+      - light.living_room
+      - cover.smartwings_wm25_l_z_cover
+
+      - lock.front_door
+      - alarm_control_panel.blink_breton_way
+
+      # Dining room
+      - light.dining_lamp
+      - light.hall
+      - light.h60a1
+      - binary_sensor.tze204_qasjif9e_ts0601
+      - sensor.tze204_qasjif9e_ts0601
+
+      # Kitchen
+      - light.bar
+      - light.h60a1_2
+      - light.water_closet
+      - switch.switch_kettle_switch_kettle
+
+      # Bedroom
+      - light.switch_closet_closet_light
+      - light.dimmer_bedroom
+      - binary_sensor.closet_door
+      - sensor.sense_b_temp
+      - sensor.sense_b
+
+      # Office
+      - light.wall_dimmer_switch
+      - switch.office_a
+      - switch.office_b
+      - switch.desk_screen_left
+      - switch.desk_screen_right
+      - switch.switch_b_switch_b
+      - switch.desk
+      - switch.switch_firetv_switch_firetv
+      - switch.spare
+      - switch.third_reality_inc_3rwk0148z
+      - sensor.sense_office_pm_temperature
+      - sensor.sense_office_office_pm_2_5_m
+      - sensor.sense_office_senseair_co2_value
+
+      # Bathroom A
+      - light.mark_light
+      - light.kawai_light
+      - switch.matrix_clock_display
+      - sensor.bathroom_temperature
+      - sensor.bathroom_humidity
+
+      # Bathroom B
+      - light.switch_bathroom_b_switch_b
+      - light.switch_bathroom_b_switch_a
+
+      # Binary Sensors
+      - binary_sensor.bathroom_b_motion
+      - binary_sensor.water_closet_motion
+      - binary_sensor.bath_a
+      - binary_sensor.leak_bathroom
+      - binary_sensor.leak_bathroom_b
+      - binary_sensor.leak_laundry
+      - binary_sensor.leak_kitchen
+      - binary_sensor.motion_bathroom
+      - sensor.moisture_a
+
+      - weather.forecast_home
+      - climate.home
+
+      #      - media_player.great_room
+      #      - input_boolean.media
+      #      - input_select.status
+
+      # Scenes
+      - scene.dinner
+      - scene.good_morning
+      - scene.good_evening
+      - scene.good_night
+      - scene.breton_away
+      - scene.breton_home
+      - scene.kawai_tv

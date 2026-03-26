@@ -1,0 +1,1032 @@
+2025-10-26 19:03:10.651 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration eufy_security which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2025-10-26 19:03:10.652 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration grok_conversation which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2025-10-26 19:03:10.653 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2025-10-26 19:03:10.654 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration unraid which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2025-10-26 19:03:10.655 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration adsb_lol which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2025-10-26 19:03:20.590 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:03:20.590 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:03:20.592 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:03:21.949 WARNING (MainThread) [homeassistant.util.loop] Detected blocking call to open with args ('/root/.netrc',) inside the event loop by integration 'google_generative_ai_conversation' at homeassistant/components/google_generative_ai_conversation/__init__.py, line 165: await client.aio.models.get( (offender: /usr/local/lib/python3.13/netrc.py, line 87: with open(file, encoding="utf-8") as fp:), please create a bug report at https://github.com/home-assistant/core/issues?q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+google_generative_ai_conversation%22
+For developers, please see https://developers.home-assistant.io/docs/asyncio_blocking_operations/#open
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 229, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 215, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 271, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 906, in async_setup_locked
+    await self.async_setup(hass, integration=integration)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 672, in async_setup
+    await self.__async_setup_with_context(hass, integration)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 761, in __async_setup_with_context
+    result = await component.async_setup_entry(hass, self)
+  File "/usr/src/homeassistant/homeassistant/components/google_generative_ai_conversation/__init__.py", line 165, in async_setup_entry
+    await client.aio.models.get(
+
+2025-10-26 19:03:24.794 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/device.py:34: SyntaxWarning: invalid escape sequence '\s'
+  INSTALL_RESULT_PATTERN = "(Success|Failure|Error)\s?(.*)"
+
+2025-10-26 19:03:24.800 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/command/transport/__init__.py:95: SyntaxWarning: invalid escape sequence '\['
+  result_pattern = "^\[([\s\S]*?)\]: \[([\s\S]*?)\]\r?$"
+
+2025-10-26 19:03:24.824 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:35: SyntaxWarning: invalid escape sequence '\s'
+  pattern = "ACTIVITY\s([\w\.]+)/([\w\.]+)\s[\w\d]+\spid=([\d]+)"
+
+2025-10-26 19:03:24.824 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:48: SyntaxWarning: invalid escape sequence '\s'
+  total_meminfo_re = re.compile('\s*TOTAL\s*(?P<pss>\d+)'
+
+2025-10-26 19:03:24.825 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:49: SyntaxWarning: invalid escape sequence '\s'
+  '\s*(?P<private_dirty>\d+)'
+
+2025-10-26 19:03:24.825 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:50: SyntaxWarning: invalid escape sequence '\s'
+  '\s*(?P<private_clean>\d+)'
+
+2025-10-26 19:03:24.825 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:51: SyntaxWarning: invalid escape sequence '\s'
+  '\s*(?P<swapped_dirty>\d+)'
+
+2025-10-26 19:03:24.825 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:52: SyntaxWarning: invalid escape sequence '\s'
+  '\s*(?P<heap_size>\d+)'
+
+2025-10-26 19:03:24.825 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:53: SyntaxWarning: invalid escape sequence '\s'
+  '\s*(?P<heap_alloc>\d+)'
+
+2025-10-26 19:03:24.826 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:54: SyntaxWarning: invalid escape sequence '\s'
+  '\s*(?P<heap_free>\d+)')
+
+2025-10-26 19:03:24.826 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:85: SyntaxWarning: invalid escape sequence '\d'
+  pattern = "userId=([\d]+)"
+
+2025-10-26 19:03:24.826 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/utils.py:102: SyntaxWarning: invalid escape sequence '\d'
+  pattern = "versionName=([\d\.]+)"
+
+2025-10-26 19:03:24.832 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/wm.py:12: SyntaxWarning: invalid escape sequence '\s'
+  SIZE_RE = 'Physical size:\s([\d]+)x([\d]+)'
+
+2025-10-26 19:03:24.835 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/traffic.py:36: SyntaxWarning: invalid escape sequence '\d'
+  pattern = "userId=([\d]+)"
+
+2025-10-26 19:03:24.838 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/ppadb/plugins/device/cpustat.py:90: SyntaxWarning: invalid escape sequence '\s'
+  "cpu\s+([\d]+)\s([\d]+)\s([\d]+)\s([\d]+)\s([\d]+)\s([\d]+)\s([\d]+)\s([\d]+)\s([\d]+)\s([\d]+)\s")
+
+2025-10-26 19:03:27.169 WARNING (ImportExecutor_0) [py.warnings] /usr/local/lib/python3.13/site-packages/opuslib/api/decoder.py:73: SyntaxWarning: "is not" with 'int' literal. Did you mean "!="?
+  if result_code.value is not 0:
+
+2025-10-26 19:03:32.260 ERROR (MainThread) [homeassistant.components.button] Platform music_assistant does not generate unique IDs. ID RINCON_000E5852699601400_favorite_now_playing already exists - ignoring button.great_room_favorite_current_song
+2025-10-26 19:03:32.260 ERROR (MainThread) [homeassistant.components.media_player] Platform music_assistant does not generate unique IDs. ID RINCON_000E5852699601400 already exists - ignoring media_player.great_room_2
+2025-10-26 19:03:35.433 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for switch-outdoor @ 192.168.1.226: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.226', port=6053))]: [Errno 113] Connect call failed ('192.168.1.226', 6053) (SocketAPIError)
+2025-10-26 19:03:35.435 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for sense-hydro @ 192.168.1.108: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.108', port=6053))]: [Errno 113] Connect call failed ('192.168.1.108', 6053) (SocketAPIError)
+2025-10-26 19:03:35.435 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for bt-proxy-a @ 192.168.1.186: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.186', port=6053))]: [Errno 113] Connect call failed ('192.168.1.186', 6053) (SocketAPIError)
+2025-10-26 19:03:35.435 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for wemos-s2 @ 192.168.1.125: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.125', port=6053))]: [Errno 113] Connect call failed ('192.168.1.125', 6053) (SocketAPIError)
+2025-10-26 19:03:35.436 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for sense-presence @ 192.168.1.80: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.80', port=6053))]: [Errno 113] Connect call failed ('192.168.1.80', 6053) (SocketAPIError)
+2025-10-26 19:03:35.489 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for switch-c @ 192.168.1.97: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.97', port=6053))]: [Errno 113] Connect call failed ('192.168.1.97', 6053) (SocketAPIError)
+2025-10-26 19:03:35.490 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for switch-sonos @ 192.168.1.203: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.203', port=6053))]: [Errno 113] Connect call failed ('192.168.1.203', 6053) (SocketAPIError)
+2025-10-26 19:03:35.490 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for switch-firetv @ 192.168.1.242: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.242', port=6053))]: [Errno 113] Connect call failed ('192.168.1.242', 6053) (SocketAPIError)
+2025-10-26 19:03:35.625 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for switch-water-pump @ 192.168.1.120: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.120', port=6053))]: [Errno 113] Connect call failed ('192.168.1.120', 6053) (SocketAPIError)
+2025-10-26 19:03:35.626 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for matrix @ 192.168.1.32: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.1.32', port=6053))]: [Errno 113] Connect call failed ('192.168.1.32', 6053) (SocketAPIError)
+2025-10-26 19:03:35.866 WARNING (MainThread) [homeassistant.components.esphome.manager] Home Assistant Voice 09693d: [W][micro_wake_word:353]: Wake word detection is already running
+2025-10-26 19:03:39.486 ERROR (MainThread) [homeassistant.components.automation] Automation with alias 'Tag Media is scanned' failed to setup actions and has been disabled: Unknown device '92d626649fb930b1ebe4a50c25af9445'
+2025-10-26 19:03:39.519 ERROR (MainThread) [homeassistant.components.automation] Blueprint 'ZHA - Smart Knob' generated invalid automation with inputs {'remote': '340f3d01a964a3f528bbb1171c8d3573', 'mediaplayer': 'media_player.great_room', 'long_press': [{'action': 'switch.turn_off', 'metadata': {}, 'data': {}, 'target': {'entity_id': ['switch.sonos', 'switch.switch_projector_switch_projector']}}, {'action': 'media_player.turn_off', 'metadata': {}, 'data': {}, 'target': {'entity_id': 'media_player.living'}}], 'single_press': [{'action': 'switch.turn_on', 'metadata': {}, 'data': {}, 'target': {'entity_id': ['switch.switch_projector_switch_projector', 'switch.sonos']}}, {'action': 'media_player.turn_on', 'metadata': {}, 'data': {}, 'target': {'entity_id': 'media_player.living'}}, {'action': 'media_player.volume_set', 'metadata': {}, 'data': {'volume_level': 0.74}}, {'wait_for_trigger': [{'type': 'turned_on', 'device_id': 'e251d3a35e73eea32dd1f67e9463ef35', 'entity_id': '5facd437bce66996d30f13c5f6acb616', 'domain': 'light', 'trigger': 'device', 'for': {'hours': 0, 'minutes': 1, 'seconds': 0}}]}, {'action': 'media_player.volume_set', 'metadata': {}, 'data': {'volume_level': 0.76}}]}: Unknown device 'e251d3a35e73eea32dd1f67e9463ef35'
+2025-10-26 19:03:48.412 ERROR (MainThread) [homeassistant.components.homekit] HomeKit media player n1 pro cannot startup: entity not available: {'exclude_domains': [], 'exclude_entities': [], 'include_domains': [], 'include_entities': ['media_player.n1_pro'], 'exclude_entity_globs': [], 'include_entity_globs': []}
+2025-10-26 19:03:48.417 ERROR (MainThread) [homeassistant.components.homekit] HomeKit remote n1 pro cannot startup: entity not available: {'exclude_domains': [], 'exclude_entities': [], 'include_domains': [], 'include_entities': ['remote.n1_pro'], 'exclude_entity_globs': [], 'include_entity_globs': []}
+2025-10-26 19:03:48.438 WARNING (MainThread) [homeassistant.components.homekit] The bridge Home Assistant Bridge has entity lock.front_door. For best performance, and to prevent unexpected unavailability, create and pair a separate HomeKit instance in accessory mode for this entity
+2025-10-26 19:03:48.441 ERROR (MainThread) [pyhap.characteristic] SecuritySystemCurrentState: value=0 is an invalid value.
+2025-10-26 19:03:48.441 ERROR (MainThread) [pyhap.characteristic] SecuritySystemTargetState: value=0 is an invalid value.
+2025-10-26 19:03:51.487 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:03:51.487 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:03:51.489 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:04:04.799 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:04:04.799 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:04:04.799 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:04:28.159 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:04:28.159 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:04:28.160 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:05:11.487 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:05:11.487 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:05:11.488 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:06:34.943 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:06:34.943 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:06:34.944 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:07:58.143 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:07:58.143 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:07:58.144 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:09:21.279 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:09:21.279 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:09:21.280 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:10:44.543 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:10:44.543 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:10:44.544 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:12:07.871 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:12:07.871 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:12:07.872 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:13:31.455 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:13:31.455 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:13:31.456 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:14:54.655 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:14:54.655 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:14:54.656 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:16:17.855 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:16:17.855 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:16:17.856 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:17:41.055 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:17:41.055 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:17:41.056 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:19:04.255 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:19:04.255 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:19:04.256 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:20:27.647 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:20:27.647 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:20:27.648 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:21:51.039 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:21:51.039 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:21:51.040 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:23:14.623 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:23:14.623 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:23:14.624 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:24:29.109 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities assist_satellite.my_satellite are missing or not currently available
+2025-10-26 19:24:38.015 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:24:38.016 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:24:38.016 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:26:01.279 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:26:01.280 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:26:01.280 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:27:08.357 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities assist_satellite.my_satellite are missing or not currently available
+2025-10-26 19:27:24.799 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:27:24.800 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:27:24.800 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:28:11.458 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities assist_satellite.my_satellite are missing or not currently available
+2025-10-26 19:28:48.255 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:28:48.256 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:28:48.256 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:30:11.391 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:30:11.392 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:30:11.392 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:31:34.719 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:31:34.720 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:31:34.720 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:32:58.111 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:32:58.112 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:32:58.112 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:33:33.701 ERROR (Recorder) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 603, in request
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 369, in poll_control_checkin_callback
+    await poll_control.checkin_response(
+    ...<3 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/zigpy/zcl/__init__.py", line 401, in request
+    return await self._endpoint.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/endpoint.py", line 234, in request
+    return await self.device.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 602, in request
+    async with asyncio_timeout(timeout):
+               ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/local/lib/python3.13/asyncio/timeouts.py", line 116, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+2025-10-26 19:34:21.312 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:34:21.312 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:34:21.313 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:35:44.575 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:35:44.576 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:35:44.576 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:37:07.967 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:37:07.968 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:37:07.968 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:38:31.295 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:38:31.296 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:38:31.297 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:39:54.815 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:39:54.816 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:39:54.816 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:41:18.015 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:41:18.016 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:41:18.017 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:42:41.471 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:42:41.472 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:42:41.473 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:44:04.928 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:44:04.929 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:44:04.929 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:45:28.383 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:45:28.384 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:45:28.385 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:46:19.625 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 19:46:33.839 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 19:46:51.711 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:46:51.712 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:46:51.713 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:47:10.409 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 19:47:22.493 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 19:47:33.820 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 19:47:40.808 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 19:48:12.456 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 19:48:14.911 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:48:14.912 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:48:14.913 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:48:18.284 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 19:49:38.175 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:49:38.176 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:49:38.177 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:51:01.375 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:51:01.376 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:51:01.377 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:52:24.703 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:52:24.704 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:52:24.705 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:53:48.031 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:53:48.032 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:53:48.033 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:55:11.231 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:55:11.232 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:55:11.233 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:56:34.495 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:56:34.496 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:56:34.497 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:57:57.823 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:57:57.824 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:57:57.825 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:59:21.087 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:59:21.088 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 19:59:21.089 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:00:44.671 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:00:44.672 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:00:44.673 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:01:29.521 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/bellows/zigbee/application.py", line 1009, in send_packet
+    send_status, _ = await future
+                     ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 369, in poll_control_checkin_callback
+    await poll_control.checkin_response(
+    ...<3 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/zigpy/zcl/__init__.py", line 401, in request
+    return await self._endpoint.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/endpoint.py", line 234, in request
+    return await self.device.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 601, in request
+    await send_request()
+  File "/usr/local/lib/python3.13/site-packages/zigpy/application.py", line 890, in request
+    await self.send_packet(
+    ...<14 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/bellows/zigbee/application.py", line 1004, in send_packet
+    async with asyncio_timeout(
+               ~~~~~~~~~~~~~~~^
+        MESSAGE_SEND_TIMEOUT_MAINS
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if not packet.extended_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        else MESSAGE_SEND_TIMEOUT_BATTERY
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/usr/local/lib/python3.13/asyncio/timeouts.py", line 116, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+2025-10-26 20:02:07.807 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:02:07.808 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:02:07.809 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:03:31.327 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:03:31.328 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:03:31.329 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:04:54.783 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:04:54.784 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:04:54.785 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:06:18.303 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:06:18.304 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:06:18.305 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:07:14.216 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 20:07:21.977 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 20:07:41.695 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:07:41.696 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:07:41.697 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:07:45.287 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 20:07:48.850 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:07:48.858 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.kitchen_counter are missing or not currently available
+2025-10-26 20:09:04.895 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:09:04.896 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:09:04.897 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:10:28.415 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:10:28.416 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:10:28.417 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:11:45.442 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 20:11:51.679 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:11:51.680 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:11:51.681 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:11:57.037 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 20:13:15.199 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:13:15.200 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:13:15.201 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:13:54.884 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 20:14:34.969 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 20:14:38.719 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:14:38.720 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:14:38.721 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:16:02.239 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:16:02.240 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:16:02.242 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:16:17.103 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 20:17:25.759 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:17:25.760 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:17:25.762 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:18:22.101 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:18:22.112 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_bar are missing or not currently available
+2025-10-26 20:18:22.814 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:18:22.820 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:18:22.823 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:18:23.646 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:18:23.652 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.kitchen_counter are missing or not currently available
+2025-10-26 20:18:24.991 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:18:25.002 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:18:25.004 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:18:25.815 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:18:25.821 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:18:25.823 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:18:27.378 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:18:27.384 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_bar are missing or not currently available
+2025-10-26 20:18:28.646 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:18:28.652 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_bar are missing or not currently available
+2025-10-26 20:18:30.649 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:18:30.655 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.kitchen_counter are missing or not currently available
+2025-10-26 20:18:34.983 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:18:34.991 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:18:34.993 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:18:49.151 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:18:49.152 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:18:49.154 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:19:20.329 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:19:20.339 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.kitchen_counter are missing or not currently available
+2025-10-26 20:19:20.711 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:19:20.717 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_bar are missing or not currently available
+2025-10-26 20:19:21.073 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:19:21.080 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:19:21.084 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:19:26.056 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:19:26.063 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:19:26.065 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_dining are missing or not currently available
+2025-10-26 20:20:12.735 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:20:12.736 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:20:12.738 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:21:19.001 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/bellows/zigbee/application.py", line 1009, in send_packet
+    send_status, _ = await future
+                     ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 369, in poll_control_checkin_callback
+    await poll_control.checkin_response(
+    ...<3 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/zigpy/zcl/__init__.py", line 401, in request
+    return await self._endpoint.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/endpoint.py", line 234, in request
+    return await self.device.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 601, in request
+    await send_request()
+  File "/usr/local/lib/python3.13/site-packages/zigpy/application.py", line 890, in request
+    await self.send_packet(
+    ...<14 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/bellows/zigbee/application.py", line 1004, in send_packet
+    async with asyncio_timeout(
+               ~~~~~~~~~~~~~~~^
+        MESSAGE_SEND_TIMEOUT_MAINS
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if not packet.extended_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        else MESSAGE_SEND_TIMEOUT_BATTERY
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/usr/local/lib/python3.13/asyncio/timeouts.py", line 116, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+2025-10-26 20:21:36.063 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:21:36.064 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:21:36.066 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:22:59.519 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:22:59.520 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:22:59.522 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:24:22.719 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:24:22.720 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:24:22.722 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:25:46.303 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:25:46.304 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:25:46.306 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:27:09.759 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:27:09.760 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:27:09.762 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:28:33.279 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:28:33.280 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:28:33.282 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:28:36.075 WARNING (MainThread) [zigpy.device] Cluster 0x0006 on <TuyaSmartRemote0044TOPlusA model='TS0044' manuf='_TZ3000_ee8nrt2l' nwk=0xF1B3 ieee=a4:c1:38:f3:3a:ce:59:21 is_initialized=True> has incorrect direction (got <Direction.Client_to_Server: 0> for <ClusterType.Server: 0> cluster). Please report this here: https://github.com/zigpy/zigpy/issues/1640
+2025-10-26 20:28:36.082 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities light.dimmer_bar are missing or not currently available
+2025-10-26 20:29:56.799 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:29:56.801 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:29:56.802 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:31:20.383 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:31:20.385 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:31:20.386 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:32:43.647 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:32:43.648 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:32:43.650 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:34:06.847 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:34:06.848 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:34:06.850 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:35:30.367 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:35:30.369 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:35:30.370 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:36:53.567 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:36:53.569 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:36:53.570 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:38:16.767 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:38:16.769 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:38:16.770 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:39:40.287 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:39:40.289 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:39:40.290 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:41:03.743 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:41:03.745 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:41:03.746 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:42:26.943 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:42:26.945 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:42:26.946 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:43:50.271 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:43:50.273 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:43:50.274 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:45:13.535 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:45:13.537 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:45:13.538 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:46:37.119 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:46:37.121 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:46:37.122 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:48:00.447 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:48:00.449 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:48:00.450 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:49:23.839 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:49:23.841 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:49:23.842 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:50:47.103 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:50:47.105 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:50:47.106 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:51:18.308 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/bellows/zigbee/application.py", line 1009, in send_packet
+    send_status, _ = await future
+                     ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 369, in poll_control_checkin_callback
+    await poll_control.checkin_response(
+    ...<3 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/zigpy/zcl/__init__.py", line 401, in request
+    return await self._endpoint.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/endpoint.py", line 234, in request
+    return await self.device.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 601, in request
+    await send_request()
+  File "/usr/local/lib/python3.13/site-packages/zigpy/application.py", line 890, in request
+    await self.send_packet(
+    ...<14 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/bellows/zigbee/application.py", line 1004, in send_packet
+    async with asyncio_timeout(
+               ~~~~~~~~~~~~~~~^
+        MESSAGE_SEND_TIMEOUT_MAINS
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if not packet.extended_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        else MESSAGE_SEND_TIMEOUT_BATTERY
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/usr/local/lib/python3.13/asyncio/timeouts.py", line 116, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+2025-10-26 20:52:10.303 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:52:10.305 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:52:10.307 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:53:33.887 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:53:33.889 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:53:33.891 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:54:57.087 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:54:57.089 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:54:57.091 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:56:20.351 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:56:20.353 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:56:20.355 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:56:22.482 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities assist_satellite.my_satellite are missing or not currently available
+2025-10-26 20:56:25.598 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities assist_satellite.my_satellite are missing or not currently available
+2025-10-26 20:57:29.615 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities assist_satellite.my_satellite are missing or not currently available
+2025-10-26 20:57:33.428 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities assist_satellite.my_satellite are missing or not currently available
+2025-10-26 20:57:43.679 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:57:43.681 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:57:43.683 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:59:07.071 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:59:07.073 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 20:59:07.075 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:00:30.271 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:00:30.273 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:00:30.275 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:01:53.407 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:01:53.409 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:01:53.411 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:03:16.607 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:03:16.609 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:03:16.611 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:03:29.182 WARNING (MainThread) [homeassistant.util.loop] Detected blocking call to open with args ('/usr/local/lib/python3.13/site-packages/pytz/zoneinfo/Africa/Abidjan', 'rb') inside the event loop by integration 'caldav' at homeassistant/components/caldav/coordinator.py, line 111: if not hasattr(event.instance, "vevent"): (offender: /usr/local/lib/python3.13/site-packages/pytz/__init__.py, line 108: return open(filename, 'rb')), please create a bug report at https://github.com/home-assistant/core/issues?q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+caldav%22
+For developers, please see https://developers.home-assistant.io/docs/asyncio_blocking_operations/#open
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 229, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 215, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 271, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/helpers/update_coordinator.py", line 280, in _handle_refresh_interval
+    await self._async_refresh(log_failures=True, scheduled=True)
+  File "/usr/src/homeassistant/homeassistant/helpers/update_coordinator.py", line 392, in _async_refresh
+    self.data = await self._async_update_data()
+  File "/usr/src/homeassistant/homeassistant/components/caldav/coordinator.py", line 111, in _async_update_data
+    if not hasattr(event.instance, "vevent"):
+
+2025-10-26 21:04:39.935 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:04:39.937 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:04:39.939 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:06:03.263 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:06:03.265 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:06:03.267 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:07:26.591 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:07:26.593 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:07:26.595 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:08:50.175 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:08:50.177 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:08:50.179 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:09:56.146 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:10:13.759 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:10:13.761 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:10:13.763 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:11:37.151 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:11:37.153 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:11:37.155 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:13:00.607 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:13:00.609 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:13:00.611 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:14:23.999 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:14:24.001 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:14:24.003 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:15:47.327 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:15:47.329 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:15:47.331 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:16:20.478 ERROR (Recorder) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 603, in request
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 369, in poll_control_checkin_callback
+    await poll_control.checkin_response(
+    ...<3 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/zigpy/zcl/__init__.py", line 401, in request
+    return await self._endpoint.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/endpoint.py", line 234, in request
+    return await self.device.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 602, in request
+    async with asyncio_timeout(timeout):
+               ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/local/lib/python3.13/asyncio/timeouts.py", line 116, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+2025-10-26 21:17:10.527 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:17:10.529 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:17:10.531 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:18:34.062 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:18:34.064 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:18:34.066 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:19:57.567 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:19:57.569 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:19:57.572 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:21:20.959 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:21:20.961 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:21:20.963 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:22:44.415 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:22:44.417 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:22:44.419 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:24:07.935 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:24:07.937 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:24:07.939 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:25:31.263 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:25:31.265 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:25:31.268 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:25:34.847 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:26:54.591 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:26:54.593 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:26:54.595 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:28:17.983 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:28:17.985 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:28:17.987 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:29:41.247 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:29:41.249 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:29:41.252 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:31:04.575 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:31:04.577 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:31:04.580 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:32:27.775 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:32:27.777 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:32:27.780 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:33:51.295 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:33:51.297 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:33:51.300 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:35:14.687 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:35:14.689 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:35:14.692 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:36:25.188 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:36:36.484 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:36:37.951 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:36:37.953 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:36:37.956 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:36:44.103 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:36:53.475 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:37:04.518 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:37:34.982 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:37:46.862 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:37:59.372 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:38:01.407 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:38:01.409 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:38:01.412 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:38:18.714 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:38:41.431 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:38:47.616 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:38:54.288 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:39:08.675 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:39:14.875 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:39:24.927 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:39:24.929 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:39:24.932 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:39:28.900 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:39:37.261 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:39:50.290 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:39:59.803 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:40:08.809 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:40:17.753 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:40:28.242 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:40:34.047 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:40:41.460 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:40:48.511 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:40:48.513 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:40:48.516 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:40:58.336 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:41:08.872 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:41:15.279 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:41:31.030 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:42:08.277 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:42:11.967 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:42:11.969 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:42:11.972 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:42:26.695 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:43:35.423 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:43:35.425 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:43:35.428 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:43:58.289 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:44:22.928 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:44:28.998 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:44:45.267 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:44:58.687 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:44:58.689 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:44:58.692 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:45:21.427 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:45:40.942 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:46:17.861 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:46:21.951 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:46:21.954 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:46:21.956 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:46:35.244 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:47:01.956 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:47:07.599 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:47:35.463 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:47:45.087 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:47:45.090 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:47:45.092 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:48:34.020 ERROR (SyncWorker_6) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/bellows/zigbee/application.py", line 1009, in send_packet
+    send_status, _ = await future
+                     ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 369, in poll_control_checkin_callback
+    await poll_control.checkin_response(
+    ...<3 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/zigpy/zcl/__init__.py", line 401, in request
+    return await self._endpoint.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/endpoint.py", line 234, in request
+    return await self.device.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 601, in request
+    await send_request()
+  File "/usr/local/lib/python3.13/site-packages/zigpy/application.py", line 890, in request
+    await self.send_packet(
+    ...<14 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/bellows/zigbee/application.py", line 1004, in send_packet
+    async with asyncio_timeout(
+               ~~~~~~~~~~~~~~~^
+        MESSAGE_SEND_TIMEOUT_MAINS
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if not packet.extended_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        else MESSAGE_SEND_TIMEOUT_BATTERY
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/usr/local/lib/python3.13/asyncio/timeouts.py", line 116, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+2025-10-26 21:49:02.903 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:49:08.415 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:49:08.418 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:49:08.420 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:49:10.579 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:49:22.967 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:49:46.560 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:50:12.596 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:50:31.999 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:50:32.002 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:50:32.004 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:51:10.535 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:51:42.908 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:51:55.327 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:51:55.330 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:51:55.332 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:52:24.156 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:52:29.477 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:52:35.882 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:52:42.328 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:53:18.847 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:53:18.850 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:53:18.852 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:54:07.836 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:54:12.770 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:54:17.521 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:54:23.583 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:54:29.115 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:54:35.357 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:54:40.937 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:54:42.431 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:54:42.434 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:54:42.436 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:54:48.314 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:55:52.309 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:56:05.567 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:56:05.570 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:56:05.572 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:56:12.597 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:56:23.646 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:56:40.243 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:56:57.094 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:57:05.339 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:57:28.767 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:57:28.770 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:57:28.772 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:58:05.554 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:58:23.354 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:58:34.257 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:58:41.998 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:58:47.073 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:58:52.223 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:58:52.226 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:58:52.228 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 21:58:59.416 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:59:19.439 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:59:32.208 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 21:59:43.049 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:00:03.209 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:00:13.282 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:00:15.743 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:00:15.746 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:00:15.749 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:00:55.625 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:01:12.581 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:01:26.706 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:01:39.327 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:01:39.330 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:01:39.333 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:01:44.534 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:01:58.657 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:02:05.404 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:02:38.396 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:02:46.529 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:03:02.527 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:03:02.530 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:03:02.532 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:03:05.982 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:03:21.145 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:03:28.664 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:03:36.608 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:03:52.923 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:04:08.308 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:04:20.366 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:04:25.855 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:04:25.858 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:04:25.860 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:04:31.253 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:04:45.530 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:04:50.884 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:05:02.895 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:05:21.527 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:05:37.586 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from localhost (127.0.0.1). Requested URL: '/auth/token'. (Home Assistant/2025.10.0 (io.robbie.HomeAssistant; build:2025.1443; iOS 26.0.1) Alamofire/5.8.0)
+2025-10-26 22:05:42.476 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:05:49.375 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:05:49.378 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:05:49.381 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:05:51.568 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from localhost (127.0.0.1). Requested URL: '/auth/token'. (Home Assistant/2025.10.0 (io.robbie.HomeAssistant; build:2025.1443; iOS 26.0.1) Alamofire/5.8.0)
+2025-10-26 22:05:51.667 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from localhost (127.0.0.1). Requested URL: '/auth/token'. (Home Assistant/2025.10.0 (io.robbie.HomeAssistant; build:2025.1443; iOS 26.0.1) Alamofire/5.8.0)
+2025-10-26 22:05:52.158 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection] [140646196211968] Received invalid command: {'access_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI2ZWVmZTJkNWQ1YTk0Njg0OTQwMzdkM2M0MzBjYzI2NyIsImlhdCI6MTc2MTUzMDc1MSwiZXhwIjoxNzYxNTMyNTUxfQ.BfWeRaTwbJiZzmqFZA2W5mYS3vGaqwyW94UPgYNu2kQ', 'type': 'auth'}
+2025-10-26 22:05:52.375 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from localhost (127.0.0.1). Requested URL: '/auth/token'. (Home Assistant/2025.10.0 (io.robbie.HomeAssistant; build:2025.1443; iOS 26.0.1) Alamofire/5.8.0)
+2025-10-26 22:05:52.867 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from localhost (127.0.0.1). Requested URL: '/auth/token'. (Home Assistant/2025.10.0 (io.robbie.HomeAssistant; build:2025.1443; iOS 26.0.1) Alamofire/5.8.0)
+2025-10-26 22:05:53.714 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from localhost (127.0.0.1). Requested URL: '/auth/token'. (Home Assistant/2025.10.0 (io.robbie.HomeAssistant; build:2025.1443; iOS 26.0.1) Alamofire/5.8.0)
+2025-10-26 22:05:54.030 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:05:54.217 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from localhost (127.0.0.1). Requested URL: '/auth/token'. (Home Assistant/2025.10.0 (io.robbie.HomeAssistant; build:2025.1443; iOS 26.0.1) Alamofire/5.8.0)
+2025-10-26 22:06:03.805 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:07:12.767 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:07:12.770 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:07:12.773 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:08:02.469 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:08:10.607 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:08:15.664 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:08:25.815 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:08:31.718 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:08:36.159 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:08:36.162 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:08:36.165 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:08:40.350 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:08:46.838 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:09:59.487 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:09:59.490 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:09:59.493 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:11:20.437 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:11:22.879 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:11:22.882 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:11:22.885 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:11:36.076 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:11:43.264 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:12:09.135 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:12:16.703 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:12:18.577 ERROR (bellows.thread_0) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 603, in request
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 369, in poll_control_checkin_callback
+    await poll_control.checkin_response(
+    ...<3 lines>...
+    )
+  File "/usr/local/lib/python3.13/site-packages/zigpy/zcl/__init__.py", line 401, in request
+    return await self._endpoint.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/endpoint.py", line 234, in request
+    return await self.device.request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/usr/local/lib/python3.13/site-packages/zigpy/device.py", line 602, in request
+    async with asyncio_timeout(timeout):
+               ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/local/lib/python3.13/asyncio/timeouts.py", line 116, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+2025-10-26 22:12:46.324 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:12:46.399 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:12:46.402 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:12:46.405 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:12:55.679 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:13:30.121 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:13:48.578 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:13:57.048 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:14:09.361 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:14:09.855 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:14:09.858 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:14:09.861 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:14:16.723 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:14:29.714 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:14:41.916 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:14:56.137 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:15:09.395 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:15:21.109 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:15:33.119 ERROR (MainThread) [custom_components.unraid.api.connection_manager] Connection failed to 192.168.1.117: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:15:33.122 ERROR (MainThread) [custom_components.unraid.coordinator] Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:15:33.125 ERROR (MainThread) [custom_components.unraid] Failed to set up Unraid integration: Error communicating with Unraid: [Errno 113] Connect call failed ('192.168.1.117', 22)
+2025-10-26 22:15:57.925 ERROR (Thread-10) [pychromecast.socket_client] [Android TV(fd80:ddf7:6191:5b4c:c50:97ff:fe68:2f7d):8009] Failed to connect to service HostServiceInfo(host='fd80:ddf7:6191:5b4c:c50:97ff:fe68:2f7d', port=8009), retrying in 5.0s
+2025-10-26 22:16:01.277 WARNING (MainThread) [homeassistant.components.automation.bathroom_motion_2] Bathroom A Motion: Already running
+2025-10-26 22:16:01.992 ERROR (MainThread) [homeassistant.components.androidtv.entity] Failed to execute an ADB command. ADB connection re-establishing attempt in the next update. Error: Reading from 192.168.1.179:5555 timed out (9.0 seconds)
+2025-10-26 22:16:02.910 ERROR (MainThread) [homeassistant.components.automation] Automation with alias 'Tag Media is scanned' failed to setup actions and has been disabled: Unknown device '92d626649fb930b1ebe4a50c25af9445'
+2025-10-26 22:16:02.955 ERROR (MainThread) [homeassistant.components.automation] Blueprint 'ZHA - Smart Knob' generated invalid automation with inputs {'remote': '340f3d01a964a3f528bbb1171c8d3573', 'mediaplayer': 'media_player.great_room', 'long_press': [{'action': 'switch.turn_off', 'metadata': {}, 'data': {}, 'target': {'entity_id': ['switch.sonos', 'switch.switch_projector_switch_projector']}}, {'action': 'media_player.turn_off', 'metadata': {}, 'data': {}, 'target': {'entity_id': 'media_player.living'}}], 'single_press': [{'action': 'switch.turn_on', 'metadata': {}, 'data': {}, 'target': {'entity_id': ['switch.switch_projector_switch_projector', 'switch.sonos']}}, {'action': 'media_player.turn_on', 'metadata': {}, 'data': {}, 'target': {'entity_id': 'media_player.living'}}, {'action': 'media_player.volume_set', 'metadata': {}, 'data': {'volume_level': 0.74}}, {'wait_for_trigger': [{'type': 'turned_on', 'device_id': 'e251d3a35e73eea32dd1f67e9463ef35', 'entity_id': '5facd437bce66996d30f13c5f6acb616', 'domain': 'light', 'trigger': 'device', 'for': {'hours': 0, 'minutes': 1, 'seconds': 0}}]}, {'action': 'media_player.volume_set', 'metadata': {}, 'data': {'volume_level': 0.76}}]}: Unknown device 'e251d3a35e73eea32dd1f67e9463ef35'
+2025-10-26 22:16:27.936 ERROR (Thread-10) [pychromecast.socket_client] [Android TV(192.168.1.179):8009] Failed to connect: timed out. aborting due to stop signal.
+2025-10-26 22:16:28.120 WARNING (MainThread) [homeassistant.helpers.service] Referenced entities switch.spare are missing or not currently available

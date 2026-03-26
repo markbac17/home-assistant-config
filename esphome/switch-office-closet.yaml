@@ -1,0 +1,84 @@
+substitutions:
+  name: "switch-bathroom-b"
+  friendly_name: "Switch Bathroom B"
+  device_description: "Switch 2 Buttons"
+  board: esp01_1m
+  project_name: "esphome.BlueVue"
+  project_version: "3.0"
+  ip_address: "10.10.10.175"
+
+packages:
+  network: !include modules/network_defaults.yaml
+  base: !include modules/base.yaml
+  platform: !include modules/platform/esp8266.yaml
+
+# esphome:
+#   name: "${name}"
+#   friendly_name: "${friendly_name}"
+#   comment: "${device_description}"
+#   name_add_mac_suffix: false
+#   project:
+#     name: esphome.BlueVue
+#     version: "2.0"
+
+#esp8266:
+#  board: esp01_1m
+
+# Enable logging
+logger:
+  level: INFO  # Reduce log verbosity in production
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO12
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    name: "Switch A"
+    id: button_center
+    filters:
+      - delayed_on: 10ms
+      - delayed_off: 10ms
+    on_press:
+      - switch.toggle: relay4
+      
+  - platform: gpio
+    pin:
+      number: GPIO3
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    name: "Switch B"
+    id: button_north
+    filters:
+      - delayed_on: 10ms
+      - delayed_off: 10ms
+    on_press:
+      - switch.toggle: relay5
+
+switch:
+  - platform: gpio
+    name: "Switch A"
+    icon: mdi:lightbulb
+    pin: GPIO13
+    id: relay4
+    restore_mode: RESTORE_DEFAULT_OFF
+    
+  - platform: gpio
+    name: "Switch B"
+    icon: mdi:lightbulb
+    pin: GPIO4
+    id: relay5
+    restore_mode: RESTORE_DEFAULT_OFF
+
+status_led:
+  pin:
+    number: GPIO0
+    inverted: true
+
+button:
+  - platform: restart
+    name: "Switch Restart"

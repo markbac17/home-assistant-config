@@ -1,0 +1,36 @@
+- platform: rest
+  resource: http://10.10.10.41/current-sample
+  name: neurio_raw
+  scan_interval: 5
+  value_template: "OK"
+  json_attributes:
+    - channels
+
+- platform: template
+  scan_interval: 5
+  sensors:
+    realtime_consumption_a:
+      friendly_name: "Phase A Power"
+      device_class: power
+      unit_of_measurement: W
+      value_template: "{{ state_attr('sensor.neurio_raw', 'channels')[0].p_W }}"
+    realtime_consumption_b:
+      friendly_name: "Phase B Power"
+      device_class: power
+      unit_of_measurement: W
+      value_template: "{{ state_attr('sensor.neurio_raw', 'channels')[1].p_W }}"
+      #value_template: "{{ state_attr('sensor.neurio_raw', 'channels')[1].p_W }}"
+    realtime_consumption:
+      friendly_name: "Total Power"
+      device_class: power
+      unit_of_measurement: W
+      value_template: "{{ state_attr('sensor.neurio_raw', 'channels')[2].p_W }}"
+    house_voltage:
+      friendly_name: 'Voltage'
+      device_class: voltage
+      unit_of_measurement: V
+      value_template: "{{ state_attr('sensor.neurio_raw', 'channels')[2].v_V }}"
+
+- platform: integration
+  source: sensor.realtime_consumption
+  name: real_energy

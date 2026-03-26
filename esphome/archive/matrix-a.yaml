@@ -1,0 +1,53 @@
+substitutions:
+  name: "matrix-a"
+  friendly_name: "Matrix A"
+
+packages:
+  device_base: !include modules/device_base.yaml
+  wifi: !include modules/wifi.yaml
+
+esp32:
+  board: wemos_d1_mini32
+#  board: esp-wrover-kit
+  framework:
+    type: esp-idf
+
+logger:
+
+bluetooth_proxy:
+
+i2c:
+  sda: GPIO17
+  scl: GPIO16
+  scan: true
+  id: bus_a
+
+sensor:
+  - platform: ens160_i2c
+    eco2:
+      name: "ENS160 eCO2"
+    tvoc:
+      name: "ENS160 Total Volatile Organic Compounds"
+    aqi:
+      id: ens160_air_quality_index
+      name: "ENS160 Air Quality Index"
+    update_interval: 60s
+    address: 0x53
+    compensation:
+      temperature: id_temperature_sensor
+      humidity: id_humidity_sensor
+  - platform: aht10
+    variant: AHT20
+    temperature:
+      id: id_temperature_sensor
+      name: "AHT21 Temperature"
+    humidity:
+      id: id_humidity_sensor
+      name: "AHT21 Humidity"
+    update_interval: 60s
+    address: 0x38
+
+ota:
+  - platform: esphome
+    password: "d85b8a5c4989ed04ea6fe5b6fc4f659c"
+

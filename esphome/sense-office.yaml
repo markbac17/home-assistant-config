@@ -1,0 +1,55 @@
+substitutions:
+  name: "sense-office"
+  friendly_name: "Sense Office"
+  
+packages:
+  device_base: !include modules/device_base.yaml
+  wifi: !include modules/wifi.yaml
+
+logger:
+  baud_rate: 0
+
+esp32:
+  board: lolin_s2_mini #Pinout: https://www.wemos.cc/en/latest/s2/s2_mini.html
+  framework:
+    type: esp-idf
+    version: recommended
+
+uart:
+  - id: UART_2
+    rx_pin: 16
+    tx_pin: 18 
+    baud_rate: 9600
+  - id: UART_1
+    rx_pin: 7
+    tx_pin: 9
+    baud_rate: 9600
+one_wire:
+  - platform: gpio
+    pin: 35
+
+sensor:
+  - platform: senseair
+    co2:
+      id: co2
+      name: "SenseAir CO2 Value"
+    uart_id: UART_2
+    update_interval: 60s
+  - platform: pmsx003
+    type: PMSX003
+#    pm_1_0:
+#      name: "Office PM 1µm"
+    pm_2_5:
+      name: "Office PM 2.5µm"
+#    pm_10_0:
+#      name: "Office PM 10µm"
+    update_interval: 30000ms
+    uart_id: UART_1
+  - platform: dallas_temp
+    id: office_1
+    address: 0xcd01157161d1ff28
+    name: "Office PM Temperature"
+
+ota:
+  - platform: esphome
+    password: !secret ota_password

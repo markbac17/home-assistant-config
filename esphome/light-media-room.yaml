@@ -1,0 +1,30 @@
+substitutions:
+  name: "switch-fire-tv"
+  friendly_name: "Switch FireTV"
+  device_description: "Sonoff Basic relay switch"
+  board: esp01_1m
+  project_name: "esphome.BlueVue"
+  project_version: "3.0"
+  icon: "mdi:floor-lamp"
+
+packages:
+  base: !include modules/base.yaml
+  platform: !include modules/platform/esp8266.yaml
+  device: !include modules/device/switch_sonoff_basic.yaml
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  power_save_mode: none
+  ap:
+    ssid: "${friendly_name} Fallback"
+    password: !secret api_password
+  manual_ip:
+    static_ip: 10.10.10.166
+    gateway: 10.10.10.1
+    subnet: 255.255.255.0
+
+# Enable logging
+logger:
+  level: INFO

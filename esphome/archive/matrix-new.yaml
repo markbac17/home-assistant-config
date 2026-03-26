@@ -1,0 +1,155 @@
+substitutions:
+  name: "matrix-portal-s3"
+  friendly_name: "Matrix Portal S3"
+
+  # ===== Display / Panel =====
+  display_panel_width: 64
+  display_panel_height: 32
+  display_layout: HORIZONTAL
+  display_layout_rows: 1
+  display_layout_cols: 1
+  display_scan_wiring: STANDARD_TWO_SCAN
+
+  DISPLAY_W: ${display_panel_width * display_layout_cols}
+  DISPLAY_H: ${display_panel_height * display_layout_rows}
+
+  # Note: some variables need to be configured at the page level down below
+
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  name_add_mac_suffix: true
+
+logger:
+
+api:
+
+# WiFi configuration with static IP
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "Matrix Fallback"
+    password: !secret fallback_ap_password  # Use a secret for the fallback password
+  fast_connect: true
+
+ota:
+  - platform: esphome
+
+captive_portal:
+
+web_server:
+  version: 3
+
+packages:
+  wifi: !include modules/wifi.yaml
+  remote_package_files:
+    url: https://github.com/stuartparmenter/hub75-studio
+    ref: main
+    refresh: 0s
+    files:
+    # Sets minimum supported ESPHome version
+    - path: packages/common/esphome-version.yaml
+
+    # Base board/pins, LVGL root, services, etc.
+    - path: packages/controllers/adafruit-matrix-portal-s3.yaml
+      vars:
+        panel_width: ${display_panel_width}
+        panel_height: ${display_panel_width}
+        layout: ${display_layout}
+        layout_rows: ${display_layout_rows}
+        layout_cols: ${display_layout_cols}
+        scan_wiring: ${display_scan_wiring}
+
+    # Shared helpers, sensors, buttons
+    - path: packages/common/utils.yaml
+
+    # Shared fonts and LVGL styles
+    - path: packages/common/theme.yaml
+
+    # Shared DDP and DDP websocket control config
+    # Note: This is required by "Now Playing" and the "DDP Stream" pages
+    - path: packages/common/ddp.yaml
+      vars:
+        ddp_port: "4048"
+        ws_ddp_host: "homeassistant.local"
+        ws_ddp_port: "8788"
+        device_id: "${name}"
+
+    # WiZ Smart Remote Support
+    - path: packages/common/wizmote.yaml
+      vars:
+        wizmote_page_1: "page_time_date"  # packages/pages/clock.yaml
+        wizmote_page_2: "fx_page"         # packages/pages/fx.yaml
+        wizmote_page_3: "page_pong"       # packages/pages/pong.yaml
+        wizmote_page_4: "ddp_video"       # packages/pages/ddp-stream.yaml
+
+    # Basic Boot Screen to avoid flashing or things not being ready yet
+    - path: packages/pages/bios.yaml
+
+    # Simple clock page
+    - path: packages/pages/clock.yaml
+      vars:
+        page_friendly_name: "Clock"
+
+    # Clock weather / dashboard
+    - path: packages/pages/clock-dashboard.yaml
+      vars:
+        page_friendly_name: "Clock Dashboard"
+        weather_entity: "weather.home"
+        alarm_entity: "alarm_control_panel.example_alarm"
+        person_a: "person.person_a"
+        person_b: "person.person_b"
+        person_a_icon: "\U000F040A"
+        person_b_icon: "\U000F0B8F"
+
+    # "Now Playing" media player page
+    # - path: packages/pages/now-playing.yaml
+    #   vars:
+    #     uid: "your_uid"
+    #     page_friendly_name: "Now Playing"
+    #     ha_base_url: "http://homeassistant.local:8123"  # Used to get preview images
+    #     media_player_entity: "media_player.your_media_player"
+
+    # Page that uses lvgl-canvas-fx to render various effects (and change which in HA)
+    - path: packages/pages/fx.yaml
+      vars:
+        page_friendly_name: "Visual Effects"
+
+    # A classic
+    - path: packages/pages/pong.yaml
+      vars:
+        page_friendly_name: "Pong"
+
+    # Visualize your Apollo Automation MSR-2
+    # - path: packages/pages/msr-2-radar.yaml
+    #   vars:
+    #     page_friendly_name: "MSR-2 Radar"
+    #     msr2_prefix: "apollo_msr_2_xxxxxx"
+
+    # DDP display target (stream id 1 -- for LedFx, etc)
+    - path: packages/pages/ddp-receiver.yaml
+      vars:
+        page_friendly_name: "DDP Display"
+        back_buffers: 2  # 0-2
+
+    # Media Proxy controlled DDP video streaming
+    - path: packages/pages/ddp-stream.yaml
+      vars:
+        page_friendly_name: "Media Stream"
+        back_buffers: 2  # 0-2
+        default_video_src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+
+    # Team Tracker Page (can be included multiple times with different entities and uids)
+    # - path: packages/pages/teamtracker.yaml
+    #   vars:
+    #     uid: "falcons"
+    #     page_friendly_name: "Team Tracker - Falcons"
+    #     entity_id: "sensor.team_tracker_nfl_atl"
+
+    # QR Code page - YouTube example
+    # - path: packages/pages/qr.yaml
+    #   vars:
+    #     uid: "video"
+    #     page_friendly_name: "QR Code - Cool Video"
+    #     qr_code_text: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"

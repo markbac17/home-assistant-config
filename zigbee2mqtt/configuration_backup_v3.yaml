@@ -1,0 +1,96 @@
+homeassistant: true
+advanced:
+  network_key:
+    - 144
+    - 239
+    - 22
+    - 1
+    - 7
+    - 255
+    - 149
+    - 250
+    - 220
+    - 206
+    - 68
+    - 138
+    - 83
+    - 231
+    - 102
+    - 118
+  pan_id: 3579
+  ext_pan_id:
+    - 145
+    - 11
+    - 128
+    - 120
+    - 40
+    - 31
+    - 54
+    - 94
+  log_level: info
+  output: json
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  user: zigbee2mqtt
+  password: gtyuWWP1
+  base_topic: zigbee2mqtt
+frontend:
+  port: 8099
+serial:
+  port: /dev/serial/by-id/usb-SMLIGHT_SMLIGHT_SLZB-07_dceb91646fe7ed119460d3770b2af5ab-if00-port0
+  adapter: ezsp
+devices:
+  '0xa4c1389ebfed0782':
+    friendly_name: Sensor A
+  '0x00158d0006f80ce7':
+    friendly_name: Button Echo
+  '0xa4c138c7ca87d21e':
+    friendly_name: Sensor B
+  '0x0017880108755c8c':
+    friendly_name: Button Hotel
+  '0x00158d0007ed7fd7':
+    friendly_name: Sense Sierra
+  '0xa4c138078283a024':
+    friendly_name: Water leak sink
+  '0xa4c138935db53f20':
+    friendly_name: Water leak laundry
+  '0xa4c1382b454a0046':
+    friendly_name: Contact Closet
+  '0xa4c1387b41e16000':
+    friendly_name: Button B
+  '0xa4c138f33ace5921':
+    friendly_name: Button A
+  '0xa4c13828865e1378':
+    friendly_name: Motion Bedroom
+  '0x00124b002a4f3c29':
+    friendly_name: Switch S31
+    state_action: true
+  '0xa4c138ac17a71b09':
+    friendly_name: Motion Bathroom
+  '0xa4c1383f06962bd6':
+    friendly_name: Media Control
+  '0xa4c1384427c66501':
+    friendly_name: Soil sensor
+  '0x44e2f8fffe3f81dc':
+    friendly_name: Button Kitchen
+  '0xa4c1387f7cd2ec2a':
+    friendly_name: Motion Sliders
+  '0x94ec32fffefe5fd1':
+    friendly_name: Shades
+  '0xa4c138cc557c9ea7':
+    friendly_name: Presence Office
+    debounce: 10
+  '0xa4c1380bc0cdae60':
+    friendly_name: Switch A
+  '0x00158d0006f84fe8':
+    friendly_name: Button Kawai
+  '0x54ef441000de73b2':
+    friendly_name: Water valve
+  '0x001788010e95a1de':
+    friendly_name: Living A
+  '0x001788010e9ae0b1':
+    friendly_name: Living B
+  '0x001788010e9ae0cd':
+    friendly_name: Living C
+  '0x001788010e9762db':
+    friendly_name: Living D

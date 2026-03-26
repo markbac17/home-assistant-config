@@ -1,0 +1,219 @@
+blueprint:
+  name: ZHA - Tuya - TS004F Smart Knob - Custom Actions
+  description: Questa automazione aggiunge trigger per tutte le azioni del telecomando
+    a manopola rotante Tuya TS004F.  Può essere utilizzato sia in modalità Comando/Dimmer
+    che Evento/Scena. Entrambe le modalità hanno le proprie azioni. In modalità Command/Dimmer
+    la configurazione è per lo più interna tranne che per la pressione del pulsante.  In
+    modalità Evento/Scena puoi selezionare le tue azioni.  Per cambiare modalità è
+    possibile premere il pulsante 3 volte velocemente. Venduto su AliExpress da marchi
+    come Moes, Girier ecc.
+  domain: automation
+  input:
+    mode:
+      name: Automation Mode
+      description: https://www.home-assistant.io/docs/automation/modes/
+      default: restart
+      selector:
+        select:
+          mode: dropdown
+          options:
+          - single
+          - restart
+          - queued
+          - parallel
+          custom_value: false
+          multiple: false
+          sort: false
+    max:
+      name: Automazione Max Esecuzioni
+      description: Il numero massimo di esecuzioni che possono essere eseguite e messe
+        in coda alla volta.
+      default: 10
+      selector:
+        number:
+          mode: box
+          min: 1.0
+          max: 100.0
+          step: 1.0
+    remote:
+      name: Tuya - TS004F Smart Knob
+      description: Seleziona il telecomando che desideri utilizzare.
+      selector:
+        device:
+          integration: zha
+          manufacturer: _TZ3000_qja6nq5z
+          model: TS004F
+          multiple: false
+    light:
+      name: Light (Command/Dimmer mode)
+      selector:
+        target:
+          entity:
+          - domain:
+            - light
+    toggle:
+      name: Toggle (Command/Dimmer mode)
+      selector:
+        action: {}
+      default: []
+    press_short:
+      name: Short Press (Event/Scene mode)
+      selector:
+        action: {}
+      default: []
+    press_double:
+      name: Double Press (Event/Scene mode)
+      selector:
+        action: {}
+      default: []
+    press_long:
+      name: Long Press (Event/Scene mode)
+      selector:
+        action: {}
+      default: []
+    rotate_left:
+      name: Rotate Left (Event/Scene mode)
+      selector:
+        action: {}
+      default: []
+    rotate_right:
+      name: Rotate Right (Event/Scene mode)
+      selector:
+        action: {}
+      default: []
+  source_url: https://github.com/1achy/HomeAssistantConfig/blob/master/blueprints/automation/tuya/tuya-TS004F-knob.yaml
+mode: !input mode
+max: !input max
+max_exceeded: silent
+trigger:
+- platform: event
+  event_type: zha_event
+  event_data:
+    device_id: !input remote
+action:
+- variables:
+    light: !input light
+    command: '{{ trigger.event.data.command }}'
+    cluster_id: '{{ trigger.event.data.cluster_id }}'
+    endpoint_id: '{{ trigger.event.data.endpoint_id }}'
+    args: '{{ trigger.event.data.args }}'
+    direction: '{% if trigger.event.data.args[0] == 0 %} 0 {% elif trigger.event.data.args[0]
+      == 1 %} 1 {% elif trigger.event.data.args[0] == 3 %} 3 {% endif %}'
+    value: '{% if trigger.event.data.args[1] %} {{ trigger.event.data.args[1] / 2
+      }} {% endif %}'
+    speed: '{% if trigger.event.data.args[2] == 1 %} 0.5 {% else %} 0 {% endif %}'
+- choose:
+  - conditions:
+    - '{{ command == ''toggle'' }}'
+    - '{{ cluster_id == 6 }}'
+    - '{{ endpoint_id == 1 }}'
+    sequence: !input toggle
+  - conditions:
+    - '{{ command == ''step'' }}'
+    - '{{ cluster_id == 8 }}'
+    - '{{ endpoint_id == 1 }}'
+    - '{{ direction == 0 }}'
+    sequence:
+    - repeat:
+        while:
+        - condition: template
+          value_template: '{{ repeat.index < 2 }}'
+        sequence:
+        - service_template: light.turn_on
+          target: !input light
+          data_template:
+            brightness_step_pct: '{{ value }}'
+            transition: '{{ speed }}'
+  - conditions:
+    - '{{ command == ''step'' }}'
+    - '{{ cluster_id == 8 }}'
+    - '{{ endpoint_id == 1 }}'
+    - '{{ direction == 1 }}'
+    sequence:
+    - repeat:
+        while:
+        - condition: template
+          value_template: '{{ repeat.index < 2 }}'
+        sequence:
+        - service_template: light.turn_on
+          target: !input light
+          data_template:
+            brightness_step_pct: '{{ - value }}'
+            transition: '{{ speed }}'
+  - conditions:
+    - '{{ command == ''step_color_temp'' }}'
+    - '{{ cluster_id == 768 }}'
+    - '{{ endpoint_id == 1 }}'
+    - '{{ direction == 1 }}'
+    sequence:
+    - repeat:
+        while:
+        - condition: template
+          value_template: '{{ repeat.index < 2 }}'
+        sequence:
+        - service_template: light.turn_on
+          target: !input light
+          data_template:
+            color_temp: '{{ ( state_attr( light.entity_id, ''color_temp'' ) or 300
+              ) + value }}'
+            transition: '{{ speed }}'
+  - conditions:
+    - '{{ command == ''step_color_temp'' }}'
+    - '{{ cluster_id == 768 }}'
+    - '{{ endpoint_id == 1 }}'
+    - '{{ direction == 3 }}'
+    sequence:
+    - repeat:
+        while:
+        - condition: template
+          value_template: '{{ repeat.index < 2 }}'
+        sequence:
+        - service_template: light.turn_on
+          target: !input light
+          data_template:
+            color_temp: '{{ ( state_attr( light.entity_id, ''color_temp'' ) or 300
+              ) - value }}'
+            transition: '{{ speed }}'
+  - conditions:
+    - '{{ command == ''move_hue'' }}'
+    - '{{ cluster_id == 768 }}'
+    - '{{ endpoint_id == 1 }}'
+    sequence:
+    - repeat:
+        while:
+        - condition: template
+          value_template: '{{ repeat.index < 24 }}'
+        sequence:
+        - service_template: light.turn_on
+          target: !input light
+          data_template:
+            hs_color:
+            - '{{ ( value + (state_attr( light.entity_id , ''hs_color'' )[0] or 0))
+              % 360 }}'
+            - 100
+            transition: 0.5
+        - delay:
+            hours: 0
+            minutes: 0
+            seconds: 1
+            milliseconds: 0
+  - conditions:
+    - '{{ command == ''stop_move_step'' }}'
+    - '{{ cluster_id == 768 }}'
+    - '{{ endpoint_id == 1 }}'
+    sequence:
+  - conditions:
+    - '{{ command == ''remote_button_short_press'' }}'
+    sequence: !input press_short
+  - conditions:
+    - '{{ command == ''remote_button_double_press'' }}'
+    sequence: !input press_double
+  - conditions:
+    - '{{ command == ''remote_button_long_press'' }}'
+    sequence: !input press_long
+  - conditions:
+    - '{{ command == ''left'' }}'
+    sequence: !input rotate_left
+  - conditions:
+    - '{{ command == ''right'' }}'
+    sequence: !input rotate_right

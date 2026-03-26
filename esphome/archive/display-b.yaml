@@ -1,0 +1,55 @@
+substitutions:
+  name: "display-b"
+  friendly_name: "Display B"
+  
+packages:
+  device_base: !include modules/device_base.yaml
+  wifi: !include modules/wifi.yaml
+
+esp8266:
+  board: d1_mini
+
+time:
+  - platform: sntp
+    id: sntp_time
+
+logger:
+  baud_rate: 0
+
+uart:
+  id: uart_2
+  rx_pin: D4
+  tx_pin: D7
+  baud_rate: 9600
+#  baud_rate: 115200
+  debug:
+
+number:
+  - platform: template
+    id: number_brightness
+    name: "Display A Brightness"
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: 100
+    optimistic: true
+    set_action:
+      - lambda: id(nextion1)->set_backlight_brightness(x/100);
+
+switch:
+  - platform: gpio
+    pin: D6
+    restore_mode: ALWAYS_ON
+    name: "LCD"
+
+display:
+  - platform: nextion
+    id: nextion1
+    uart_id: uart_2
+    update_interval: 10s
+    lambda: |-
+      it.set_component_text("t0", "Test");
+
+ota:
+  - platform: esphome
+    password: "b6a8d2b2d1239d16a22bc6617259aea2"

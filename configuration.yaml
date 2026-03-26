@@ -1,0 +1,43 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+      
+zha:
+  device_config: 
+    a4:c1:38:0b:c0:cd:ae:60-1:   # format: {ieee}-{endpoint_id}
+      type: "switch"              # corrected device type
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensors.yaml
+homekit: !include homekit.yaml
+
+homeassistant:
+  packages: !include_dir_named packages
+
+yahoofinance:
+  symbols:
+    - TSLA
+    - PLTR
+    - NVDA
+    - VOO
+    - VTI
+    - USDPLN=X
+  scan_interval:
+    minutes: 15
+
+recorder:
+  exclude:
+    entity_globs:
+      - sensor.*_linkquality
+
+logger:
+  default: info
+  logs:
+    homeassistant.components.wemo: debug
+    pywemo: debug

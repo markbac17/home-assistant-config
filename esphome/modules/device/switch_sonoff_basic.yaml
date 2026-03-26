@@ -1,0 +1,28 @@
+# Sonoff Basic - Simple relay switch with button and status LED
+# No power monitoring, no UART conflicts
+
+switch:
+  - platform: gpio
+    name: "${friendly_name}"
+    icon: "${icon}"
+    pin: GPIO12
+    id: relay
+    restore_mode: RESTORE_DEFAULT_OFF
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    name: "${friendly_name} Button"
+    entity_category: diagnostic
+    on_press:
+      - switch.toggle: relay
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: true

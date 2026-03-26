@@ -1,0 +1,981 @@
+substitutions:
+  name: "matrix-clock"
+  friendly_name: "Matrix Clock"
+  waiting: " . EHLPClock-HA . ."
+  project_name: "BlueVue.esphome"
+  project_version: "2.0"
+  time_zone: "EST5EDT,M3.2.0/2:00:00,M11.1.0/2:00:00"
+  time_zone_alt: "EST5EDT,M3.2.0/2:00:00,M11.1.0/2:00:00"
+  time_zone_alt_name: "EST/EDT"
+
+  time_format12: "%l:%M%p"
+  time_format24: "%H:%M:%S"
+  date_format: "%b %d"
+  date_formatA: "%a" # Mon
+
+  ha_sensor_data: sensor.led_pixelclock_data
+
+  # Pins for Display
+  clk_pin: GPIO14
+  mosi_pin: GPIO13
+  cs_pin: GPIO15
+  # Pins for I2C RTC
+  scl_pin: GPIO4
+  sda_pin: GPIO5
+  # Other Pins
+  status_led_pin: GPIO2
+  download_button_pin: GPIO0
+  rotation_pin: GPIO16
+
+esphome:
+  name: ${name}
+  project:
+    name: "${project_name}"
+    version: "${project_version}"
+  min_version: 2023.11.0
+  on_boot:
+    - priority: 600
+      then:
+        - if:
+            condition:
+              - switch.is_on: tz_alt
+            then:
+              - switch.turn_on: tz_alt
+        - ds1307.read_time:
+    - priority: -100
+      then:
+        - wait_until:
+            condition:
+              - lambda: 'return (id(my_time).now().is_valid());'
+        - ds1307.write_time:
+
+esp8266:
+  board: esp12e
+  restore_from_flash: True
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+  reboot_timeout: 15min # Default is 15min
+  enable_on_boot: True
+  id: wifi_id
+  ap:
+    ssid: ${name}
+    password: !secret wifi_password
+  on_connect:
+    - logger.log: "Wifi connected"
+    - light.turn_off: led1
+
+font:
+  # Get the fonts from https://github.com/trip5/MatrixClockFonts (but you can use others too!)
+  # The glyphs must be present or you'll see boxes/blank spaces (no problem unless you edit the Display section below) - don't forget to include a space!
+  # How to get an easy glyphs list? Click here and edit the s = string to your needs: https://www.onlinegdb.com/fork/zh1VszNT1
+  # It's the Java code from here: https://www.geeksforgeeks.org/cpp-program-to-remove-duplicates-from-a-given-string/
+  # ...to here (OnlineGDB's Java handles Unicode a bit better than the C++ compiler): https://www.onlinegdb.com/online_java_compiler
+  - file: fonts/MatrixLight8X.ttf
+    id: default_font
+    glyphs: |-
+      %0123456789:.Sun MoTesWdhFriatAPJbpylgOcNvD오후전일월화수목금토요
+    # Above covers Sun Mon Tues Wed Thu Fri Sat AM PM Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec as well as Korean Dates
+    # Because this font is ONLY used for time and date display, it should be the easiest to cut down
+    # If your clock is crashing, you can delete this section, go down to the display section, find and change message_font (3 times) to default_font
+    # And use the full glyphs list from message_font just below here
+  - file: fonts/MatrixLight8X.ttf
+    id: message_font
+    glyphs: |-
+      ! "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz°₩₿
+    # %0123456789 EHLPClock-A.DatenfOTr
+    # Above should cover the system messages: "EHLPClock-HA . / Date on / Date off / OTA % / Done / Error" if you don't plan on using on using the HA service calls or sensors
+
+time:
+  - platform: homeassistant # use Home Assistant as a time source (sntp is also possible)
+    id: my_time
+    timezone: "${time_zone}"
+    update_interval: 24h # This seems like the longest safe amount of time - actual configured update happens in interval section (or when changing time zone)
+  - platform: ds1307 # even though it's a ds3231
+    id: my_time_ds
+    update_interval: never
+    timezone: "${time_zone}"
+
+script:
+  - id: sync_the_time
+    mode: restart
+    then:
+      - lambda: 'id(my_time)->update();'
+      - ds1307.write_time:
+
+# Enable Home Assistant API
+api:
+  reboot_timeout: 15min # 15min is default
+  # This next section creates the Home Assistant services to allow messages to be displayed (also used for certain system messages)
+  services:
+    - service: message
+      variables:
+        message: string
+        message_alive_time: int
+        message_display_time: int
+        message_clock_time: int
+      then:
+        - globals.set:
+            id: message
+            value: !lambda 'return message;'
+        - globals.set:
+            id: message_alive_time
+            value: !lambda 'return message_alive_time;'
+        - globals.set:
+            id: message_display_time
+            value: !lambda 'return message_display_time;'
+        - globals.set:
+            id: message_clock_time
+            value: !lambda 'return message_clock_time;'
+        - globals.set:
+            id: message_clock_time_count
+            value: !lambda 'return message_clock_time;'
+        - globals.set:
+            id: message_alive_time_count
+            value: '0'
+        - logger.log:
+            format: "Message: %s"
+            args: [ 'message.c_str()' ]
+        - logger.log:
+            format: "Alive Time: %i / Display Time: %i / Clock Time: %i"
+            args: [ 'message_alive_time', 'message_display_time' , 'message_clock_time' ]
+
+mdns:
+  disabled: False # needs to be on to connect to HA
+
+logger:
+  level: NONE
+# Logging is disabled to save memory but you can easily enable logging (and stop the various sensors/switches from spamming the log) by deleting the above line and uncommening the lines below
+# Note that increasing the level uses up memory (which this device has very little available) and may cause errors and/or crashing - please note it's also disabled in the web_server section
+#  level: DEBUG
+#  logs:
+#    sensor: ERROR
+#    text_sensor: NONE
+#    switch: NONE
+#    light: NONE
+#    number: NONE
+
+# Web Server is disabled due to memory constraints.  Enable at your own risk (consider removing captive_portal, reducing fonts to 1 to save memory)
+#web_server:
+#  port: 80
+#  ota: True
+#  include_internal: False # True will expose more than needed to the Web UI
+#  version: 2 # version 3 is much larger but possible if local is False
+#  local: True # will download www.js and serve it directly from the clock
+#  log: False # disabling in the WebUI to save memory
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+    on_begin:
+      then:
+        - lambda: |-
+            id(matrix)->clear();
+            id(matrix)->print(0, 0, id(message_font), "OTA...");
+            id(matrix)->loop();
+        - logger.log: "OTA Update started."
+    on_progress:
+      then:
+        - lambda: |-
+            if (x > 9) {
+              id(matrix)->clear();
+              id(matrix)->printf(0, 0, id(message_font), "OTA %d%%", (int)x);
+              id(matrix)->loop();
+            }
+        - logger.log:
+            format: "OTA progress %0.1f%%"
+            args: ["x"]
+    on_end:
+      then:
+        - lambda: |-
+            id(matrix)->clear();
+            id(matrix)->print(0, 0, id(message_font), "OTA Done");
+            id(matrix)->loop();
+        - logger.log: "OTA end"
+    on_error:
+      then:
+        - lambda: |-
+            id(matrix)->clear();
+            id(matrix)->print(0, 0, id(message_font), "Error!");
+            id(matrix)->loop();
+        - logger.log:
+            format: "OTA update error %d"
+            args: ["x"]
+
+captive_portal:
+
+text_sensor:
+  - platform: version
+    name: "${friendly_name} ESPHome Version"
+    hide_timestamp: True
+    entity_category: diagnostic
+  - platform: wifi_info
+    ip_address:
+      id: wifi_ip
+      name: "${friendly_name} IP Address"
+      entity_category: diagnostic
+    ssid:
+      id: wifi_ssid
+      name: "${friendly_name} SSID"
+      entity_category: diagnostic
+  - platform: template
+    name: "${friendly_name} ${project_name} Version"
+    lambda: 'return std::string("${project_version}");'
+    entity_category: diagnostic
+  - platform: template
+    name: "${friendly_name} Time Zone"
+    lambda: 'return {"${time_zone}"};'
+    entity_category: diagnostic
+  # Below this point are text sensors to hold time and date and allow for substitutions... you can delete/edit the filters, just don't delete the entire text sensor
+  # The github repo should also contain methods to change the time into other localized formats.
+  - platform: template
+    id: time_text
+    name: "${friendly_name} Replacement Time Text"
+    entity_category: diagnostic
+    update_interval: never
+    internal: True
+    filters:
+      - lambda: |-
+          // Use the format "%p%I:%M" (PM 1:25) and run filters on it to get 오후1:25
+          if (id(hour12_mode).state == 1) {
+            int offset = 0;
+            std::time_t tz1time = (id(my_time).now().timestamp + offset);
+            std::tm *tz1time_astm = localtime(&tz1time);
+            char display_tmdt[20];
+            strftime(display_tmdt, 20, "%p%I:%M", tz1time_astm);
+            std::string tmdt(display_tmdt);
+            return tmdt;
+          } else {
+            return x;
+          }
+      - append: ""
+      - prepend: ""
+      - substitute:
+        - "M0 -> M" # removes leading 0 on Hours
+        - "AM -> 오전"
+        - "PM -> 오후"
+  - platform: template
+    id: date_text
+    name: "${friendly_name} Replacement Date Text"
+    entity_category: diagnostic
+    update_interval: never
+    internal: True
+    filters:
+      - lambda: |-
+          // Use the format "%b %d" (May 23) and run filters on it to get 05월 23일
+          int offset = 0;
+          std::time_t tz1time = (id(my_time).now().timestamp + offset);
+          std::tm *tz1time_astm = localtime(&tz1time);
+          char display_tmdt[20];
+          strftime(display_tmdt, 20, "%b %d", tz1time_astm);
+          std::string tmdt(display_tmdt);
+          return tmdt;
+      - append: "일"
+      - prepend: ""
+      - substitute:
+        - "Jan -> 1월"
+        - "Feb -> 2월"
+        - "Mar -> 3월"
+        - "Apr -> 4월"
+        - "May -> 5월"
+        - "Jun -> 6월"
+        - "Jul -> 7월"
+        - "Aug -> 8월"
+        - "Sep -> 9월"
+        - "Oct -> 10월"
+        - "Nov -> 11월"
+        - "Dec -> 12월"
+  - platform: template
+    id: dateA_text
+    name: "${friendly_name} Replacement Date A Text"
+    entity_category: diagnostic
+    update_interval: never
+    internal: True
+    filters:
+      - lambda: |-
+          // Use the format "%a" (Fri) and run filters on it to get 금요일
+          int offset = 0;
+          std::time_t tz1time = (id(my_time).now().timestamp + offset);
+          std::tm *tz1time_astm = localtime(&tz1time);
+          char display_tmdt[20];
+          strftime(display_tmdt, 20, "%a", tz1time_astm);
+          std::string tmdt(display_tmdt);
+          return tmdt;
+      - append: "요일"
+      - prepend: ""
+      - substitute:
+        - "Sun -> 일"
+        - "Mon -> 월"
+        - "Tue -> 화"
+        - "Wed -> 수"
+        - "Thu -> 목"
+        - "Fri -> 금"
+        - "Sat -> 토"
+  # Call text sensors from Home Assistant
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 0
+    id: ha_sensor_data_0
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 1
+    id: ha_sensor_data_1
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 2
+    id: ha_sensor_data_2
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 3
+    id: ha_sensor_data_3
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 4
+    id: ha_sensor_data_4
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 5
+    id: ha_sensor_data_5
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 6
+    id: ha_sensor_data_6
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 7
+    id: ha_sensor_data_7
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 8
+    id: ha_sensor_data_8
+  - platform: homeassistant
+    entity_id: '${ha_sensor_data}'
+    attribute: 9
+    id: ha_sensor_data_9
+
+output:
+  - platform: esp8266_pwm
+    id: statusled
+    pin:
+      number: ${status_led_pin}
+      inverted: True
+
+light:
+  - platform: monochromatic
+    id: led1
+    name: "${friendly_name} Status LED"
+    output: statusled
+    internal: True
+
+preferences:
+  flash_write_interval: 15s # 0 does immediate write to memory with no mem buffer (not recommended) (only saves when persistent variables have changed)
+
+i2c:
+  sda: ${sda_pin}
+  scl: ${scl_pin}
+  scan: True
+  id: i2cbus
+
+spi:
+  clk_pin: ${clk_pin}
+  mosi_pin: ${mosi_pin}
+
+# Some info how to handle multi_click options: https://community.home-assistant.io/t/esphome-button-held-double-press/136083/10
+binary_sensor:
+  - platform: status
+    name: "${friendly_name} Status"
+  - platform: gpio
+    pin: 
+      number: ${download_button_pin}
+      inverted: True
+    name: "${friendly_name} Download Button"
+    filters:
+      - delayed_on: 10ms
+      - delayed_off: 10ms
+    on_multi_click:
+      #Click will toggle Date display mode
+      - timing:
+          - ON for at most 0.5s
+          - OFF for at least 0.5s
+        then:
+          - switch.toggle: date_display_mode
+      #Double-Click will toggle 12-hour mode
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 0.5s
+          - ON for at most 1s
+          - OFF for at least 0.1s
+        then:
+          - switch.toggle: hour12_mode
+      #Click once, then Hold will toggle Alt Time Zone
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 0.5s
+          - ON for at least 1s
+        then:
+          - switch.toggle: tz_alt
+      #Hold 2s will toggle Time/Date Text Replacement
+      - timing:
+          - ON for at least 2s
+          - OFF for at least 0.5s
+        then:
+          - switch.toggle: replace_mode
+      #Hold 5s will toggle Auto Replacement = Alt. Time
+      - timing:
+          - ON for at least 5s
+        then:
+          - switch.toggle: auto_replace_tz_alt
+  - platform: gpio
+    pin: 
+      number: ${rotation_pin}
+      inverted: True
+    name: "${friendly_name} Rotation Mode"
+    id: rotation_mode
+
+display:
+  - platform: max7219digit
+    id: matrix
+    cs_pin: ${cs_pin}
+    num_chips: 4
+    update_interval: 1s
+    reverse_enable: True # true for button-side up / false for down (be warned that if you change these 2 settings you may get a garbled display)
+    rotate_chip: 0 # 0 for button-side up (default) / 180 for down (you could switch them but then I would recommend go change the inverted settting for the gpio)
+    scroll_mode: continuous
+    lambda: |-
+      // Display the message if all conditions are met
+      if (id(my_time).now().is_valid()) {
+        if ((id(message_alive_time) != 0) && (id(message_clock_time_count) >= id(message_clock_time))) {
+          ESP_LOGD("main", "Showing Message");
+          id(message_display_time_count) += 1;
+          id(message_alive_time_count) += 1;
+          std::string message_text = id(message);
+          it.print(0, 0, id(message_font), message_text.c_str());
+          if (id(message_display_time_count) >= id(message_display_time)) {
+            id(message_display_time_count) = 0;
+            id(message_clock_time_count) = 0;
+            if (id(message_alive_time_count) >= id(message_alive_time)) {
+              id(message_alive_time_count) = 0;
+              id(message_alive_time) = 0;
+              ESP_LOGD("main", "Message Alive Time finished.");
+            }
+          }
+        } else {
+          // check if we should display sensor data now
+          if (id(ha_sensor_data_now) == true) {
+            std::string sensor_data_text = "";
+            if (id(ha_sensor_data_this) == 0) {
+              if (id(ha_sensor_data_0).state.empty()) {
+                id(ha_sensor_data_this) = 1;
+              } else {
+                sensor_data_text = id(ha_sensor_data_0).state.c_str();
+              }
+            }
+            if (id(ha_sensor_data_this) == 1) {
+              if (id(ha_sensor_data_1).state.empty()) {
+                id(ha_sensor_data_this) = 2;
+              } else {
+                sensor_data_text = id(ha_sensor_data_1).state.c_str();
+              }
+            }
+            if (id(ha_sensor_data_this) == 2) {
+              if (id(ha_sensor_data_2).state.empty()) {
+                id(ha_sensor_data_this) = 3;
+              } else {
+                sensor_data_text = id(ha_sensor_data_2).state.c_str();
+              }
+            }
+            if (id(ha_sensor_data_this) == 3) {
+              if (id(ha_sensor_data_3).state.empty()) {
+                id(ha_sensor_data_this) = 4;
+              } else {
+                sensor_data_text = id(ha_sensor_data_3).state.c_str();
+              }
+            }
+            if (id(ha_sensor_data_this) == 4) {
+              if (id(ha_sensor_data_4).state.empty()) {
+                id(ha_sensor_data_this) = 5;
+              } else {
+                sensor_data_text = id(ha_sensor_data_4).state.c_str();
+              }
+            }
+            if (id(ha_sensor_data_this) == 5) {
+              if (id(ha_sensor_data_5).state.empty()) {
+                id(ha_sensor_data_this) = 6;
+              } else {
+                sensor_data_text = id(ha_sensor_data_5).state.c_str();
+              }
+            }
+            if (id(ha_sensor_data_this) == 6) {
+              if (id(ha_sensor_data_6).state.empty()) {
+                id(ha_sensor_data_this) = 7;
+              } else {
+                sensor_data_text = id(ha_sensor_data_6).state.c_str();
+              }
+            }
+            if (id(ha_sensor_data_this) == 7) {
+              if (id(ha_sensor_data_7).state.empty()) {
+                id(ha_sensor_data_this) = 8;
+              } else {
+                sensor_data_text = id(ha_sensor_data_7).state.c_str();
+              }
+            }
+            if (id(ha_sensor_data_this) == 8) {
+              if (id(ha_sensor_data_8).state.empty()) {
+                id(ha_sensor_data_this) = 9;
+              } else {
+                sensor_data_text = id(ha_sensor_data_8).state.c_str();
+              }
+            }
+            if (id(ha_sensor_data_this) == 9) {
+              if (id(ha_sensor_data_9).state.empty()) {
+                if (id(ha_sensor_data_all).state == false) {
+                  id(ha_sensor_data_this) = 0;
+                  sensor_data_text = id(ha_sensor_data_0).state.c_str();
+                }
+              } else {
+                sensor_data_text = id(ha_sensor_data_9).state.c_str();
+              }
+            }
+            if (sensor_data_text != "") {
+              id(ha_sensor_data_this_time) += 1;
+              if ((id(ha_sensor_data_this_time) >= (id(ha_sensor_data_time).state)) && (id(ha_sensor_data_all).state == true)) {
+                id(ha_sensor_data_this_time) = 0;
+                id(ha_sensor_data_this) += 1;
+              }
+              if ((id(ha_sensor_data_this_time) > (id(ha_sensor_data_time).state)) && (id(ha_sensor_data_all).state == false)) { // was just > but... 2 seconds either way?
+                id(ha_sensor_data_this_time) = 0;
+                id(ha_sensor_data_this) += 1;
+                id(ha_sensor_data_now) = false ; // we needed to buy 1 second if this mode is on
+              } else {
+                it.print(0, 0, id(message_font), sensor_data_text.c_str());
+              }
+            } else {
+              id(ha_sensor_data_now) = false;
+              id(ha_sensor_data_this) = 0;
+              id(ha_sensor_data_this_time) = 0;
+            }
+            if ((id(ha_sensor_data_this) == 9) && (id(ha_sensor_data_all).state == true)) {
+              id(ha_sensor_data_this) = false;
+              id(ha_sensor_data_now) = false;
+            }
+          }
+          // because there may be no HA sensors, we can't skip display the time/date - just check if it actually did print it
+          if (id(ha_sensor_data_now) == false) {
+            if ((id(message_alive_time) != 0) && (id(message_clock_time) != 0)) {
+              id(message_clock_time_count) += 1;
+              id(message_alive_time_count) += 1;
+            }
+            std::time_t tz1time = (id(my_time).now().timestamp);
+            std::tm *tz1time_astm = localtime(&tz1time);
+            char display_tmdt[20];
+            // check if the date should be displayed
+            if ((id(time_display_count) >= (id(time_display_time).state)) && (id(date_display_mode).state != false)) {
+              id(date_display_count) += 1;
+              // if date_formatA is on, display it for 50% of the time first, after the 1st...
+              if ((id(date_A_mode).state == true) && (id(date_display_count) <= (id(date_display_time).state / 2))) {
+                strftime(display_tmdt, 20, "${date_formatA}", tz1time_astm);
+                // check if Date A text replacement should be made
+                if (id(replace_mode_auto).state == true) {
+                  std::string tmdt(display_tmdt);
+                  id(dateA_text).publish_state(tmdt);
+                  strcpy(display_tmdt, id(dateA_text).state.c_str());
+                }
+              } else {
+                strftime(display_tmdt, 20, "${date_format}", tz1time_astm);
+                // check if Date text replacement should be made
+                if (id(replace_mode_auto).state == true) {
+                  std::string tmdt(display_tmdt);
+                  id(date_text).publish_state(tmdt);
+                  strcpy(display_tmdt, id(date_text).state.c_str());
+                }
+              }
+            } else {
+              id(date_display_count) = 0;
+              id(time_display_count) += 1;
+              // choose which time format to display
+              if (id(hour12_mode).state == true) {
+                strftime(display_tmdt, 20, "${time_format12}", tz1time_astm);
+              } else {
+                strftime(display_tmdt, 20, "${time_format24}", tz1time_astm);
+              }
+              // check if Time text replacement should be made
+              if (id(replace_mode_auto).state == true) {
+                std::string tmdt(display_tmdt);
+                id(time_text).publish_state(tmdt);
+                strcpy(display_tmdt, id(time_text).state.c_str());
+              }
+            }
+            // print the date / time
+            it.printf((32 / 2), (8 / 2), id(default_font), TextAlign::CENTER, "%s", display_tmdt);
+            if (((id(date_display_count) >= id(date_display_time).state) && (id(date_display_mode).state != false)) || ((id(time_display_count) >= id(time_display_time).state) && (id(date_display_mode).state == false))) {
+              id(time_display_count) = 0;
+              // check if Sensor Data Stop is active 
+              if (id(ha_sensor_data_stop).state == false) {
+                id(ha_sensor_data_now) = 1;
+              }
+              // check if Replace Interval is active, count or reset, when date display is finished - or after the interval, depending
+              // ...and trip the boolean to display HA sensors
+              if (id(replace_interval).state > 0) {
+                id(replace_interval_count) += 1;
+                if (id(replace_interval_count) >= id(replace_interval).state) {
+                  id(replace_interval_count) = 0;
+                  if (id(auto_replace_tz_alt).state == true) {
+                    if (id(replace_mode_auto).state == true) {
+                      id(tz_alt_auto).turn_off();
+                    } else {
+                      id(tz_alt_auto).turn_on();
+                    }
+                  }
+                  id(replace_mode_auto).toggle();
+                }
+              }
+            }
+          }
+        }
+      } else {
+        it.print(0, 0, id(message_font), "${waiting}");
+      }
+      // ---- DISPLAY ON / OFF CONTROL ----
+      if (!id(display_on).state) {
+        // DISPLAY OFF: clear screen and set intensity to 0
+        it.clear();
+        it.intensity(0);
+      } else {
+        // DISPLAY ON: normal brightness
+        uint8_t bri = (uint8_t)id(brightness).state;
+        it.intensity(bri);
+      }
+
+      // ---- ROTATION ----
+      if (id(rotation_mode).state) {
+        it.set_reverse(0);
+        it.set_chip_orientation(2);
+      } else {
+        it.set_reverse(1);
+        it.set_chip_orientation(0);
+      }
+
+interval:
+  - interval: 1min # check if the time should be synced, and if so, do it
+    then:
+      - lambda: |-
+          id(sync_time_count) += 1;
+          if (id(sync_time_count) >= (id(sync_time).state * 60)) {
+            id(sync_time_count) = 0;
+            id(sync_the_time).execute();
+          }
+
+globals:
+  - id: replace_interval_count
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: message
+    type: std::string
+    restore_value: False
+    initial_value: ''
+  - id: message_display_time
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: message_clock_time
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: message_alive_time
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: message_display_time_count
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: message_clock_time_count
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: message_alive_time_count
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: time_display_count
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: date_display_count
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: sync_time_count
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+# HA Sensors variables
+  - id: ha_sensor_data_this
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: ha_sensor_data_this_time
+    type: uint8_t
+    restore_value: False
+    initial_value: '0'
+  - id: ha_sensor_data_now
+    type: bool
+    restore_value: False
+    initial_value: 'false'
+
+button:
+  - platform: restart
+    id: restart_button
+    name: "${friendly_name} Restart"
+    entity_category: diagnostic
+
+switch:
+  - platform: template
+    name: "${friendly_name} Display"
+    id: display_on
+    restore_mode: RESTORE_DEFAULT_ON      # starts ON after reboot
+    optimistic: true
+    turn_on_action:
+      - lambda: |-
+          ESP_LOGD("main", "Display ON");
+    turn_off_action:
+      - lambda: |-
+          ESP_LOGD("main", "Display OFF");
+  - platform: template
+    name: "${friendly_name} 12 Hour Mode"
+    id: hour12_mode
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "12 Hour Mode On");
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "12 Hour Mode Off");
+  - platform: template
+    name: "${friendly_name} Date A Mode"
+    id: date_A_mode
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "Date A Mode On");
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "Date A Mode Off");
+  - platform: template
+    name: "${friendly_name} Replacement Mode"
+    id: replace_mode
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "Replace Mode On");
+            id(auto_replace_tz_alt).turn_off();
+            id(replace_mode_auto).turn_on();
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "Replace Mode Off");
+            id(replace_mode_auto).turn_off();
+  - platform: template
+    id: replace_mode_auto
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    internal: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "Replace Mode Auto On");
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "Replace Mode Auto Off");
+  - platform: template
+    name: "${friendly_name} Date Display Mode"
+    id: date_display_mode
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "Date on");
+            id(message) = ("Date on");
+            id(message_alive_time) = 1;
+            id(message_display_time) = 1;
+            id(message_clock_time) = 0;
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "Date off");
+            id(message) = ("Date off");
+            id(message_alive_time) = 1;
+            id(message_display_time) = 1;
+            id(message_clock_time) = 0;
+  - platform: template
+    name: "${friendly_name} HA Sensors Data All"
+    id: ha_sensor_data_all
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "HA Sensors Data All On");
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "HA Sensors Data All Off");
+  - platform: template
+    name: "${friendly_name} HA Sensors Data Stop"
+    id: ha_sensor_data_stop
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "HA Sensors Data Stop On");
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "HA Sensors Data Stop Off");
+# Alt Time Zone selector / activator
+  - platform: template
+    name: "${friendly_name} Alternate Time (${time_zone_alt_name})"
+    id: tz_alt
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "Alt Time Zone On");
+            id(auto_replace_tz_alt).turn_off();
+            id(tz_alt_auto).turn_on();
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "Alt Time Zone Off");
+            id(tz_alt_auto).turn_off();
+  - platform: template
+    id: tz_alt_auto
+    restore_mode: DISABLED
+    optimistic: True
+    internal: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "Alt Time Zone Auto On");
+            id(my_time)->set_timezone("${time_zone_alt}");
+            id(my_time_ds)->set_timezone("${time_zone_alt}");
+            id(my_time)->call_setup();
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "Alt Time Zone Auto Off");
+            id(my_time)->set_timezone("${time_zone}");
+            id(my_time_ds)->set_timezone("${time_zone}");
+            id(my_time)->call_setup();
+  - platform: template
+    name: "${friendly_name} Auto Replacement = Alt. Time"
+    id: auto_replace_tz_alt
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    turn_on_action:
+        - lambda: |-
+            ESP_LOGD("main", "Auto Replacement = Alt. Time On");
+            if (id(replace_interval).state == 0) {
+              auto call = id(replace_interval).make_call();
+              call.set_value(1);
+              call.perform();
+            }
+            id(replace_mode).turn_off();
+            id(tz_alt).turn_off();
+    turn_off_action:
+        - lambda: |-
+            ESP_LOGD("main", "Auto Replacement Mode = Alt. Time Off");
+            id(tz_alt_auto).turn_off();
+
+number:
+  - platform: template
+    name: "${friendly_name} Brightness"
+    id: brightness
+    restore_value: True
+    optimistic: True
+    step: 1
+    min_value: 0
+    max_value: 15
+    initial_value: 1
+    mode: slider
+    set_action:
+      then:
+        - lambda: |-
+            ESP_LOGD("main", "Brightness: %.0f", x);
+  - platform: template
+    name: "${friendly_name} Time Display Time"
+    id: time_display_time
+    restore_value: True
+    optimistic: True
+    step: 1
+    min_value: 1
+    max_value: 60
+    initial_value: 8
+    mode: box
+    unit_of_measurement: seconds
+    set_action:
+      then:
+        - lambda: |-
+            ESP_LOGD("main", "Time Display Time: %.0f seconds", x);
+  - platform: template
+    name: "${friendly_name} Date Display Time"
+    id: date_display_time
+    restore_value: True
+    optimistic: True
+    step: 1
+    min_value: 1
+    max_value: 60
+    initial_value: 2
+    mode: box
+    unit_of_measurement: seconds
+    set_action:
+      then:
+        - lambda: |-
+            ESP_LOGD("main", "Date Display Time: %.0f seconds", x);
+  - platform: template
+    name: "${friendly_name} Auto Replacement Interval"
+    id: replace_interval
+    restore_value: True
+    optimistic: True
+    step: 1
+    min_value: 0
+    max_value: 10
+    initial_value: 0
+    mode: box
+    unit_of_measurement: intervals
+    set_action:
+      then:
+        - lambda: |-
+            ESP_LOGD("main", "Auto Replacement Interval: %.0f", x);
+            if (x > 0) {
+              if (id(replace_mode).state == true) {
+                id(replace_mode).turn_off();
+              }
+            }
+  - platform: template
+    name: "${friendly_name} Time Sync Interval"
+    id: sync_time
+    restore_value: True
+    optimistic: True
+    step: 1
+    min_value: 1
+    max_value: 24
+    initial_value: 8
+    mode: box
+    unit_of_measurement: hours
+    set_action:
+      then:
+        - lambda: |-
+            ESP_LOGD("main", "Time Sync Interval: %.0f hours", x);
+  - platform: template
+    name: "${friendly_name} HA Sensor Data Time"
+    id: ha_sensor_data_time
+    restore_value: True
+    optimistic: True
+    step: 1
+    min_value: 1
+    max_value: 10
+    initial_value: 2
+    mode: box
+    unit_of_measurement: seconds
+    set_action:
+      then:
+        - lambda: |-
+            ESP_LOGD("main", "HA Sensor Data Time: %.0f seconds", x);

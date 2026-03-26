@@ -1,0 +1,123 @@
+blueprint:
+  name: ZHA - Smart Knob
+  description: 'Control Media Player with a Moes Smart Knob. You can set functions
+    for a single press. This allows you to assign, e.g., a scene or anything else.
+    Rotating left/right will change the volume smoothly of the selected media player.
+    Not all functionality of the device is available at time of writing, e.g. double
+    press, long press.
+
+    Version 2025-04-10'
+  domain: automation
+  input:
+    remote:
+      name: Remote
+      description: Smart Knob
+      selector:
+        device:
+          integration: zha
+          model: TS004F
+          multiple: false
+    mediaplayer:
+      name: MediaPlayer
+      description: The Media player to control.
+      selector:
+        entity:
+          domain:
+          - media_player
+          multiple: false
+    step_percent:
+      name: Volume step
+      description: Volume percent change for each knob step
+      selector:
+        number:
+          mode: slider
+          min: 0.0
+          max: 100.0
+          step: 1.0
+      default: 10
+    single_press:
+      name: Single press
+      description: Action to run on single press
+      default: []
+      selector:
+        action: {}
+    long_press:
+      name: Long press
+      description: Action to run on long press
+      default: []
+      selector:
+        action: {}
+  source_url: https://gist.github.com/markbac17/29a73111da942c43818a21d858f62e46
+mode: restart
+max_exceeded: silent
+trigger:
+- platform: event
+  event_type: zha_event
+  event_data:
+    device_id: !input remote
+action:
+- choose:
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger is defined and trigger.event is defined }}'
+    sequence:
+    - variables:
+        media_player_entity_id: !input mediaplayer
+        command: '{{ trigger.event.data.command if trigger.event is defined else ''none''
+          }}'
+        cluster_id: '{{ trigger.event.data.cluster_id if trigger.event is defined
+          else 0 }}'
+        endpoint_id: '{{ trigger.event.data.endpoint_id if trigger.event is defined
+          else 0 }}'
+        mode: "{% if trigger.event is defined and command != 'toggle' and trigger.event.data.args
+          | length > 0 %}\n  {{ trigger.event.data.args[0] }}\n{% else %}\n  ''\n{%
+          endif %}\n"
+        step_percent: !input step_percent
+        media_player_is_on: '{{ states(media_player_entity_id) not in [''off'', ''unavailable'']
+          }}'
+    - choose:
+      - conditions:
+        - '{{ cluster_id == 6 }}'
+        - '{{ endpoint_id == 1 }}'
+        - '{{ command == ''toggle'' }}'
+        sequence: !input single_press
+      - conditions:
+        - '{{ cluster_id == 6 }}'
+        - '{{ endpoint_id == 1 }}'
+        - '{{ command == ''right'' }}'
+        - '{{ media_player_is_on }}'
+        sequence:
+        - service: media_player.volume_set
+          entity_id: !input mediaplayer
+          data:
+            volume_level: '{% set current_volume = state_attr(media_player_entity_id,
+              ''volume_level'') | float(0) %} {% set volume_increment = step_percent
+              / 100 %} {% set new_volume = current_volume + volume_increment %} {{
+              0 if new_volume < 0 else 1 if new_volume > 1 else new_volume }}
+
+              '
+      - conditions:
+        - '{{ cluster_id == 6 }}'
+        - '{{ endpoint_id == 1 }}'
+        - '{{ command == ''left'' }}'
+        - '{{ media_player_is_on }}'
+        sequence:
+        - service: media_player.volume_set
+          entity_id: !input mediaplayer
+          data:
+            volume_level: '{% set current_volume = state_attr(media_player_entity_id,
+              ''volume_level'') | float(0) %} {% set volume_increment = step_percent
+              / 100 %} {% set new_volume = current_volume - volume_increment %} {{
+              0 if new_volume < 0 else 1 if new_volume > 1 else new_volume }}
+
+              '
+      - conditions:
+        - '{{ cluster_id == 6 }}'
+        - '{{ endpoint_id == 1 }}'
+        - '{{ command == ''off'' }}'
+        sequence: !input long_press
+  default:
+  - service: persistent_notification.create
+    data:
+      message: Automation triggered manually. No ZHA event data available.
+      title: Manual Trigger Warning

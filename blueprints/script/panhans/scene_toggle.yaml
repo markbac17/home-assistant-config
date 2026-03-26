@@ -1,0 +1,118 @@
+blueprint:
+  name: Scene Toggle
+  description: '
+
+    ## Features
+
+    - toggle through scenes by order or last activated timestamp
+
+    - define a transition time
+
+    - select scenes by area and/or include/exclude specific scenes
+
+    - timeout for beginning at start if using static order
+
+
+    **Help & FAQ**: [Simple Scene Toggle](https://community.home-assistant.io/t/simple-scene-toggle)
+
+
+    **Version**: 3.2
+
+
+    If you like my work and support feel free to support me.
+
+
+    [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q3QEH52)
+
+    '
+  source_url: https://github.com/panhans/homeassistant/blob/main/blueprints/script/scene_toggle.yaml
+  domain: script
+  input:
+    area:
+      name: Name of area
+      description: Name of the area where you want to toggle scenes
+      default: ''
+      selector:
+        area: {}
+    included_scenes:
+      name: Included Scenes
+      description: Additional scenes to be included
+      default: []
+      selector:
+        entity:
+          filter:
+          - domain:
+            - scene
+          multiple: true
+    excluded_scenes:
+      name: Excluded Scenes
+      description: Scenes to be excluded
+      default: []
+      selector:
+        entity:
+          filter:
+          - domain:
+            - scene
+          multiple: true
+    transition:
+      name: Transition time
+      description: Transition time when switching between scenes
+      default: 1
+      selector:
+        number:
+          min: 0.0
+          max: 10.0
+          step: 0.1
+          unit_of_measurement: s
+          mode: slider
+    use_static_order:
+      name: Static order
+      description: This automation is based on timestamps of the activation of the
+        scenes. If this option is enabled a static order will be used instead of the
+        dynamic one.
+      default: false
+      selector:
+        boolean: {}
+    reset_after:
+      name: Reset After
+      description: If the static order is activated, a timeout can be set after which
+        the order is reset to the first scene. If 0 is set the timeout is disabled.
+      default: 0
+      selector:
+        number:
+          min: 0.0
+          max: 120.0
+          step: 1.0
+          unit_of_measurement: s
+          mode: slider
+mode: queued
+variables:
+  area: !input area
+  included_scenes: !input included_scenes
+  excluded_scenes: !input excluded_scenes
+  reset_after: !input reset_after
+  use_static_order: !input use_static_order
+  last_triggered: '{{ as_timestamp(iif(state_attr(this.entity_id,''last_triggered'')
+    == none, now(), state_attr(this.entity_id,''last_triggered''))) }}'
+sequence:
+- service: scene.turn_on
+  data_template:
+    transition: !input transition
+    entity_id: "{% set area_scenes = states.scene | selectattr('entity_id', 'in',
+      area_entities(area)) | map(attribute='entity_id') | list %} {% set all_scenes
+      = (area_scenes | reject('in', excluded_scenes) | list) + included_scenes %}\n{%
+      if use_static_order == true %}\n\n  {% set is_reset = reset_after > 0 and (as_timestamp(now())
+      - last_triggered >= reset_after) %}\n\n  {% if is_reset == true %}\n    {{ all_scenes[0]
+      }}\n  {% else %}\n    \n    {% set unknown_scenes = expand(all_scenes) | selectattr('state',
+      'eq', 'unknown') | map(attribute='entity_id') | list %}\n    {% set scenes_sorted_by_activation
+      = expand(all_scenes) | sort(attribute='state', reverse = true) | map(attribute='entity_id')
+      | reject('in', unknown_scenes) | list %}\n    {% set last_activated_scene =
+      scenes_sorted_by_activation[0] %}\n    {% set index_of_last_activated_scene
+      = all_scenes.index(last_activated_scene) %}\n    {% set new_index = index_of_last_activated_scene
+      + 1 %}\n\n    {% if new_index == all_scenes | count %}\n      {{ all_scenes[0]
+      }}\n    {% else %}\n      {{ all_scenes[new_index] }}\n    {% endif %}\n  {%
+      endif %}\n{% else %}     \n  {% set unknown_scenes = expand(all_scenes) | selectattr('state',
+      'eq', 'unknown') | map(attribute='entity_id') | list %}\n  {% if unknown_scenes
+      | count > 0 %}\n    {{ unknown_scenes[0] }}     \n  {% else %}\n    {% set known_scenes
+      = expand(all_scenes) | sort(attribute='state', reverse = false) | map(attribute='entity_id')
+      | list %}\n    {{ known_scenes[0] }}\n  {% endif %}\n{% endif %}\n"

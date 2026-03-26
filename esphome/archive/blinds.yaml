@@ -1,0 +1,76 @@
+esphome:
+  name: blinds
+  friendly_name: Blinds
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  
+# Define the transmitter pin (GPIO16)
+substitutions:
+  transmit_pin: "GPIO16"
+
+# Custom component for Markisol protocol
+external_components:
+  - source:
+      type: local
+      path: my_components/markisol_transmitter
+    components:
+      markisol_transmitter
+
+# Define the Markisol transmitter component
+markisol_transmitter:
+  id: markisol_tx
+  pin: ${transmit_pin}
+
+# Define switches to trigger Markisol commands
+switch:
+  - platform: template
+    name: "Markisol Up"
+    icon: "mdi:arrow-up"
+    lambda: |-
+      id(markisol_tx).send_command("01010101010101010101010101010101010101010");  // Replace with your UP command
+      return {};
+    turn_on_action:
+      - logger.log: "Sending Markisol UP command"
+
+  - platform: template
+    name: "Markisol Down"
+    icon: "mdi:arrow-down"
+    lambda: |-
+      id(markisol_tx).send_command("01010101010101010101010101010101010101011");  // Replace with your DOWN command
+      return {};
+    turn_on_action:
+      - logger.log: "Sending Markisol DOWN command"
+
+  - platform: template
+    name: "Markisol Stop"
+    icon: "mdi:stop"
+    lambda: |-
+      id(markisol_tx).send_command("01010101010101010101010101010101010101100");  // Replace with your STOP command
+      return {};
+    turn_on_action:
+      - logger.log: "Sending Markisol STOP command"
+
+# Enable Home Assistant API
+api:
+
+ota:
+  - platform: esphome
+    password: "bda0b13f8943c7afa616e0e3df56aef8"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Blinds Fallback Hotspot"
+    password: "Ak2XQ0sV2P1d"
+
+captive_portal:
+    

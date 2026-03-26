@@ -1,0 +1,223 @@
+substitutions:
+  name: "climate-oasis"
+  friendly_name: "Climate Oasis"
+  device_description: "Midea IR climate control with DS18B20 temperature sensor"
+
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  comment: "${device_description}"
+  name_add_mac_suffix: false
+  project:
+    name: esphome.BlueVue
+    version: "2.0"
+
+esp8266:
+  board: d1_mini
+  restore_from_flash: true
+
+# Enable logging with appropriate level
+logger:
+  level: INFO
+  baud_rate: 115200
+
+# API configuration
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+  reboot_timeout: 15min
+
+# WiFi configuration with improved reliability
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  power_save_mode: none
+  ap:
+    ssid: "Climate-Oasis-Fallback"
+    password: !secret api_password
+
+captive_portal:
+
+# OTA updates
+ota:
+  - platform: esphome
+    id: my_ota
+
+# Safe mode component
+safe_mode:
+
+# Web server for local access
+web_server:
+  port: 80
+  version: 3
+
+# Status LED
+status_led:
+  pin:
+    number: D4  # Built-in LED on D1 Mini
+    inverted: true
+
+# One Wire bus for temperature sensors
+one_wire:
+  - platform: gpio
+    pin: D1
+    id: onewire_bus
+
+# Remote receiver for IR signals
+remote_receiver:
+  id: rcvr
+  pin:
+    number: D2
+    inverted: true
+    mode:
+      input: true
+      pullup: true
+  tolerance: 25%
+  buffer_size: 2kb
+
+# Remote transmitter for IR signals
+remote_transmitter:
+  id: tmtr
+  pin: D3
+  carrier_duty_percent: 50%
+
+# Sensors
+sensor:
+  # Dallas temperature sensor - FIXED: Removed hardcoded address
+  - platform: dallas_temp
+    one_wire_id: onewire_bus
+    id: oasis_temp
+    name: "Office Temperature"
+    device_class: temperature
+    state_class: measurement
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    update_interval: 30s
+    # Removed hardcoded address - let ESPHome auto-discover
+    filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 5
+      - delta: 0.2  # Only send updates if temperature changes by 0.2°C
+
+  # WiFi Signal Strength
+  - platform: wifi_signal
+    name: "Climate Oasis WiFi Signal"
+    device_class: signal_strength
+    state_class: measurement
+    update_interval: 300s
+    filters:
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 3
+
+  # Uptime sensor
+  - platform: uptime
+    name: "Climate Oasis Uptime"
+    device_class: duration
+    state_class: total_increasing
+    entity_category: diagnostic
+    update_interval: 300s
+
+  # Template sensor for temperature in Fahrenheit
+  - platform: template
+    name: "Office Temperature (°F)"
+    device_class: temperature
+    state_class: measurement
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    lambda: |-
+      if (id(oasis_temp).has_state()) {
+        return id(oasis_temp).state * 9.0 / 5.0 + 32.0;
+      } else {
+        return NAN;
+      }
+    update_interval: never  # Updates when oasis_temp updates
+
+# Climate control
+climate:
+  - platform: midea_ir
+    id: oasis_climate
+    name: "Office AC"
+    sensor: oasis_temp
+    receiver_id: rcvr
+    transmitter_id: tmtr
+    use_fahrenheit: false  # Keep internal calculations in Celsius
+    visual:
+      min_temperature: 16 °C
+      max_temperature: 32 °C
+      temperature_step: 1.0 °C
+    on_state:
+      then:
+        - logger.log:
+            format: "Climate state changed - Mode: %s, Target: %.1f°C, Current: %.1f°C"
+            args: 
+              - 'id(oasis_climate).mode'
+              - 'id(oasis_climate).target_temperature'
+              - 'id(oasis_temp).state'
+
+# Binary sensors
+binary_sensor:
+  # Template sensor to monitor if AC is actively cooling/heating
+  - platform: template
+    name: "AC Active"
+    device_class: running
+    lambda: |-
+      if (id(oasis_climate).mode == CLIMATE_MODE_OFF) {
+        return false;
+      }
+      if (!id(oasis_temp).has_state()) {
+        return false;
+      }
+      float temp_diff = abs(id(oasis_climate).target_temperature - id(oasis_temp).state);
+      return temp_diff > 1.0;  // Consider active if more than 1C difference
+
+# Text sensors for diagnostics
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "Climate Oasis IP Address"
+      entity_category: diagnostic
+    mac_address:
+      name: "Climate Oasis MAC Address"
+      entity_category: diagnostic
+
+  - platform: template
+    name: "Climate Mode"
+    lambda: |-
+      switch (id(oasis_climate).mode) {
+        case CLIMATE_MODE_OFF: return {"Off"};
+        case CLIMATE_MODE_HEAT_COOL: return {"Auto"};
+        case CLIMATE_MODE_COOL: return {"Cool"};
+        case CLIMATE_MODE_HEAT: return {"Heat"};
+        case CLIMATE_MODE_FAN_ONLY: return {"Fan"};
+        case CLIMATE_MODE_DRY: return {"Dry"};
+        default: return {"Unknown"};
+      }
+    update_interval: 5s
+
+# Buttons for manual control
+button:
+  - platform: template
+    name: "AC Power Toggle"
+    icon: "mdi:power"
+    on_press:
+      - climate.control:
+          id: oasis_climate
+          mode: !lambda |-
+            if (id(oasis_climate).mode == CLIMATE_MODE_OFF) {
+              return CLIMATE_MODE_COOL;
+            } else {
+              return CLIMATE_MODE_OFF;
+            }
+
+  - platform: restart
+    name: "Climate Oasis Restart"
+    entity_category: diagnostic
+
+# Intervals for maintenance tasks - FIXED: Removed problematic interval
+interval:
+  - interval: 300s
+    then:
+      - logger.log: "System healthy - monitoring temperature"

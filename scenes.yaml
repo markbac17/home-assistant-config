@@ -1,0 +1,730 @@
+- id: '1730823928421'
+  name: Good morning
+  entities:
+    switch.matrix_display_power:
+      icon: mdi:matrix
+      friendly_name: Matrix
+      state: 'on'
+    cover.smartwings_wm25_l_z_cover:
+      current_position: 100
+      device_class: shade
+      friendly_name: Shades
+      supported_features: 15
+      state: open
+    climate.home:
+      hvac_modes:
+      - 'off'
+      - heat
+      - cool
+      - heat_cool
+      min_temp: 55
+      max_temp: 92
+      fan_modes:
+      - 'on'
+      - auto
+      current_temperature: 71
+      temperature: 72
+      target_temp_high:
+      target_temp_low:
+      current_humidity: 40
+      fan_mode: auto
+      hvac_action: idle
+      friendly_name: Home
+      supported_features: 395
+      state: heat
+    switch.sonos:
+      device_class: outlet
+      friendly_name: 'Sonos '
+      state: 'on'
+    switch.switch_kettle_switch_kettle:
+      icon: mdi:kettle
+      friendly_name: Kettle
+      state: 'on'
+  metadata:
+    cover.smartwings_wm25_l_z_cover:
+      entity_only: true
+    climate.home:
+      entity_only: true
+    switch.sonos:
+      entity_only: true
+- id: '1743360872282'
+  name: Good night
+  entities:
+    light.dining_lamp:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - 'off'
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      entity_id:
+      - light.signify_netherlands_b_v_lct001_light
+      - light.signify_netherlands_b_v_lct001_light_3
+      - light.signify_netherlands_b_v_lct001_light_4
+      - light.signify_netherlands_b_v_lct001_light_2
+      icon: mdi:lightbulb-group
+      friendly_name: Dining lamp
+      supported_features: 44
+      state: 'off'
+    switch.switch_c_switch_c:
+      icon: mdi:air-humidifier
+      friendly_name: Humidifier
+      state: 'off'
+    switch.projector:
+      icon: mdi:projector
+      friendly_name: Projector
+      state: 'off'
+    switch.sonos:
+      device_class: outlet
+      friendly_name: 'Sonos '
+      state: 'off'
+    switch.desk_screen_left:
+      icon: mdi:monitor
+      friendly_name: Screen L
+      state: 'off'
+    switch.desk_screen_right:
+      icon: mdi:monitor
+      friendly_name: Screen R
+      state: 'off'
+    light.living_room:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - 'off'
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      entity_id:
+      - light.signify_netherlands_b_v_lcd005
+      - light.living1
+      - light.living3
+      - light.living4
+      icon: mdi:lightbulb-group
+      friendly_name: Living room
+      supported_features: 44
+      state: 'off'
+    light.dining_a:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 500
+      effect_list:
+      - none
+      - sunrise
+      - sunset
+      - movie
+      - dating
+      - romantic
+      - twinkle
+      - candlelight
+      - snowflake
+      - energetic
+      - breathe
+      - crossing
+      supported_color_modes:
+      - color_temp
+      - rgb
+      supported_features: 4
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Dining A
+      state: 'off'
+    light.bar_light:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 500
+      effect_list:
+      - none
+      - sunrise
+      - sunset
+      - movie
+      - dating
+      - romantic
+      - twinkle
+      - candlelight
+      - snowflake
+      - energetic
+      - breathe
+      - crossing
+      supported_color_modes:
+      - color_temp
+      - rgb
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      icon: mdi:light-recessed
+      friendly_name: Bar
+      supported_features: 4
+      state: 'off'
+    switch.matrix_display_power:
+      icon: mdi:matrix
+      friendly_name: Matrix
+      state: 'off'
+    light.hall:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - 'off'
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      entity_id:
+      - light.hall1
+      - light.hall2
+      icon: mdi:lightbulb-group
+      friendly_name: Hall
+      supported_features: 44
+      state: 'off'
+  metadata:
+    light.dining_lamp:
+      entity_only: true
+    switch.projector:
+      entity_only: true
+    switch.sonos:
+      entity_only: true
+    switch.desk_screen_left:
+      entity_only: true
+    switch.desk_screen_right:
+      entity_only: true
+    light.living_room:
+      entity_only: true
+    light.dining_a:
+      entity_only: true
+    light.bar_light:
+      entity_only: true
+    switch.matrix_display_power:
+      entity_only: true
+    light.hall:
+      entity_only: true
+- id: '1766333848255'
+  name: Dinner
+  entities:
+    light.signify_netherlands_b_v_lct001_light:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      effect_list:
+      - 'off'
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 128
+      color_temp_kelvin: 2000
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      off_with_transition: false
+      off_brightness:
+      friendly_name: Dining A
+      supported_features: 44
+      state: 'on'
+    light.signify_netherlands_b_v_lct001_light_2:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      effect_list:
+      - 'off'
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 128
+      color_temp_kelvin: 2000
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      off_with_transition: false
+      off_brightness:
+      friendly_name: Light B
+      supported_features: 44
+      state: 'on'
+    light.signify_netherlands_b_v_lct001_light_3:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      effect_list:
+      - 'off'
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 128
+      color_temp_kelvin: 2000
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      off_with_transition: false
+      off_brightness:
+      friendly_name: Dining C
+      supported_features: 44
+      state: 'on'
+    light.signify_netherlands_b_v_lct001_light_4:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      effect_list:
+      - 'off'
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 128
+      color_temp_kelvin: 2000
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      off_with_transition: false
+      off_brightness:
+      friendly_name: Dining D
+      supported_features: 44
+      state: 'on'
+  metadata:
+    light.signify_netherlands_b_v_lct001_light:
+      entity_only: true
+    light.signify_netherlands_b_v_lct001_light_2:
+      entity_only: true
+    light.signify_netherlands_b_v_lct001_light_3:
+      entity_only: true
+    light.signify_netherlands_b_v_lct001_light_4:
+      entity_only: true
+- id: '1767142179356'
+  name: Good Evening
+  entities:
+    cover.smartwings_wm25_l_z_cover:
+      current_position: 0
+      device_class: shade
+      friendly_name: Shades
+      supported_features: 15
+      state: closed
+    switch.sonos:
+      device_class: outlet
+      friendly_name: 'Sonos '
+      state: 'on'
+    switch.projector:
+      icon: mdi:projector
+      friendly_name: Projector
+      state: 'on'
+    light.dining_lamp:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - 'off'
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect: 'off'
+      color_mode: xy
+      brightness: 128
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      - 37.465
+      - 83.529
+      rgb_color:
+      - 255
+      - 175
+      - 42
+      xy_color:
+      - 0.541695
+      - 0.419833
+      entity_id:
+      - light.signify_netherlands_b_v_lct001_light
+      - light.signify_netherlands_b_v_lct001_light_3
+      - light.signify_netherlands_b_v_lct001_light_4
+      - light.signify_netherlands_b_v_lct001_light_2
+      icon: mdi:lightbulb-group
+      friendly_name: Dining lamp
+      supported_features: 44
+      state: 'on'
+    light.living_room:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - 'off'
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 26
+      color_temp_kelvin: 2000
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      entity_id:
+      - light.signify_netherlands_b_v_lcd005
+      - light.living1
+      - light.living3
+      - light.living4
+      icon: mdi:lightbulb-group
+      friendly_name: Living room
+      supported_features: 44
+      state: 'on'
+    light.dining_a:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 500
+      effect_list:
+      - none
+      - sunrise
+      - sunset
+      - movie
+      - dating
+      - romantic
+      - twinkle
+      - candlelight
+      - snowflake
+      - energetic
+      - breathe
+      - crossing
+      supported_color_modes:
+      - color_temp
+      - rgb
+      effect:
+      color_mode: color_temp
+      brightness: 35
+      color_temp_kelvin: 2200
+      color_temp: 454
+      hs_color:
+      - 29.797
+      - 84.644
+      rgb_color:
+      - 255
+      - 146
+      - 39
+      xy_color:
+      - 0.579
+      - 0.388
+      friendly_name: Dining A
+      supported_features: 4
+      state: 'on'
+    light.hall:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - 'off'
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 51
+      color_temp_kelvin: 2000
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      entity_id:
+      - light.hall1
+      - light.hall2
+      icon: mdi:lightbulb-group
+      friendly_name: Hall
+      supported_features: 44
+      state: 'on'
+    automation.apple_fitness_2:
+      id: '1739129964404'
+      last_triggered: '2026-01-12T23:54:14.249468+00:00'
+      mode: single
+      current: 0
+      friendly_name: Apple Fitness
+      state: 'on'
+  metadata:
+    cover.smartwings_wm25_l_z_cover:
+      entity_only: true
+    light.dining_lamp:
+      entity_only: true
+    light.living_room:
+      entity_only: true
+    light.dining_a:
+      entity_only: true
+    light.hall:
+      entity_only: true
+    automation.apple_fitness_2:
+      entity_only: true
+- id: '1771709908470'
+  name: Kawai TV
+  entities:
+    switch.projector:
+      icon: mdi:projector
+      friendly_name: Projector
+      state: 'on'
+    switch.sonos:
+      device_class: outlet
+      friendly_name: Sonos
+      state: 'on'
+    light.living_room:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - 'off'
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 23
+      color_temp_kelvin: 2000
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      entity_id:
+      - light.signify_netherlands_b_v_lcd005
+      - light.living1
+      - light.living3
+      - light.living4
+      icon: mdi:lightbulb-group
+      friendly_name: Living room
+      supported_features: 44
+      state: 'on'
+    cover.smartwings_wm25_l_z_cover:
+      current_position: 50
+      device_class: shade
+      friendly_name: Shades
+      supported_features: 15
+      state: open
+    media_player.living_room:
+      source_list:
+      - Apple Events
+      - App Store
+      - Arcade
+      - CBS
+      - CBS Sports
+      - Cityscapes
+      - CNBC
+      - Computers
+      - DailyWire
+      - ESPN
+      - Fitness
+      - FOX Local
+      - Fox News
+      - FOX NOW
+      - FOX Sports
+      - HBO Max
+      - Music
+      - NBC
+      - NBC Sports
+      - Netflix
+      - Optimum TV
+      - Photos
+      - Podcasts
+      - Prime Video
+      - Search
+      - Settings
+      - Tubi
+      - TV
+      - VLC
+      - WHAT THE GOLF?
+      - YouTube
+      icon: mdi:apple
+      friendly_name: AppleTV
+      supported_features: 450487
+      volume_level: 0.74
+      media_duration: 1719
+      media_position: 1
+      media_position_updated_at: '2026-02-21T03:41:01.497967+00:00'
+      media_title: Japan Just Did Something Legitimately INSANE for Taiwan
+      media_artist: Business Basics
+      media_album_name: ''
+      app_id: com.google.ios.youtube
+      app_name: YouTube
+      state: paused
+    media_player.android_tv_2:
+      assumed_state: true
+      device_class: tv
+      friendly_name: Android TV
+      supported_features: 153529
+      volume_level: 1
+      is_volume_muted: false
+      app_id: com.google.android.tvlauncher
+      app_name: com.google.android.tvlauncher
+      state: 'on'
+    remote.android_tv:
+      friendly_name: Android TV
+      supported_features: 4
+      activity_list: []
+      current_activity: com.google.android.tvlauncher
+      state: 'on'
+  metadata:
+    light.living_room:
+      entity_only: true
+    cover.smartwings_wm25_l_z_cover:
+      entity_only: true
+    media_player.living_room:
+      entity_only: true
+- id: '1771716407810'
+  name: Breton Away
+  entities:
+    alarm_control_panel.blink_breton_way:
+      code_format:
+      changed_by:
+      code_arm_required: false
+      name: Breton Way
+      id: 1094151
+      network_id: 532486
+      serial: '290020197'
+      version: 4.5.37
+      status: online
+      region_id: prod
+      local_storage: false
+      friendly_name: blink Breton Way
+      supported_features: 2
+      state: armed_away
+    switch.office_camera_motion_detection:
+      device_class: switch
+      friendly_name: Front door Camera motion detection
+      state: 'on'
+    cover.smartwings_wm25_l_z_cover:
+      current_position: 0
+      device_class: shade
+      friendly_name: Shades
+      supported_features: 15
+      state: closed
+  metadata:
+    cover.smartwings_wm25_l_z_cover:
+      entity_only: true
+- id: '1772213884512'
+  name: Breton Home
+  entities:
+    alarm_control_panel.blink_breton_way:
+      code_format:
+      changed_by:
+      code_arm_required: false
+      name: Breton Way
+      id: 1094151
+      network_id: 532486
+      serial: '290020197'
+      version: 4.5.37
+      status: online
+      region_id: prod
+      local_storage: false
+      friendly_name: blink Breton Way
+      supported_features: 2
+      state: disarmed
+    switch.office_camera_motion_detection:
+      device_class: switch
+      friendly_name: Front door Camera motion detection
+      state: 'off'
+    cover.smartwings_wm25_l_z_cover:
+      current_position: 100
+      device_class: shade
+      friendly_name: Shades
+      supported_features: 15
+      state: open
+  metadata:
+    cover.smartwings_wm25_l_z_cover:
+      entity_only: true

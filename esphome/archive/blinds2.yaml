@@ -1,0 +1,116 @@
+esphome:
+  name: markisol_transmitter
+  platform: esp32
+  board: esp32dev
+
+wifi:
+  ssid: "YOUR_WIFI_SSID"
+  password: "YOUR_WIFI_PASSWORD"
+
+# Optional: Enable web server for control
+web_server:
+  port: 80
+
+# Optional: Enable Home Assistant integration
+api:
+  encryption:
+    key: "YOUR_ENCRYPTION_KEY"
+
+ota:
+  password: "YOUR_OTA_PASSWORD"
+
+# Define the transmitter output pin
+output:
+  - platform: gpio
+    pin: GPIO16  # Adjust this to match your specific ESP32 pin
+    id: markisol_transmit_pin
+
+# Custom component for Markisol protocol
+custom_component:
+  - lambda: |-
+      class MarkisolTransmitter {
+      public:
+        // Timing constants (in microseconds)
+        static const int AGC1_PULSE = 4885;
+        static const int AGC2_PULSE = 2450;
+        static const int AGC3_PULSE = 1700;
+        static const int RADIO_SILENCE = 5057;
+        
+        static const int PULSE_SHORT = 340;
+        static const int PULSE_LONG = 680;
+        
+        static const int COMMAND_BIT_LENGTH = 41;
+        static const int REPEAT_COMMAND = 8;
+
+        void sendCommand(const std::string& command, gpio::GPIOOutput* transmit_pin) {
+          // Validate command length and content
+          if (command.length() != COMMAND_BIT_LENGTH) {
+            ESP_LOGE("markisol", "Invalid command length");
+            return;
+          }
+
+          for (int repeat = 0; repeat < REPEAT_COMMAND; repeat++) {
+            sendTribitSequence(command, transmit_pin);
+          }
+
+          // Final radio silence
+          transmitLow(transmit_pin, RADIO_SILENCE);
+        }
+
+      private:
+        void sendTribitSequence(const std::string& command, gpio::GPIOOutput* transmit_pin) {
+          // AGC bits sequence
+          transmitHigh(transmit_pin, AGC1_PULSE);
+          transmitLow(transmit_pin, AGC2_PULSE);
+          transmitHigh(transmit_pin, AGC3_PULSE);
+
+          // Send command bits
+          for (char bit : command) {
+            if (bit == '0') {
+              // LOW-HIGH-LOW sequence for 0
+              transmitLow(transmit_pin, PULSE_SHORT);
+              transmitHigh(transmit_pin, PULSE_SHORT);
+              transmitLow(transmit_pin, PULSE_SHORT);
+            } else if (bit == '1') {
+              // LOW-HIGH-HIGH sequence for 1
+              transmitLow(transmit_pin, PULSE_SHORT);
+              transmitHigh(transmit_pin, PULSE_LONG);
+            }
+          }
+        }
+
+        void transmitHigh(gpio::GPIOOutput* pin, int microseconds) {
+          pin->turn_on();
+          delayMicroseconds(microseconds);
+        }
+
+        void transmitLow(gpio::GPIOOutput* pin, int microseconds) {
+          pin->turn_off();
+          delayMicroseconds(microseconds);
+        }
+      };
+
+      auto markisol_transmitter = new MarkisolTransmitter();
+      return {markisol_transmitter};
+
+# Create a button to trigger the transmitter
+button:
+  - platform: template
+    name: "Send Markisol Command"
+    on_press:
+      then:
+        - lambda: |-
+            auto markisol_transmitter = get_custom_component<MarkisolTransmitter*>(0);
+            markisol_transmitter->sendCommand("YOUR_41_BIT_COMMAND_HERE", id(markisol_transmit_pin));
+
+# Optional: Add text input for command (requires Home Assistant)
+text_input:
+  - platform: template
+    name: "Markisol Command Input"
+    id: markisol_command_input
+    min_length: 41
+    max_length: 41
+    pattern: "^[01]+$"
+    on_value:
+      then:
+        - button.press: send_command_button

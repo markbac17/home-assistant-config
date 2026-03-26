@@ -1,0 +1,101 @@
+substitutions:
+  name: "bt-proxy-c"
+  friendly_name: "BT Proxy C"
+
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  name_add_mac_suffix: false
+  project:
+    name: esphome.BlueVue
+    version: "1.0"
+
+esp32:
+#  board: wemos_d1_mini32
+  board: esp32dev
+#  framework:
+#    type: esp-idf
+
+logger:
+
+#esp32_ble_tracker:
+#  scan_parameters:
+#    active: true
+
+#bluetooth_proxy:
+#  active: true
+
+
+i2c:
+  sda: GPIO14
+  scl: GPIO2
+  scan: true
+  id: i2c0
+
+#one_wire:
+#  - platform: gpio
+#    pin: GPIO2
+
+#tca9548a:
+#  - address: 0x70
+#    id: multiplex0
+#    i2c_id: i2c0
+#    channels:
+#      - bus_id: multiplex0channel0
+#        channel: 0
+#      - bus_id: multiplex0channel1
+#        channel: 1
+#      - bus_id: multiplex0channel2
+#        channel: 2
+#      - bus_id: multiplex0channel3
+#        channel: 3
+#      - bus_id: multiplex0channel4
+#        channel: 4
+#      - bus_id: multiplex0channel5
+#        channel: 5
+#      - bus_id: multiplex0channel6
+#        channel: 6
+#      - bus_id: multiplex0channel7
+#        channel: 7
+
+#  - platform: bme280_i2c
+#    temperature:
+#      name: "BME280-2 Temperature"
+#      id: bme280_2_temperature
+#    humidity:
+#      name: "BME280-2 Humidity"
+#      id: bme280_2_humidity
+# 
+
+sensor:
+  - platform: tsl2561
+    name: "TSL2561 Ambient Light"
+    address: 0x39
+    update_interval: 60s
+#    i2c_id: multiplex0channel0
+    
+button:
+- platform: safe_mode
+  name: Safe Mode Boot
+  entity_category: diagnostic
+
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+
+ota:
+  - platform: esphome
+#  password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "BT Proxy Fallback Hotspot"
+    password: !secret api_password
+
+captive_portal:
+
+web_server:
+  port: 80
+  version: 3

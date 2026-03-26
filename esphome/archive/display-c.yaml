@@ -1,0 +1,45 @@
+substitutions:
+  name: "display-c"
+  friendly_name: "Display C"
+  
+packages:
+  device_base: !include modules/device_base.yaml
+  wifi: !include modules/wifi.yaml
+
+#esp8266:
+#  board: d1_mini
+
+esp32:
+  board: lolin_s2_mini
+  variant: ESP32S2
+  framework:
+    type: arduino
+
+time:
+  - platform: sntp
+    id: sntp_time
+
+logger:
+  baud_rate: 0
+
+uart:
+  id: uart_2
+  rx_pin: 11
+  tx_pin: 16
+#  baud_rate: 9600
+  baud_rate: 115200
+  debug:
+
+display:
+  - platform: nextion
+    id: nextion1
+    uart_id: uart_2
+    update_interval: 10s
+    lambda: |
+      it.send_command("recmode=0");
+    
+    # Exit Protocol Reparse Mode
+    # Other configurations like baud rate, etc.
+
+ota:
+  - platform: esphome

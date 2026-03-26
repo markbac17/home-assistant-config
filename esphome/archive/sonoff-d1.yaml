@@ -1,0 +1,63 @@
+substitutions:
+  name: "switch-air-filter-bedroom"
+  friendly_name: "Switch Air Filter Bedroom"
+
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  name_add_mac_suffix: false
+  project:
+    name: esphome.BlueVue
+    version: "1.0"
+
+esp8266:
+  board: esp8285
+  restore_from_flash: true
+
+uart:
+  rx_pin: RX
+  tx_pin: TX
+  baud_rate: 9600
+
+# Make sure logging is not using the serial port
+logger:
+  baud_rate: 0
+
+# Define our custom light component
+light:
+  - platform: sonoff_d1
+    use_rm433_remote: False
+    name: "Bedroom Air filter"
+    icon: mdi:air-filter
+    restore_mode: RESTORE_DEFAULT_OFF
+    gamma_correct: 0.0
+    default_transition_length: 1s
+    min_value: 20
+    max_value: 80
+
+button:
+- platform: safe_mode
+  name: Safe Mode Boot
+  entity_category: diagnostic
+
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+
+ota:
+  - platform: esphome
+    password: "04e07ada4aa6cbfbed8e24acc2655a92"
+#ota:
+#  password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "Air Officer Fallback Hotspot"
+    password: !secret api_password
+
+captive_portal:
+
+web_server:
+  port: 80

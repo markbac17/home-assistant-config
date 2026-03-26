@@ -1,0 +1,405 @@
+{
+  "title": "Unraid",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Unraid",
+        "description": "Connect to your Unraid server using the GraphQL API. Requires Unraid 7.2.0 or newer.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "api_key": "API key"
+        },
+        "data_description": {
+          "host": "IP address (for example, 192.168.1.100) or hostname/domain of your Unraid server.",
+          "port": "HTTP port number (default: 80). Secure connections are handled automatically.",
+          "api_key": "Generate in Unraid Settings → Management Access → API Keys. Requires ADMIN role."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reauthenticate Unraid",
+        "description": "The API key for {host} is no longer valid. Please enter a new API key.",
+        "data": {
+          "api_key": "API key"
+        },
+        "data_description": {
+          "api_key": "Generate a new API key in Unraid Settings → Management Access → API Keys"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure Unraid",
+        "description": "Update the connection settings for your Unraid server.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "api_key": "API key"
+        },
+        "data_description": {
+          "host": "IP address or hostname of your Unraid server.",
+          "port": "HTTP port number (default: 80). Secure connections are handled automatically.",
+          "api_key": "API key with ADMIN role permissions."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect. Verify the host and port are correct and reachable.",
+      "invalid_auth": "Invalid API key or insufficient permissions. Ensure the key has ADMIN role.",
+      "unsupported_version": "Unraid version not supported. Minimum required: Unraid 7.2.0 (API v4.21.0).",
+      "unknown": "Unexpected error occurred. Check Home Assistant logs for details.",
+      "already_configured": "This Unraid server is already configured.",
+      "required": "This field is required.",
+      "invalid_hostname": "Invalid hostname or IP address format."
+    },
+    "abort": {
+      "already_configured": "This Unraid server is already configured.",
+      "reauth_successful": "Reauthentication successful.",
+      "reauth_failed": "Reauthentication failed.",
+      "reconfigure_successful": "Reconfiguration successful.",
+      "reconfigure_failed": "Reconfiguration failed - entry not found."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Unraid UPS Settings",
+        "description": "Configure UPS power settings for accurate power monitoring.",
+        "data": {
+          "ups_capacity_va": "UPS capacity (VA)",
+          "ups_nominal_power": "UPS nominal power (W)"
+        },
+        "data_description": {
+          "ups_capacity_va": "Optional. Your UPS VA rating (e.g., 1000 for a 1000VA UPS). Shown in sensor attributes for reference.",
+          "ups_nominal_power": "Required for UPS Power sensor. Enter the Watts value from your UPS specs. If Unraid only shows VA, check your UPS label or estimate using VA × 0.6."
+        }
+      }
+    },
+    "abort": {
+      "no_options_available": "No configurable options available. Options are shown when a UPS device is detected."
+    }
+  },
+  "issues": {
+    "auth_failed": {
+      "title": "Authentication Failed",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Reauthenticate Unraid",
+            "description": "The API key for {host} is no longer valid. Click submit to enter a new API key."
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "container_start_failed": {
+      "message": "Failed to start container {name}: {error}"
+    },
+    "container_stop_failed": {
+      "message": "Failed to stop container {name}: {error}"
+    },
+    "container_restart_failed": {
+      "message": "Failed to restart container {name}: {error}"
+    },
+    "vm_start_failed": {
+      "message": "Failed to start VM {name}: {error}"
+    },
+    "vm_stop_failed": {
+      "message": "Failed to stop VM {name}: {error}"
+    },
+    "vm_force_stop_failed": {
+      "message": "Failed to force stop VM {name}: {error}"
+    },
+    "vm_reboot_failed": {
+      "message": "Failed to reboot VM {name}: {error}"
+    },
+    "vm_pause_failed": {
+      "message": "Failed to pause VM {name}: {error}"
+    },
+    "vm_resume_failed": {
+      "message": "Failed to resume VM {name}: {error}"
+    },
+    "vm_reset_failed": {
+      "message": "Failed to reset VM {name}: {error}"
+    },
+    "array_start_failed": {
+      "message": "Failed to start array: {error}"
+    },
+    "array_stop_failed": {
+      "message": "Failed to stop array: {error}"
+    },
+    "parity_check_start_failed": {
+      "message": "Failed to start parity check: {error}"
+    },
+    "parity_check_pause_failed": {
+      "message": "Failed to pause parity check: {error}"
+    },
+    "parity_check_resume_failed": {
+      "message": "Failed to resume parity check: {error}"
+    },
+    "parity_check_stop_failed": {
+      "message": "Failed to stop parity check: {error}"
+    },
+    "disk_spin_up_failed": {
+      "message": "Failed to spin up disk {name}: {error}"
+    },
+    "disk_spin_down_failed": {
+      "message": "Failed to spin down disk {name}: {error}"
+    },
+    "archive_all_notifications_failed": {
+      "message": "Failed to archive all notifications: {error}"
+    },
+    "delete_all_archived_notifications_failed": {
+      "message": "Failed to delete all archived notifications: {error}"
+    },
+    "graphql_query_failed": {
+      "message": "GraphQL query failed: {error}"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "cpu_usage": {
+        "name": "CPU usage"
+      },
+      "cpu_temperature": {
+        "name": "CPU temperature"
+      },
+      "cpu_power": {
+        "name": "CPU power"
+      },
+      "ram_usage": {
+        "name": "RAM usage"
+      },
+      "ram_used": {
+        "name": "RAM used"
+      },
+      "swap_usage": {
+        "name": "Swap usage"
+      },
+      "swap_used": {
+        "name": "Swap used"
+      },
+      "unraid_version": {
+        "name": "Unraid version"
+      },
+      "api_version": {
+        "name": "API version"
+      },
+      "uptime": {
+        "name": "Up since"
+      },
+      "active_notifications": {
+        "name": "Active notifications"
+      },
+      "notifications_unread_info": {
+        "name": "Unread info notifications"
+      },
+      "notifications_unread_warning": {
+        "name": "Unread warning notifications"
+      },
+      "notifications_unread_alert": {
+        "name": "Unread alert notifications"
+      },
+      "notifications_archived_total": {
+        "name": "Archived notifications"
+      },
+      "array_state": {
+        "name": "Array state"
+      },
+      "array_usage": {
+        "name": "Array usage"
+      },
+      "parity_progress": {
+        "name": "Parity progress"
+      },
+      "last_parity_check_date": {
+        "name": "Last parity check"
+      },
+      "last_parity_check_errors": {
+        "name": "Last parity check errors"
+      },
+      "disk_temperature": {
+        "name": "Disk {name} temperature"
+      },
+      "disk_usage": {
+        "name": "Disk {name} usage"
+      },
+      "share_usage": {
+        "name": "Share {name} usage"
+      },
+      "flash_usage": {
+        "name": "Flash usage"
+      },
+      "ups_battery": {
+        "name": "UPS {name} battery"
+      },
+      "ups_load": {
+        "name": "UPS {name} load"
+      },
+      "ups_runtime": {
+        "name": "UPS {name} runtime"
+      },
+      "ups_power": {
+        "name": "UPS {name} power"
+      },
+      "ups_energy": {
+        "name": "UPS {name} energy"
+      },
+      "ups_input_voltage": {
+        "name": "UPS {name} input voltage"
+      },
+      "ups_output_voltage": {
+        "name": "UPS {name} output voltage"
+      },
+      "ups_battery_health": {
+        "name": "UPS {name} battery health"
+      },
+      "registration_type": {
+        "name": "License type"
+      },
+      "registration_state": {
+        "name": "License state"
+      },
+      "installed_plugins": {
+        "name": "Installed plugins"
+      },
+      "container_cpu": {
+        "name": "Container {name} CPU"
+      },
+      "container_memory_usage": {
+        "name": "Container {name} memory"
+      },
+      "container_memory_percent": {
+        "name": "Container {name} memory %"
+      },
+      "parity_speed": {
+        "name": "Parity check speed"
+      },
+      "parity_elapsed": {
+        "name": "Parity check elapsed"
+      },
+      "parity_estimated": {
+        "name": "Parity check estimated"
+      },
+      "ups_status": {
+        "name": "UPS {name} status"
+      },
+      "container_updates_count": {
+        "name": "Container updates available"
+      },
+      "registration_expiration": {
+        "name": "License expiration"
+      },
+      "disk_error_count": {
+        "name": "Disk {name} errors"
+      }
+    },
+    "binary_sensor": {
+      "disk_health": {
+        "name": "Disk {name} health"
+      },
+      "parity_status": {
+        "name": "Parity status"
+      },
+      "array_started": {
+        "name": "Array started"
+      },
+      "parity_check_running": {
+        "name": "Parity check running"
+      },
+      "parity_check_paused": {
+        "name": "Parity check paused"
+      },
+      "parity_valid": {
+        "name": "Parity valid"
+      },
+      "ups_connected": {
+        "name": "UPS {name} connected"
+      },
+      "service": {
+        "name": "Service {name}"
+      },
+      "cloud_connected": {
+        "name": "Cloud connected"
+      },
+      "remote_access": {
+        "name": "Remote access"
+      },
+      "container_update_available": {
+        "name": "Container {name} update"
+      },
+      "mover_active": {
+        "name": "Mover active"
+      },
+      "disks_disabled": {
+        "name": "Disks disabled"
+      },
+      "disks_missing": {
+        "name": "Disks missing"
+      },
+      "disks_invalid": {
+        "name": "Disks invalid"
+      },
+      "safe_mode": {
+        "name": "Safe mode"
+      },
+      "config_valid": {
+        "name": "Config valid"
+      },
+      "filesystems_unmountable": {
+        "name": "Filesystems unmountable"
+      }
+    },
+    "switch": {
+      "array": {
+        "name": "Array"
+      },
+      "parity_check": {
+        "name": "Parity check"
+      },
+      "disk_spin": {
+        "name": "Disk {name} spin"
+      },
+      "docker_container": {
+        "name": "Container {name}"
+      },
+      "virtual_machine": {
+        "name": "VM {name}"
+      }
+    },
+    "button": {
+      "parity_check_start_correct": {
+        "name": "Parity check (correcting)"
+      },
+      "parity_check_pause": {
+        "name": "Pause parity check"
+      },
+      "parity_check_resume": {
+        "name": "Resume parity check"
+      },
+      "docker_container_restart": {
+        "name": "Restart container {name}"
+      },
+      "vm_force_stop": {
+        "name": "Force stop VM {name}"
+      },
+      "vm_reboot": {
+        "name": "Reboot VM {name}"
+      },
+      "vm_pause": {
+        "name": "Pause VM {name}"
+      },
+      "vm_resume": {
+        "name": "Resume VM {name}"
+      },
+      "vm_reset": {
+        "name": "Reset VM {name}"
+      },
+      "archive_all_notifications": {
+        "name": "Archive all notifications"
+      },
+      "delete_all_archived_notifications": {
+        "name": "Delete all archived notifications"
+      }
+    }
+  }
+}
